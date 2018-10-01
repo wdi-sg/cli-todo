@@ -38,9 +38,9 @@ let queryShowCallback = (err, result) => {
       for (let i=0;i<result.rows.length;i++){
         var j=i+1;
         if(result.rows[i].done){
-          console.log(j+'. [x] - '+result.rows[i].name);
+          console.log(j+'. [x] - '+result.rows[i].name+', created at: '+result.rows[i].created_at);
         } else {
-          console.log(j+'. [ ] - '+result.rows[i].name);
+          console.log(j+'. [ ] - '+result.rows[i].name+', created at: '+result.rows[i].created_at);
         };
       }
     }
