@@ -1,9 +1,7 @@
-console.log("works!!", process.argv[2]);
-
 const pg = require('pg');
 
 const configs = {
-    user: 'akira',
+    user: 'admin',
     host: '127.0.0.1',
     database: 'todo',
     port: 5432,
@@ -11,25 +9,85 @@ const configs = {
 
 const client = new pg.Client(configs);
 
-let queryDoneCallback = (err, result) => {
-    if (err) {
-      console.log("query error", err.message);
-    } else {
-      console.log("result", result.rows );
+//1. showing list of items on to-do list
+if (process.argv[2] == 'show') {
+    client.connect((err) => {
+
+        let text = 'SELECT * FROM items';
+
+        client.query(text, (err, res) => {
+            if (err) {
+              console.log("query error", err.message);
+            } else {
+                for (i in res.rows) {
+                    // iterate through all of your results + CLEAN UP
+                    let x = parseInt(i) + 1;
+                    console.log(`${x}. ${res.rows[i].task}`)
+                }
+            }
+        });
+        }
+)};
+
+//NOTE: $1 and $2 takes reference to values array
+//2. adding items to the to-do list
+if (process.argv[2] === 'add') {
+
+    client.connect((err) => {
+
+        let queryText = 'INSERT INTO items (task, done) VALUES ($1, $2) RETURNING id';
+        const values = [process.argv[3], false];
+
+        client.query(queryText, values, (err, res) => {
+            if (err) {
+              console.log("query error", err.message);
+            } else {
+              let text = 'SELECT * FROM items';
+                client.query(text, (err, res) => {
+                    if (err) {
+                      console.log("query error", err.message);
+                    } else {
+                        for (i in res.rows) {
+                            let x = parseInt(i) + 1;
+                            console.log(`${x}. ${res.rows[i].task}`)
+                        }
+                    }
+                });
+            }
+        });
     }
-};
+)}
 
-let clientConnectionCallback = (err) => {
 
-  if( err ){
-    console.log( "error", err.message );
-  }
+//3. allowing for mark done
+if (process.argv[2] === 'done') {
 
-  let text = "INSERT INTO todo (name) VALUES ($1) RETURNING id";
+    client.connect((err) => {
+        //FIND OUT what is this id=$1?
+        let queryText = 'UPDATE items SET done = true WHERE id=($1);';
+        let values = [process.argv[3]];
 
-  const values = ["hello"];
-
-  client.query(text, values, queryDoneCallback);
-};
-
-client.connect(clientConnectionCallback);
+        client.query(queryText, values, (err, res) => {
+            if (err) {
+              console.log("query error", err.message);
+            } else {
+              let text = 'SELECT * FROM items';
+                client.query(text, (err, res) => {
+                    if (err) {
+                      console.log("query error", err.message);
+                    } else {
+                        for (i in res.rows) {
+                            if (res.rows[i].done == false) {
+                                var taskStatus = "[ ]";
+                                } else if (res.rows[i].done == true) {
+                                var taskStatus = "[X]";
+                                }
+                            let x = parseInt(i) + 1;
+                            console.log(`${x}. ${taskStatus} ${res.rows[i].task}`)
+                        }
+                    }
+                });
+            }
+        });
+    }
+)}
