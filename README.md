@@ -35,6 +35,40 @@ node todo.js add "eat bak kut teh"
 6. [ ] - eat bak kut teh
 ```
 
+#### Getting Started:
+Create and install some things:
+```
+npm init
+touch index.js
+npm install pg
+```
+
+Create the database itself.
+
+First, drop into `psql`:
+
+Create the DB:
+```
+CREATE DB todo
+```
+
+Create a tables.sql file:
+```
+CREATE TABLE IF NOT EXISTS items (
+  id SERIAL PRIMARY KEY,
+  name text
+);
+```
+
+(you can create a seed.sql file if you want).
+
+Run tables.sql
+```
+psql -d todo -U USERNAME -f tables.sql
+```
+
+Now you can start coding the `index.js` file. The one provided has some boilerplate code for you to start.
+
 #### Further:
 
 #### Mark as done
