@@ -1,0 +1,14 @@
+INSERT INTO items (completed, name, created_at) VALUES ('true','go shopping', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','seaweed', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('true','go sdfsfsping', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','go sdfsfsping', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','go sdfsfsping', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('true','gSDFSFg', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','go sdfsfsping', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('true','seasfsfweed', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','seasdffsfsfweed', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','seaweedsfdfsd', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','seaweed', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','seaweed', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','gluncheoning', CURRENT_TIMESTAMP);
+INSERT INTO items (completed, name, created_at) VALUES ('false','gomeating', CURRENT_TIMESTAMP);
