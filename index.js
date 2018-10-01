@@ -16,6 +16,13 @@ let queryDoneCallback = (err, result) => {
       console.log("query error", err.message);
     } else {
       console.log("result", result.rows );
+      for (var i in result.rows){
+        let checkbox = '[]';
+        let displayOut = `${checkbox} - ${result.rows[i].name}`;
+        console.log("-------------------------");
+        console.log(displayOut);
+      }
+
     }
 };
 
