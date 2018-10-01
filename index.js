@@ -52,11 +52,19 @@ const markTask = (id) => {
   });
 };
 
-client.connect(err => {
-  if (err) {
-    console.log('error', err.message);
-  }
+const deleteTask = (id) => {
+  const text = 'DELETE FROM items WHERE id=' + id;
 
+  client.query(text, (err, result) => {
+    if (err) {
+      console.log('query error', err.message);
+    } else {
+      showTasks();
+    }
+  });
+};
+
+const command = () => {
   if (process.argv[2] === 'add') {
     if (process.argv[3]) {
       addTask();
@@ -72,4 +80,18 @@ client.connect(err => {
       markTask(parseInt(process.argv[3]));
     }
   }
+
+  if (process.argv[2] === 'delete') {
+    if (process.argv[3]) {
+      deleteTask(parseInt(process.argv[3]));
+    }
+  }
+};
+
+client.connect(err => {
+  if (err) {
+    console.log('error', err.message);
+  }
+
+  command();
 });
