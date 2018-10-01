@@ -16,25 +16,27 @@ const client = new pg.Client(configs);
 
 let clientConnectionCallback = (err) => {
 
-  if (err) {console.log( "error", err.message );}
+    if (err) {console.log( "error", err.message );}
 
-  let text;
+    let text;
 
-  if (process.argv[2] === "show") {
+    if (process.argv[2] === "show") {
 
-    text = "select * from todolist";
+         text = "select * from todolist";
 
-    client.query(text, queryDoneCallback);
+         client.query(text, queryDoneCallback);
 
-  } else if (process.argv[2] === "add") {
+    }
 
-    text = "INSERT INTO todolist (completed, entry, timeadded) VALUES ($1, $2, $3) RETURNING id";
+    else if (process.argv[2] === "add") {
 
-    let values = [false, process.argv[3], new Date()];
+        text = "INSERT INTO todolist (completed, entry, timeadded) VALUES ($1, $2, $3) RETURNING id";
 
-    client.query(text, values, queryDoneCallback);
+        let values = [false, process.argv[3], new Date()];
 
-  };
+        client.query(text, values, queryDoneCallback);
+
+    };
 };
 
 
@@ -45,21 +47,23 @@ let queryDoneCallback = (err, result) => {
 
     else {
 
-    console.log("To-Do List:");
+        console.log("result.rows: ", result.rows);
 
-      for (i in result.rows) {
+        console.log("To-Do List:");
 
-        let checkBox;
+        for (i in result.rows) {
 
-        if (result.rows[i].completed === true ) {checkBox = 'X';}
+            let checkBox;
 
-        else {checkBox = ' ';};
+            if (result.rows[i].completed === true ) {checkBox = 'X';}
 
-        let output = `${result.rows[i].id}. [${checkBox}] - ${result.rows[i].entry}`
+            else {checkBox = ' ';};
 
-        console.log(output)
+            let output = `${result.rows[i].id}. [${checkBox}] - ${result.rows[i].entry}`
 
-      };
+            console.log(output)
+
+        };
 
       // console.log("result", result.rows );
     };
