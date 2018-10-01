@@ -9,22 +9,27 @@ const configs = {
 
 const client = new pg.Client(configs);
 
+const displayTasks = () => {
+  client.query('SELECT * FROM tasks ORDER BY id ASC', (qerr, res) => {
+    if (qerr) {
+      console.log(qerr.stack);
+    } else {
+      let i = 0;
+      res.rows.forEach((element) => {
+        if (element.done === true) console.log(`${(i += 1)}. [x] - ${element.name}`);
+        else console.log(`${(i += 1)}. [ ] - ${element.name}`);
+      });
+    }
+    client.end();
+  });
+};
+
 // CHECK FOR SHOW QUERY
 if (process.argv[2] === 'show') {
   client.connect((cerr) => {
     if (cerr) return console.error(cerr);
     // INIT SELECT QUERY TO DISPLAY ALL TASKS IN LIST
-    client.query('SELECT * FROM tasks', (qerr, res) => {
-      if (qerr) {
-        console.log(qerr.stack);
-      } else {
-        res.rows.forEach((element) => {
-          console.log(`${element.id}. [ ] - ${element.name}`);
-        });
-      }
-      client.end();
-    });
-    return null;
+    return displayTasks();
   });
 }
 
@@ -36,21 +41,23 @@ if (process.argv[2] === 'add' && process.argv[3] !== undefined) {
     const value = [process.argv[3]];
     // INIT INSERT OF USER INPUT
     client.query(text, value, (ierr, res) => {
-      if (ierr) {
-        console.log(ierr.stack);
-      } else {
-        // INIT DISPLAY OF ALL TASKS TO SHOW USER INPUT SUCCESS.
-        client.query('SELECT * FROM tasks', (qerr, qres) => {
-          if (qerr) {
-            console.log(qerr.stack);
-          } else {
-            qres.rows.forEach((element) => {
-              console.log(`${element.id}. [ ] - ${element.name}`);
-            });
-          }
-          client.end();
-        });
-      }
+      if (ierr) console.log(ierr.stack);
+      else displayTasks();
+    });
+    return null;
+  });
+}
+
+// CHECK FOR MARK DONE
+if (process.argv[2] === 'done' && process.argv[3] !== undefined) {
+  client.connect((cerr) => {
+    if (cerr) return console.error(cerr);
+    const text = 'UPDATE tasks SET done = true WHERE id = ($1);';
+    const value = [process.argv[3]];
+    // INIT INSERT OF USER INPUT
+    client.query(text, value, (ierr, res) => {
+      if (ierr) console.log(ierr.stack);
+      else displayTasks();
     });
     return null;
   });
