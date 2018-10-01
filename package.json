@@ -1,0 +1,23 @@
+{
+  "name": "cli-todo",
+  "version": "1.0.0",
+  "description": "![https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp](https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chanleyou/cli-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chanleyou/cli-todo/issues"
+  },
+  "homepage": "https://github.com/chanleyou/cli-todo#readme",
+  "dependencies": {
+    "pg": "^7.4.3",
+    "save": "^2.3.2"
+  }
+}
