@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS todo (
+	id SERIAL PRIMARY KEY,
+	name TEXT,
+	done BOOLEAN
+);
