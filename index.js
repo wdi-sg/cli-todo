@@ -12,6 +12,23 @@ const configs = {
 
 const client = new pg.Client(configs);
 
+const splashHeader = `
+_________________________________________________________________________________________________
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+-------------------------------------------------------------------------------------------------
+
+ooooooooooo                    ooooooooo                    ooooo       o88                o8
+88  888  88 ooooooo             888    88o   ooooooo         888        oooo   oooooooo8 o888oo
+    888   888     888 ooooooooo 888    888 888     888       888         888  888ooooooo  888
+    888   888     888           888    888 888     888       888      o  888          888 888
+   o888o    88ooo88            o888ooo88     88ooo88        o888ooooo88 o888o 88oooooo88   888o
+
+_________________________________________________________________________________________________
+ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+-------------------------------------------------------------------------------------------------
+`;
+
+
 
 
 let clientConnectionCallback = (err) => {
@@ -32,7 +49,7 @@ let clientConnectionCallback = (err) => {
 
         text = "INSERT INTO todolist (completed, entry, created_at) VALUES ($1, $2, $3) RETURNING *";
 
-        let values = [false, process.argv[3], new Date()];
+        let values = [false, process.argv[3], moment()];
 
         client.query(text, values, queryDoneCallback);
 
@@ -65,7 +82,7 @@ let queryDoneCallback = (err, result) => {
 
         // console.log("result.rows: ", result.rows);
 
-        console.log("To-Do List:");
+        console.log(splashHeader);
 
         for (i in result.rows) {
 
@@ -79,7 +96,12 @@ let queryDoneCallback = (err, result) => {
 
             }
 
-            else {checkBox = ' ';};
+            else {
+
+                checkBox = ' ';
+                updatedAtOutput = ' ';
+
+            };
 
             let output = `${result.rows[i].id}. [${checkBox}] ${result.rows[i].entry} ----- `+
             `Added: ${moment(result.rows[i].created_at).format('Do MMM h:mm:ss a')}`;
