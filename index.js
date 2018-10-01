@@ -13,19 +13,31 @@ const client = new pg.Client(configs);
 
 let clientConnectionCallback = (err) => {
 
+
   if( err ){
     console.log( "error", err.message );
   }
 
   let text;
-
+//show
   if(process.argv[2] === 'show'){
     
     text = "SELECT * FROM items;"
-  }
 
-  client.query(text,queryDoneCallback);
-};
+    client.query(text,queryDoneCallback);
+  }
+//add
+  else if(process.argv[2] === 'add'){
+
+    text = "INSERT INTO items (done,task) VALUES ($1,$2) RETURNING id";
+
+    var values = [false,process.argv[3]];
+
+    client.query(text,values,queryDoneCallback);
+  }
+}
+
+
 
 let queryDoneCallback = (err, result) => {
     if (err) {
