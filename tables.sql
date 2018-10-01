@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS items (
   id SERIAL PRIMARY KEY,
-  name text
+  name text,
+  done boolean
 );

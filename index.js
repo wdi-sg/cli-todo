@@ -17,15 +17,19 @@ const showTasks = () => {
       console.log('query error', err.message);
     } else {
       result.rows.forEach((task, index) => {
-        console.log(`${index}. [ ] - ${task.name}`);
+        if (task.done) {
+          console.log(`${index + 1}. [x] - ${task.name}`);
+        } else {
+          console.log(`${index + 1}. [ ] - ${task.name}`);
+        }
       });
     }
   });
 };
 
 const addTask = () => {
-  const text = 'INSERT INTO items (name) VALUES ($1)';
-  const values = [process.argv[3]];
+  const text = 'INSERT INTO items (name, done) VALUES ($1, $2)';
+  const values = [process.argv[3], false];
 
   client.query(text, values, (err, result) => {
     if (err) {
@@ -34,7 +38,18 @@ const addTask = () => {
       showTasks();
     }
   });
+};
 
+const markTask = (id) => {
+  const text = 'UPDATE items SET done=TRUE WHERE id=' + id;
+
+  client.query(text, (err, result) => {
+    if (err) {
+      console.log('query error', err.message);
+    } else {
+      showTasks();
+    }
+  });
 };
 
 client.connect(err => {
@@ -50,5 +65,11 @@ client.connect(err => {
 
   if (process.argv[2] === 'show') {
     showTasks();
+  }
+
+  if (process.argv[2] === 'done') {
+    if (process.argv[3]) {
+      markTask(parseInt(process.argv[3]));
+    }
   }
 });
