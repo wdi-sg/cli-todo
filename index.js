@@ -41,7 +41,7 @@ const addTask = () => {
 };
 
 const markTask = (id) => {
-  const text = 'UPDATE items SET done=TRUE WHERE id=' + id;
+  const text = `UPDATE items SET done=TRUE, updated_at=CURRENT_DATE WHERE id=${id}`;
 
   client.query(text, (err, result) => {
     if (err) {
