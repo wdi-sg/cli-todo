@@ -22,19 +22,27 @@ let clientConnectionCallback = (err) => {
 
     if (process.argv[2] === "show") {
 
-         text = "select * from todolist";
+        text = "SELECT * FROM todolist";
 
-         client.query(text, queryDoneCallback);
+        client.query(text, queryDoneCallback);
 
     }
 
     else if (process.argv[2] === "add") {
 
-        text = "INSERT INTO todolist (completed, entry, timeadded) VALUES ($1, $2, $3) RETURNING id";
+        text = "INSERT INTO todolist (completed, entry, timeadded) VALUES ($1, $2, $3) RETURNING *";
 
         let values = [false, process.argv[3], new Date()];
 
         client.query(text, values, queryDoneCallback);
+
+    }
+
+    else if (process.argv[2] === "done") {
+
+        text = `UPDATE todolist SET completed=true WHERE id=${process.argv[3]}`;
+
+        client.query(text, queryDoneCallback);
 
     };
 };
