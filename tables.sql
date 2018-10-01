@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS todolist(
 	  id SERIAL PRIMARY KEY,
     completed BOOLEAN,
     entry TEXT,
-    timeadded TIMESTAMP
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
 );
 
 
@@ -14,4 +15,4 @@ CREATE TABLE IF NOT EXISTS todolist(
 -- );
 
 
---run from terminal: psql -d todo -U kencheng -f tables.sql
+--run from Terminal: psql -d todo -U kencheng -f tables.sql

@@ -1,6 +1,6 @@
 
-// console.log("process.argv[2]: ", process.argv[2]);
 
+const moment = require('moment');
 const pg = require('pg');
 
 const configs = {
@@ -30,7 +30,7 @@ let clientConnectionCallback = (err) => {
 
     else if (process.argv[2] === "add") {
 
-        text = "INSERT INTO todolist (completed, entry, timeadded) VALUES ($1, $2, $3) RETURNING *";
+        text = "INSERT INTO todolist (completed, entry, created_at) VALUES ($1, $2, $3) RETURNING *";
 
         let values = [false, process.argv[3], new Date()];
 
@@ -40,7 +40,15 @@ let clientConnectionCallback = (err) => {
 
     else if (process.argv[2] === "done") {
 
-        text = `UPDATE todolist SET completed=true WHERE id=${process.argv[3]}`;
+        text = `UPDATE todolist SET completed=true, updated_at=CURRENT_TIMESTAMP WHERE id=${process.argv[3]}`;
+
+        client.query(text, queryDoneCallback);
+
+    }
+
+    else if (process.argv[2] === "delete") {
+
+        text = `DELETE from todolist WHERE id=${process.argv[3]}`;
 
         client.query(text, queryDoneCallback);
 
@@ -55,25 +63,32 @@ let queryDoneCallback = (err, result) => {
 
     else {
 
-        console.log("result.rows: ", result.rows);
+        // console.log("result.rows: ", result.rows);
 
         console.log("To-Do List:");
 
         for (i in result.rows) {
 
             let checkBox;
+            let updatedAtOutput;
 
-            if (result.rows[i].completed === true ) {checkBox = 'X';}
+            if (result.rows[i].completed === true ) {
+
+                checkBox = 'X';
+                updatedAtOutput = ` ----- Completed: ${moment(result.rows[i].updated_at).format('Do MMM h:mm:ss a')}`;
+
+            }
 
             else {checkBox = ' ';};
 
-            let output = `${result.rows[i].id}. [${checkBox}] - ${result.rows[i].entry}`
+            let output = `${result.rows[i].id}. [${checkBox}] ${result.rows[i].entry} ----- `+
+            `Added: ${moment(result.rows[i].created_at).format('Do MMM h:mm:ss a')}`;
 
-            console.log(output)
+            output += updatedAtOutput;
+
+            console.log(output);
 
         };
-
-      // console.log("result", result.rows );
     };
 };
 
