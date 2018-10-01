@@ -1,6 +1,6 @@
 # cli-todo
 
-https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp
+![https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp](https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp)
 
 Create a commandline todo list app that you can use from your terminal and that will keep track of things you need to do.
 
