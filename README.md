@@ -39,7 +39,6 @@ node todo.js add "eat bak kut teh"
 Create and install some things:
 ```
 npm init
-touch index.js
 npm install pg
 ```
 
@@ -49,7 +48,7 @@ First, drop into `psql`:
 
 Create the DB:
 ```
-CREATE DB todo
+CREATE DATABASE todo
 ```
 
 Create a tables.sql file:
