@@ -11,6 +11,31 @@ const configs = {
     port: 5432,
 };
 
+var showList = () => {
+  let text = 'SELECT * FROM items ORDER BY id ASC';
+
+  client.query(text, (err, res) => {
+    if (err) {
+      console.log("query error", err.message);
+    }
+
+    else {
+      for( let i=0; i<res.rows.length; i++ ){
+         let items = res.rows[i];
+         if (items.status === true){
+           let str = `${items.id}. [X] - ${items.name}`;
+           console.log(str);
+         }
+         else{
+           let str = `${items.id}. [ ] - ${items.name}`;
+           console.log(str);
+         }
+      }
+    }
+  });
+}
+
+
 // create a new instance of the client
 const client = new pg.Client(configs);
 
@@ -26,7 +51,7 @@ client.connect((err) => {
     // if query is successful, log the result
 
     // set up what to query
-    let text = 'SELECT * FROM items';
+    let text = 'SELECT * FROM items ORDER BY id ASC';
 
     client.query(text, (err, res) => {
       if (err) {
@@ -36,9 +61,14 @@ client.connect((err) => {
       else {
         for( let i=0; i<res.rows.length; i++ ){
            let items = res.rows[i];
-           let str = `${items.id}. [done/not done] - ${items.name}`;
-           //console.log("result: ", res.rows[i]);
-           console.log(str);
+           if (items.status === true){
+             let str = `${items.id}. [X] - ${items.name}`;
+             console.log(str);
+           }
+           else{
+             let str = `${items.id}. [ ] - ${items.name}`;
+             console.log(str);
+           }
         }
       }
     });
@@ -54,17 +84,46 @@ client.connect((err) => {
     // returning allows you to see what you inserted
     // let text = "INSERT INTO items (id, name) VALUES ($1, $2) RETURNING (id, name)"
     // const values = [process.argv[3], process.argv[4]];
-    let text = "INSERT INTO items  (name) VALUES ($1) RETURNING (id, name)"
+    let text = "INSERT INTO items (name) VALUES ($1) RETURNING (id, name)"
     const values = [process.argv[3]];
-    //?? Can we auto generate the id ??
     client.query(text, values, (err, res) => {
 
+          if (err) {
+            console.log("query error", err.message);
+          }
+
+          else {
+            console.log(res.rows);
+          }
+        });
+  }
+
+  // mark stuff to "done" in the list
+  else if(process.argv[2] === 'done'){
+    // if connection is successful, call the query method
+    // if query is successful, mark done on the to-do list
+    id = parseInt(process.argv[3]);
+    let text = 'UPDATE items SET status=true WHERE id=' + id;
+    //let text = "UPDATE items SET status='true' WHERE id = ($1) RETURNING (id, name)";
+    //let text = 'SELECT * FROM items ORDER BY id ASC';
+
+    client.query(text, (err, res) => {
       if (err) {
         console.log("query error", err.message);
       }
 
       else {
-        console.log(res.rows);
+        for( let i=0; i<res.rows.length; i++ ){
+           let items = res.rows[i];
+           if (items.status === true){
+             let str = `${items.id}. [X] - ${items.name}`;
+             console.log(str);
+           }
+           else{
+             let str = `${items.id}. [ ] - ${items.name}`;
+             console.log(str);
+           }
+        }
       }
     });
   }
