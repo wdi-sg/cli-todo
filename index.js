@@ -3,7 +3,7 @@ console.log("works!!", process.argv[2]);
 const pg = require('pg');
 
 const configs = {
-    user: 'akira',
+    user: 'taras',
     host: '127.0.0.1',
     database: 'todo',
     port: 5432,
@@ -14,10 +14,24 @@ const client = new pg.Client(configs);
 let queryDoneCallback = (err, result) => {
     if (err) {
       console.log("query error", err.message);
-    } else {
-      console.log("result", result.rows );
-    }
-};
+}
+
+let queryText = 'SELECT * FROM items';
+
+
+client.query(text, (err, res) => {
+            if (err) {
+              console.log("query error", err.message);
+            } else {
+                for (i in res.rows) {
+
+                    let result = i + 1;
+                    console.log(`${result}. ${res.rows[result].task}`)
+                }
+            }
+        });
+        }
+
 
 let clientConnectionCallback = (err) => {
 
