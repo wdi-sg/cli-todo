@@ -11,13 +11,13 @@ const configs = {
 
 const client = new pg.Client(configs);
 
-let queryDoneCallback = (err, result) => {
-    if (err) {
-      console.log("query error", err.message);
-    } else {
-      console.log("result", result.rows );
-    }
-};
+// let queryDoneCallback = (err, result) => {
+//     if (err) {
+//       console.log("query error", err.message);
+//     } else {
+//       console.log("result", result.rows );
+//     }
+// };
 
 let clientConnectionCallback = (err) => {
 
@@ -25,22 +25,47 @@ let clientConnectionCallback = (err) => {
     console.log( "error", err.message );
   }
 }
+//show
+  if (process.argv[2] === 'show') {
 
-  if (process.argv[2] === "show") {
     let text;
-    text = "SELECT * FROM task";
+
+    text = "SELECT * FROM tasks";
+
     client.query(text, queryDoneCallback);
 
-  } else if (process.argv[2] === "add") {
+//adding
+  } else if (process.argv[2] === 'add') {
 
-      text = "INSERT INTO task (dunzo, avenue, created_at) VALUES ('hello','be','b') RETURNING id";
+      text = "INSERT INTO tasks (dunzo, avenue) VALUES ($1, $2) RETURNING id";
 
-  const values = [false, process.argv[3]];
+  var values = [false, process.argv[3]];
 
   client.query(text, values, queryDoneCallback);
 
   // } else if (process.argv[2] === "done") {
  };
 
+let queryDoneCallback = (err, result) => {
+  if (err) {
+    console.log('query error', err.message)
+  } else {
+      console.log('To do list')
+
+  for (i in result.rows) {
+
+    let tick;
+
+    if (result.rows[i].done === true) {
+      tick = 'X';
+    } else {
+      tick = '';
+    }
+
+    let output = `${result.rows[i].id}. [${tick}] - ${result.rows[i].task}`
+         console.log(output)
+   }
+  }
+};
 
 client.connect(clientConnectionCallback);
