@@ -23,11 +23,12 @@ node todo.js show
 ```
 
 ```
-1. [ ] - go shopping
-2. [ ] - feed dog
-3. [ ] - swim practice
-4. [ ] - code app
-5. [ ] - meet gabriel
+1. [ ] - eat bak kut teh
+2. [ ] - go shopping
+3. [ ] - feed dog
+4. [ ] - swim practice
+5. [ ] - code app
+6. [ ] - meet gabriel
 ```
 
 
