@@ -28,9 +28,20 @@ const runApp = () => {
     case 'remove':
       removeList();
       break;
+      default:
+      displayHelp();
   }
 
 }
+
+const displayHelp = () => {
+  console.log("Use 'show','add','done' or 'remove' without qoutations. "+
+  "For add, enter any sentence or word after the add argument. "+
+  "For done, enter any list numbers to marked as done. "+
+  "For remove, enter any list numbers to delete permanently from list."
+  )
+}
+
 
 const showList = () => {
   jsonfile.readFile(file, (err, obj) => {
