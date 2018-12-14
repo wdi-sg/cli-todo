@@ -1,35 +1,19 @@
 console.log("works!!", process.argv[2]);
 
-const pg = require('pg');
+var commandType = process.argv[2];
 
-const configs = {
-    user: 'akira',
-    host: '127.0.0.1',
-    database: 'todo',
-    port: 5432,
-};
+console.log("Your command was: "+commandType);
 
-const client = new pg.Client(configs);
+const jsonfile = require('jsonfile');
 
-let queryDoneCallback = (err, result) => {
-    if (err) {
-      console.log("query error", err.message);
-    } else {
-      console.log("result", result.rows );
-    }
-};
+const file = 'data.json'
 
-let clientConnectionCallback = (err) => {
+jsonfile.readFile(file, (err, obj) => {
 
-  if( err ){
-    console.log( "error", err.message );
-  }
+  console.log(obj);
+  obj["helloworld"] = "monkey";
 
-  let text = "INSERT INTO todo (name) VALUES ($1) RETURNING id";
-
-  const values = ["hello"];
-
-  client.query(text, values, queryDoneCallback);
-};
-
-client.connect(clientConnectionCallback);
+  jsonfile.writeFile(file, obj, (err) => {
+    console.log(err)
+  });
+});

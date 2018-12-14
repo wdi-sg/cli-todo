@@ -6,6 +6,16 @@ Create a commandline todo list app that you can use from your terminal and that 
 
 ### Deliverables:
 
+#### Add to the list
+
+```
+node todo.js add "eat bak kut teh"
+```
+
+```
+1. [ ] - eat bak kut teh
+```
+
 #### See the list
 
 ```
@@ -20,53 +30,42 @@ node todo.js show
 5. [ ] - meet gabriel
 ```
 
-#### Add to the list
 
-```
-node todo.js add "eat bak kut teh"
-```
-
-```
-1. [ ] - go shopping
-2. [ ] - feed dog
-3. [ ] - swim practice
-4. [ ] - code app
-5. [ ] - meet gabriel
-6. [ ] - eat bak kut teh
-```
 
 #### Getting Started:
 Create and install some things:
 ```
 npm init
-npm install pg
+npm install jsonfile
+touch data.json
 ```
 
-Create the database itself.
-
-First, drop into `psql`:
-
-Create the DB:
+Put the following code inside `data.json`:
 ```
-CREATE DATABASE todo
+{}
 ```
 
-Create a tables.sql file:
+Now you can start coding the `index.js` file. The one provided has a basic jsonfile example in it. (you should get rid of this basic example as you code your app)
+
+Implement the deliverables in the order shown above.
+
+1. Add to the list. (It starts empty)
+
+1. Show all the items in the list (Once you have something inside it)
+
+*Hint*: you MUST add a data structure into the json file: the *array* of todo items you want to track.
+
+So it should look like this:
+
+data.json:
 ```
-CREATE TABLE IF NOT EXISTS items (
-  id SERIAL PRIMARY KEY,
-  name text
-);
+{
+  todoItems : []
+}
 ```
 
-(you can create a seed.sql file if you want).
-
-Run tables.sql
-```
-psql -d todo -U USERNAME -f tables.sql
-```
-
-Now you can start coding the `index.js` file. The one provided has some boilerplate code for you to start.
+*Hint*:
+Which `jsonfile` library functions will you use for each of the above deliverables?
 
 #### Further:
 
@@ -86,7 +85,7 @@ node todo.js done 4
 ```
 
 #### Further:
-Add a column named `created_at` with data type date and display the date the item was added.
+Add a column named `created_at` with data type date and display the date the item was added. [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
 #### Further:
 Add the ability to permanently delete an item.
