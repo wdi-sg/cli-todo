@@ -68,6 +68,9 @@ data.json:
 *Hint*:
 Which `jsonfile` library functions will you use for each of the above deliverables?
 
+*Hint*:
+What will the JSON look like inside the `data.json` file when your app is done running an `add`?
+
 #### Further:
 
 #### Mark as done
