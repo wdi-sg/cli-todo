@@ -1,19 +1,55 @@
-console.log("works!!", process.argv[2]);
-
-var commandType = process.argv[2];
-
-console.log("Your command was: "+commandType);
-
 const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
-jsonfile.readFile(file, (err, obj) => {
+    //[[],[],[]]
+    //todoList[item number][item name]
+                        // [done or not]
+                        // [date]
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+switch (process.argv[2]) {
+    case "show":
+        jsonfile.readFile(file, (err, obj) => {
+            console.log(obj["todoList"]);
+            var list = obj["todoList"];
+            for ( var i = 0; i < list.length; i++) {
+                console.log(`${i+1}. [${list[i][1]}] - ${list[i][0]} - Added On: ${list[i][2]}`);
+            }
+        });
+        break;
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+    case "add":
+        var itemName = process.argv[3];
+        var dateTime = new Date();
+        jsonfile.readFile(file, (err, obj) => {
+
+          console.log(obj);
+
+          var list = obj["todoList"];
+          list.push([]);
+          list[list.length-1].push(itemName);
+          list[list.length-1].push(" ");
+          list[list.length-1].push(`${dateTime.getDate()}/${dateTime.getMonth()}/${dateTime.getFullYear()}`);
+
+          jsonfile.writeFile(file, obj, (err) => {
+            console.log(err)
+          });
+        });
+        break;
+
+    case "done":
+        var itemNumber = parseInt(process.argv[3]) - 1;
+
+        jsonfile.readFile(file, (err, obj) => {
+
+          console.log(obj);
+
+          var list = obj["todoList"];
+          list[itemNumber][1] = "X";
+
+          jsonfile.writeFile(file, obj, (err) => {
+            console.log(err)
+          });
+        });
+        break;
+}
