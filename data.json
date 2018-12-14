@@ -1,1 +1,1 @@
-{"todoItems":[{"status":"O","userData":"buy biscuit"},{"status":"D","userData":"buy sugar"},{"status":"O","userData":"buy rice"}]}
+{"todoItems":[{"status":"O","created_at":"15/12/2018 00:59","updated_at":"15/12/2018 00:59","userData":"buy rice"},{"status":"O","created_at":"15/12/2018 00:59","updated_at":"15/12/2018 00:59","userData":"buy salt"},{"status":"O","created_at":"15/12/2018 01:00","updated_at":"15/12/2018 01:00","userData":"buy sugar"},{"status":"O","created_at":"15/12/2018 01:00","updated_at":"15/12/2018 01:00","userData":"buy biscuits\n"}]}
