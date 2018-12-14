@@ -61,7 +61,7 @@ So it should look like this:
 data.json:
 ```
 {
-  todoItems : []
+  "todoItems" : []
 }
 ```
 
