@@ -44,6 +44,41 @@
 
 // 2. Show all the items in the list (Once you have something inside it) Just type node index.js show
 
+// const jsonfile = require('jsonfile');
+// const file = 'data.json';
+
+// var fakeArr = [];
+
+// for(let i = 3; i < process.argv.length; i++){
+//     fakeArr.push(process.argv[i]);
+// }
+
+// var joinArr = fakeArr.join(" ");
+// console.log(joinArr);
+
+// if(process.argv[2] === "add"){
+//     jsonfile.readFile(file, (err, obj) => {
+//         console.log(obj);
+//         obj.todoItems.push(joinArr);
+//             jsonfile.writeFile(file, obj, (err) => {
+//                 console.log(err);
+//             });
+//     });
+// }
+// else if(process.argv[2] === "show"){
+//     jsonfile.readFile(file, (err, obj) => {
+//         console.log(obj);
+//         for(let j = 0; j < obj.todoItems.length; j++){
+//             console.log((j+1) + " " + "[ ] - " + obj.todoItems[j]);
+//         }
+//             jsonfile.writeFile(file, obj, (err) => {
+//                 console.log(err);
+//             });
+//     });
+// }
+
+// Further 1:- Mark as done
+
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
@@ -59,7 +94,7 @@ console.log(joinArr);
 if(process.argv[2] === "add"){
     jsonfile.readFile(file, (err, obj) => {
         console.log(obj);
-        obj.todoItems.push(joinArr);
+        obj.todoItems.push({"item": joinArr, "mark": false});
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
             });
@@ -69,10 +104,30 @@ else if(process.argv[2] === "show"){
     jsonfile.readFile(file, (err, obj) => {
         console.log(obj);
         for(let j = 0; j < obj.todoItems.length; j++){
-            console.log((j+1) + " " + "[ ] - " + obj.todoItems[j]);
+            if(obj.todoItems[j]["mark"] === false){
+                console.log((j+1) + " [ ] " + Object.values(obj.todoItems)[j]["item"]);
+            }
+            else{
+                console.log((j+1) + " [X] " + Object.values(obj.todoItems)[j]["item"]);
+            }
         }
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
             });
     });
+}
+else if(process.argv[2] === "done"){
+    if(isNaN(process.argv[3]) === false){
+        var doneInput = process.argv[3];
+        var doneNum = doneInput - 1;
+
+        jsonfile.readFile(file, (err, obj) => {
+        console.log(obj);
+        var doneX = obj.todoItems[doneNum];
+        doneX.mark = true;
+            jsonfile.writeFile(file, obj, (err) => {
+                console.log(err);
+            });
+        });
+    }
 }

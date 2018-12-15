@@ -1,1 +1,1 @@
-{"todoItems":["eat bak kut teh","go shopping","feed dog","swim practice","code app","poo"]}
+{"todoItems":[{"item":"eat bak kut teh","mark":true},{"item":"go shopping","mark":false},{"item":"feed dog","mark":false},{"item":"swim practice","mark":true},{"item":"sleep","mark":false}]}
