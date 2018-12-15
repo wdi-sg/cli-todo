@@ -9,10 +9,13 @@ var add = () => {
         // push add item
         let length = obj.todoItem.length;
         let addItem = process.argv[3];
+        let date = new Date();
+        let todayDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
         obj.todoItem.push({
             num: (length + 1) + ".",
             checkbox: "[ ]",
-            item: "- " + addItem
+            item: "- " + addItem,
+            created: todayDate
         });
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
@@ -31,7 +34,8 @@ var show = () => {
         let listNum = obj.todoItem[i].num;
         let checkbox = obj.todoItem[i].checkbox;
         let item = obj.todoItem[i].item;
-        console.log(listNum + checkbox + item);
+        let date = obj.todoItem[i].created;
+        console.log(listNum + checkbox + item + " (created at " + date + ")");
     }
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
