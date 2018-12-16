@@ -2,15 +2,17 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json';
 
+let date = new Date();
+let todayDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+
+
 var add = () => {
     jsonfile.readFile(file, (err, obj) => {
         //todoItem length
         //the 4th argument to be addItem
         // push add item
-        let length = obj.todoItem.length;
+
         let addItem = process.argv[3];
-        let date = new Date();
-        let todayDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
         obj.todoItem.push({
             num: (length + 1) + ".",
             checkbox: "[ ]",
@@ -26,20 +28,22 @@ var add = () => {
 var show = () => {
     jsonfile.readFile(file, (err, obj) => {
     let length = obj.todoItem.length;
+    console.log()
        for (let i =0; i < length; i ++){
         //todoItemList num
         //todoItemList checkbox
         //todoItemList.item
         //Display the keys for todoItems keys
-        let listNum = obj.todoItem[i].num;
-        let checkbox = obj.todoItem[i].checkbox;
-        let item = obj.todoItem[i].item;
-        let date = obj.todoItem[i].created;
-        console.log(listNum + checkbox + item + " (created at " + date + ")");
-    }
-            jsonfile.writeFile(file, obj, (err) => {
-                console.log(err);
-            });
+            let todoList = obj.todoItem;
+            if (todoList[i].checkbox === "[x]") {
+                console.log(todoList[i].num + todoList[i].checkbox + todoList[i].item + " (created at " +   todoList[i].created + ")" + " (updated at " + todoList[i].updated + ")");
+            } else {
+                console.log(todoList[i].num + todoList[i].checkbox + todoList[i].item + " (created at " +   todoList[i].created + ")");
+            }
+        }
+                jsonfile.writeFile(file, obj, (err) => {
+                    console.log(err);
+                });
     });
 }
 
@@ -48,6 +52,7 @@ var done = () => {
         let markDone = parseInt(process.argv[3]);
         markDone --;
         obj.todoItem[markDone].checkbox ="[x]";
+        obj.todoItem[markDone].updated = todayDate;
 
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
