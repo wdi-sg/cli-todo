@@ -45,7 +45,6 @@ var show = () => {
 
 var done = () => {
     jsonfile.readFile(file, (err, obj) => {
-        let length = obj.todoItem.length;
         let markDone = parseInt(process.argv[3]);
         markDone --;
         obj.todoItem[markDone].checkbox ="[x]";
@@ -56,6 +55,26 @@ var done = () => {
     });
 }
 
+var del = () => {
+    jsonfile.readFile(file, (err, obj) => {
+        let length = obj.todoItem.length;
+        let option = obj.todoItem[parseInt(process.argv[3] - 1)];
+        console.log("deleted => " + option.num + option.checkbox + option.item + option.created);
+        obj.todoItem.splice(option, 1);
+
+            if( option !== length) {
+                for (let j = 0 ; j < (length-1) ; j++) {
+                    obj.todoItem[j].num = (j + 1) + ".";
+                }
+            }
+
+                jsonfile.writeFile(file, obj, (err) => {
+                    console.log(err);
+                });
+    });
+}
+
+
 switch (process.argv[2]){
     case "add":
         add();
@@ -65,6 +84,9 @@ switch (process.argv[2]){
         break;
     case "done":
         done();
+        break;
+    case "delete":
+        del();
         break;
 }
 
