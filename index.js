@@ -5,6 +5,20 @@ const file = 'data.json';
 let date = new Date();
 let todayDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
 
+const banner = `
+
+@@@@@@@   @@@@@@      @@@@@@@    @@@@@@      @@@       @@@   @@@@@@   @@@@@@@
+@@@@@@@  @@@@@@@@     @@@@@@@@  @@@@@@@@     @@@       @@@  @@@@@@@   @@@@@@@
+  @@!    @@!  @@@     @@!  @@@  @@!  @@@     @@!       @@!  !@@         @@!
+  !@!    !@!  @!@     !@!  @!@  !@!  @!@     !@!       !@!  !@!         !@!
+  @!!    @!@  !@!     @!@  !@!  @!@  !@!     @!!       !!@  !!@@!!      @!!
+  !!!    !@!  !!!     !@!  !!!  !@!  !!!     !!!       !!!   !!@!!!     !!!
+  !!:    !!:  !!!     !!:  !!!  !!:  !!!     !!:       !!:       !:!    !!:
+  :!:    :!:  !:!     :!:  !:!  :!:  !:!      :!:      :!:      !:!     :!:
+   ::    ::::: ::      :::: ::  ::::: ::      :: ::::   ::  :::: ::      ::
+   :      : :  :      :: :  :    : :  :      : :: : :  :    :: : :       :
+                                                                               `;
+
 
 var add = () => {
     jsonfile.readFile(file, (err, obj) => {
@@ -28,7 +42,7 @@ var add = () => {
 var show = () => {
     jsonfile.readFile(file, (err, obj) => {
     let length = obj.todoItem.length;
-    console.log()
+    console.log(banner);
        for (let i =0; i < length; i ++){
         //todoItemList num
         //todoItemList checkbox
