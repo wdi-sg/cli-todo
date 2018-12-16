@@ -77,7 +77,7 @@
 //     });
 // }
 
-// Further 1:- Mark as done
+// Further 1:- Mark as done Further 2:- create date, Further 3:- delete, Further:- updated, Further:- add ascii
 
 const jsonfile = require('jsonfile');
 const file = 'data.json';
@@ -91,10 +91,16 @@ for(let i = 3; i < process.argv.length; i++){
 var joinArr = fakeArr.join(" ");
 console.log(joinArr);
 
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1;
+var yyyy = today.getFullYear();
+today = dd + '/' + mm + '/' + yyyy;
+
 if(process.argv[2] === "add"){
     jsonfile.readFile(file, (err, obj) => {
         console.log(obj);
-        obj.todoItems.push({"item": joinArr, "mark": false});
+        obj.todoItems.push({"item": joinArr, "mark": false, "created_at": today, "updated_at": today});
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
             });
@@ -103,12 +109,18 @@ if(process.argv[2] === "add"){
 else if(process.argv[2] === "show"){
     jsonfile.readFile(file, (err, obj) => {
         console.log(obj);
+        console.log(`  ___ ___                 ___________.__
+ /   |   \   ____ ___.__. \__    ___/|  |__   ___________   ____
+/    ~    \_/ __ <   |  |   |    |   |  |  \_/ __ \_  __ \_/ __ \
+\    Y    /\  ___/\___  |   |    |   |   Y  \  ___/|  | \/\  ___/
+ \___|_  /  \___  > ____|   |____|   |___|  /\___  >__|    \___  >
+       \/       \/\/                      \/     \/            \/ `);
         for(let j = 0; j < obj.todoItems.length; j++){
             if(obj.todoItems[j]["mark"] === false){
-                console.log((j+1) + " [ ] " + Object.values(obj.todoItems)[j]["item"]);
+                console.log((j+1) + " [ ] " + Object.values(obj.todoItems)[j]["item"] + " " + "Created at: " + Object.values(obj.todoItems)[j]["created_at"]);
             }
             else{
-                console.log((j+1) + " [X] " + Object.values(obj.todoItems)[j]["item"]);
+                console.log((j+1) + " [X] " + Object.values(obj.todoItems)[j]["item"] + " " + "Created at: " + Object.values(obj.todoItems)[j]["created_at"] + " " + "Updated at: " + Object.values(obj.todoItems)[j]["updated_at"]);
             }
         }
             jsonfile.writeFile(file, obj, (err) => {
@@ -125,6 +137,20 @@ else if(process.argv[2] === "done"){
         console.log(obj);
         var doneX = obj.todoItems[doneNum];
         doneX.mark = true;
+            jsonfile.writeFile(file, obj, (err) => {
+                console.log(err);
+            });
+        });
+    }
+}
+else if(process.argv[2] === "delete"){
+    if(isNaN(process.argv[3]) === false){
+        var deleteInput = process.argv[3];
+        var deleteNum = deleteInput - 1;
+
+        jsonfile.readFile(file, (err, obj) => {
+        console.log(obj);
+        var deleteX = obj.todoItems.splice(deleteNum, 1);
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
             });
