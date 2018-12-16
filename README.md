@@ -87,6 +87,7 @@ node todo.js done 4
 5. [ ] - meet gabriel
 6. [ ] - eat bak kut teh
 ```
+[todo, created at, updated at, ]
 
 #### Further:
 Add a column named `created_at` with data type date and display the date the item was added. [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
