@@ -6,7 +6,6 @@ let date = new Date();
 let todayDate = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
 
 const banner = `
-
 @@@@@@@   @@@@@@      @@@@@@@    @@@@@@      @@@       @@@   @@@@@@   @@@@@@@
 @@@@@@@  @@@@@@@@     @@@@@@@@  @@@@@@@@     @@@       @@@  @@@@@@@   @@@@@@@
   @@!    @@!  @@@     @@!  @@@  @@!  @@@     @@!       @@!  !@@         @@!
@@ -16,17 +15,15 @@ const banner = `
   !!:    !!:  !!!     !!:  !!!  !!:  !!!     !!:       !!:       !:!    !!:
   :!:    :!:  !:!     :!:  !:!  :!:  !:!      :!:      :!:      !:!     :!:
    ::    ::::: ::      :::: ::  ::::: ::      :: ::::   ::  :::: ::      ::
-   :      : :  :      :: :  :    : :  :      : :: : :  :    :: : :       :
-                                                                               `;
-
+   :      : :  :      :: :  :    : :  :      : :: : :  :    :: : :       :`;
 
 var add = () => {
     jsonfile.readFile(file, (err, obj) => {
-        //todoItem length
-        //the 4th argument to be addItem
-        // push add item
-
-        let addItem = process.argv[3];
+    //todoItem length
+    //the 4th argument to be addItem
+    // push add item
+    let length = obj.todoItem.length;
+    let addItem = process.argv[3];
         obj.todoItem.push({
             num: (length + 1) + ".",
             checkbox: "[ ]",
@@ -41,8 +38,8 @@ var add = () => {
 
 var show = () => {
     jsonfile.readFile(file, (err, obj) => {
-    let length = obj.todoItem.length;
     console.log(banner);
+    let length = obj.todoItem.length;
        for (let i =0; i < length; i ++){
         //todoItemList num
         //todoItemList checkbox
@@ -56,20 +53,19 @@ var show = () => {
             }
         }
                 jsonfile.writeFile(file, obj, (err) => {
-                    console.log(err);
+                console.log(err);
                 });
     });
 }
 
 var done = () => {
     jsonfile.readFile(file, (err, obj) => {
-        let markDone = parseInt(process.argv[3]);
-        markDone --;
+        let markDone = parseInt(process.argv[3] - 1);
         obj.todoItem[markDone].checkbox ="[x]";
         obj.todoItem[markDone].updated = todayDate;
 
             jsonfile.writeFile(file, obj, (err) => {
-                console.log(err);
+            console.log(err);
             });
     });
 }
@@ -77,8 +73,8 @@ var done = () => {
 var del = () => {
     jsonfile.readFile(file, (err, obj) => {
         let length = obj.todoItem.length;
-        let option = obj.todoItem[parseInt(process.argv[3] - 1)];
-        console.log("deleted => " + option.num + option.checkbox + option.item + option.created);
+        let option = parseInt(process.argv[3] - 1);
+        console.log("deleted => " + obj.todoItem[option].num + obj.todoItem[option].checkbox + obj.todoItem[option].item + " " + obj.todoItem[option].created);
         obj.todoItem.splice(option, 1);
 
             if( option !== length) {
@@ -88,11 +84,10 @@ var del = () => {
             }
 
                 jsonfile.writeFile(file, obj, (err) => {
-                    console.log(err);
+                console.log(err);
                 });
     });
 }
-
 
 switch (process.argv[2]){
     case "add":
