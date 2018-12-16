@@ -11,15 +11,19 @@ var argArray = [];
 
 //helper functions
 var doneMarker = (list, done)=>{
-    let string = list[parseInt(argArray[0]) - 1][0];
-    list[parseInt(argArray[0]) - 1][0] = string.substring(0, 1) + done + string.substring(2, parseInt(string.length) + 1);
-    list[parseInt(argArray[0]) - 1].push(date)
-    console.log(list[parseInt(argArray[0]) - 1][0]);
-}
+    argArray.forEach(function(ele, num){
+        let string = list[parseInt(ele[0]) - 1][0];
+        list[parseInt(ele[0]) - 1][0] = string.substring(0, 1) + done + string.substring(2, parseInt(string.length) + 1);
+        list[parseInt(ele[0]) - 1].push(date)
+        console.log(list[parseInt(ele[0]) - 1][0]);
+    });
+};
 var del = (list)=>{
-    list.splice(parseInt(argArray[0]) - 1, 1);
-    console.log(list)
-}
+    argArray.forEach(function(ele, num){
+        list.splice(parseInt(ele[0]) - 1, 1);
+    });
+    console.log(list);
+};
 
 
 //ADD data.json
@@ -57,11 +61,19 @@ const write = (command)=>{
     });
 };
 //show
-const show = ()=>{
+const show = (type)=>{
     jsonfile.readFile(file, (err, obj) => {
         let list = obj.todoItems;
         list.forEach(function(ele, num){
-            console.log(`${num + 1}. ${ele}`);
+            if(type === "list"){
+                console.log(`${num + 1}. ${ele[0]}`);
+            }else if(type === "c-date"){
+                console.log(`${num + 1}. ${ele[1]}`);
+            }else if(type === "u-date"){
+                console.log(`${num + 1}. ${ele[2]}`);
+            }else {
+                console.log(`${num + 1}. ${ele}`);
+            }
         })
 
     });
@@ -81,7 +93,7 @@ switch(arg[2]) {
         break;
     case "show":
         console.log(arg[2]);
-        show();
+        show(argArray[0]);
         break;
     case "done":
         console.log(arg[2]);
@@ -97,8 +109,8 @@ switch(arg[2]) {
         break;
     case "help":
         console.log(arg[2]);
-        console.log("TYPE (node index.js) followed by (add/ show/ done/ notDone/ delete)\nADD: todo item of yours (\"buy dinner\")\nDONE/notDone/delete: no. of item you completed(node index.js done/notDone/delete 3)\n");
+        console.log("\n    TYPE (node index.js) followed by (add/ show/ done/ notDone/ delete)\n    ADD: todo item of yours (\"buy dinner\")\n    DONE/notDone/delete: no. of item you completed(node index.js done/notDone/delete 3)\n    SHOW: (list/ c-date/ u-date)");
         break;
   default:
-    console.log(arg[2]);
+    console.log("ERROR: type \"help\" to check accepted commands");
 }
