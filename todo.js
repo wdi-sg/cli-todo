@@ -29,7 +29,14 @@ if(minute<10) {
 }
 var commandType = process.argv[2].toUpperCase();
 
-var userData = process.argv[3];
+var userData="";
+
+var userInput= process.argv.slice(3);
+
+for (var i=0; i < userInput.length; i++) {
+  userData += userInput[i] +  " ";
+}
+
 
 const jsonfile = require('jsonfile');
 
