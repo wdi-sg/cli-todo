@@ -21,7 +21,8 @@ jsonfile.readFile(file, (err, obj) => {
     var addEntry = {
         task: task,
         created_at: currentDate,
-        status: "N"
+        status: "N",
+        updated_at:""
     }
 
     if (commandType == "ADD") {
@@ -33,9 +34,9 @@ jsonfile.readFile(file, (err, obj) => {
 
         for (let i = 0; i < obj.todoItems.length; i++) {
             if(obj.todoItems[i].status == "Y") {
-                console.log((i+1)+". [X] - "+obj.todoItems[i].task+" - "+obj.todoItems[i].created_at)
+                console.log((i+1)+". [X] - "+obj.todoItems[i].task+" - "+obj.todoItems[i].created_at+" - "+obj.todoItems[i].updated_at);
             } else {
-                console.log((i+1)+". [ ] - "+obj.todoItems[i].task+" - "+obj.todoItems[i].created_at);
+                console.log((i+1)+". [ ] - "+obj.todoItems[i].task+" - "+obj.todoItems[i].created_at+" - "+obj.todoItems[i].updated_at);
             }
         }
 
@@ -43,6 +44,12 @@ jsonfile.readFile(file, (err, obj) => {
 
         let denote = parseInt(task)-1;
         obj.todoItems[denote].status = "Y";
+        obj.todoItems[denote].updated_at = currentDate;
+
+    } else if (commandType == "DELETE") {
+
+        let denote = parseInt(task)-1;
+        obj.todoItems.splice(denote, 1);
 
     }
 
