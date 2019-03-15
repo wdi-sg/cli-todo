@@ -33,6 +33,14 @@ if(commandType == "add"){
             console.log(err)
         });
       });
+}else if (commandType == "delete"){
+    jsonfile.readFile(file, (err, obj) => {
+        console.log(obj);
+        obj.splice(process.argv[3]);
+        jsonfile.writeFile(file, obj, (err) => {
+            console.log(err)
+        });
+      });
 }
 
 
