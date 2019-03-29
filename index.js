@@ -25,10 +25,28 @@ if (process.argv[2] === "add") {
     }
 
     jsonfile.writeFile(file, obj, (err) => {
-      console.log(err)
+      console.log(err);
     });
   });
 }
+if (process.argv[2] === "done") {
+  jsonfile.readFile(file, (err, obj)=>{
+    if (err) {
+      console.log(err);
+    }
+    const todolistLength = Object.keys(obj).length;
+    for (let i = 0; i < todolistLength; i++) {
+      if (i === parseInt(process.argv[3])) {
+        obj[i].done = true;
+      }
+    }
+
+    jsonfile.writeFile(file, obj, (err) => {
+      console.log(err);
+    })
+  })
+}
+
 if (process.argv[2] === "show") {
   jsonfile.readFile(file, (err, obj)=>{
     if (err) {
@@ -38,7 +56,7 @@ if (process.argv[2] === "show") {
     let done = "not reading done";
     for (let i = 1; i < todolistLength + 1; i++) {
       console.log(obj[i].done);
-      
+
       if (obj[i].done === true) {
         done = "x";
       } else {
