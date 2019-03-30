@@ -1,11 +1,33 @@
+const figlet = require('figlet');
 const jsonfile = require('jsonfile');
+
 const file = 'data.json';
+
+const userInput = process.argv[3];
+const userCommandType = process.argv[2];
 
 var addZero = function(i) {
   if (i < 10) {
     i = "0" + i;
   }
   return i;
+}
+
+var setMessage = function (content) {
+    figlet(content, function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(data)
+
+        console.log('Options');
+        console.log('1. View All Items - Type in "node index.js show" to display all your to do to items');
+        console.log('2. Add New Item - Type in "node index.js add [task name]" to add new to do item');
+        console.log('3. Mark Item as Done - Type in "node index.js done [task #]" to mark to do item as done');
+        console.log('4. Delete Item: Type in "node index.js delete [task #]" to delete to do item');
+    });
 }
 
 var showItems = function () {
@@ -90,8 +112,7 @@ var markItemAsDone = function (id) {
     });
 }
 
-const userCommandType = process.argv[2];
-const userInput = process.argv[3];
+setMessage("Swee Chin - To Do List");
 
 if (userCommandType === "show") {
     showItems();
@@ -107,8 +128,5 @@ if (userCommandType === "show") {
 } else if (userCommandType === "delete"){
     deleteItem(userInput);
     console.log("Item deleted!")
-
-} else {
-    console.log("Invalid Command Type! Please try again");
 
 }

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/chuasweechin/cli-todo#readme",
   "dependencies": {
+    "figlet": "^1.2.1",
     "jsonfile": "^5.0.0"
   }
 }
