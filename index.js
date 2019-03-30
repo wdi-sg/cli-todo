@@ -2,7 +2,7 @@ console.log("Command: ", process.argv[2]);
 
 var commandType = process.argv[2];
 
-console.log("Your command was: "+commandType);
+// console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
 
@@ -12,30 +12,43 @@ const obj = {
     "todoItems": []
 }
 
+
+
 jsonfile.readFile(file, (err, obj) => {
 
-  let array = obj["todoItems"];
+      let array = obj["todoItems"];
+
+      var show = function(){
+             for (var i = 0; i < array.length; i++) {
+                  console.log(i+1 + array[i]);
+             }
+       };
 
         if (process.argv[2] === "add") {
-           array.push((array.length+1) +". [ ] - "+ process.argv[3]);
+
+            // not adding list index no. here so that it's easier to print list later when items are deleted later
+           array.push(". [ ] - "+ process.argv[3]);
+
            console.log((array.length) +". [ ] - "+ process.argv[3]);
+
       } if (process.argv[2] === "show") {
-              array.forEach(function(i){
-                  console.log(i);
-              });
+
+            show();
+
       } if (process.argv[2] === "done") {
             var number = parseInt(process.argv[3]) - 1;
             var item = obj["todoItems"][number];
             var newItem = item.replace("[ ]","[x]");
             array.splice(number, 1, newItem);
 
-            // var re = /[ ]/gi;
-            // var str = obj["todoItems"][number];
-            // var newstr = str.replace(re, '[x]');
+            show();
 
-            array.forEach(function(i){
-                  console.log(i);
-              });
+      } if (process.argv[2] === "delete") {
+            var number = parseInt(process.argv[3]) - 1;
+            array.splice(number, 1);
+
+            show();
+
       }
 
   jsonfile.writeFile(file, obj, (err) => {
