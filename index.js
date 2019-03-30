@@ -9,16 +9,17 @@ const jsonfile = require('jsonfile');
 const file = 'data.json';
 
 const obj = {
-    "todoItems": []
+    "todoItems": [],
 }
 
-
+const art = "  _            _       \n | |_ ___   __| | ___  \n | __/ _ \\ / _` |/ _ \\ \n | || (_) | (_| | (_) | \n  \\__\\___/ \\__,_|\\___/ \n";
 
 jsonfile.readFile(file, (err, obj) => {
 
       let array = obj["todoItems"];
 
       var show = function(){
+            console.log(art);
              for (var i = 0; i < array.length; i++) {
                   console.log(i+1 + array[i]);
              }
