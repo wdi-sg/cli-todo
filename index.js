@@ -3,9 +3,6 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json';
 
-const userInput = process.argv[3];
-const userCommandType = process.argv[2];
-
 var addZero = function(i) {
   if (i < 10) {
     i = "0" + i;
@@ -13,10 +10,17 @@ var addZero = function(i) {
   return i;
 }
 
-var setMessage = function (content) {
+var getCurrentDateAndTime = function () {
+    let date = new Date();
+    let dateAndTime = `${ date.getDate() }/${ date.getMonth() + 1 }/${ date.getFullYear() } ` +
+                        `${ addZero(date.getHours()) }:${ addZero(date.getMinutes()) }:${ addZero(date.getSeconds()) }`;
+
+    return dateAndTime;
+}
+
+var setConsoleMessages = function (content) {
     figlet(content, function(err, data) {
         if (err) {
-            console.log('Something went wrong...');
             console.dir(err);
             return;
         }
@@ -30,39 +34,47 @@ var setMessage = function (content) {
     });
 }
 
-var showItems = function () {
-    jsonfile.readFile(file, (err, stuff) => {
-        stuff.todoItems.forEach(function(toDoItem) {
-            if (toDoItem.deleted === "false") {
-                if (toDoItem.done == "false") {
-                    console.log(`${ toDoItem.id }. [ ] - ${ toDoItem.item }`);
+var checkForEmptyTasksList = function (data) {
+    if (data.todoItems.length <= 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+var showTasks = function () {
+    jsonfile.readFile(file, (err, data) => {
+        if (checkForEmptyTasksList(data) === true) {
+            console.log("You have an empty task list. Add in something first.")
+
+        } else {
+            data.todoItems.forEach(function(toDoItem, index) {
+                if (toDoItem.deleted === "false" && toDoItem.done == "false") {
+                    console.log(`${ toDoItem.id }. [ ] - ${ toDoItem.task }`);
+
+                } else if (toDoItem.deleted === "false" && toDoItem.done == "true") {
+                    console.log(`${ toDoItem.id }. [X] - ${ toDoItem.task }`);
+
                 }
-                else if (toDoItem.done == "true") {
-                    console.log(`${ toDoItem.id }. [x] - ${ toDoItem.item }`);
-                }
-            }
-        });
+            });
+        }
     });
 }
 
-var addItem = function (toDoItem) {
-    jsonfile.readFile(file, (err, stuff) => {
+var addTask = function (task) {
+    jsonfile.readFile(file, (err, data) => {
         let temp = {};
-        let date = new Date();
-        let time = addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":"
-                    + addZero(date.getSeconds());
-        let id =  stuff.todoItems.length + 1;
 
-        temp.id = id;
-        temp.item = toDoItem;
+        temp.id = data.todoItems.length + 1;
+        temp.task = task;
         temp.done = "false";
-        temp.created_at = time;
-        temp.updated_at = "";
         temp.deleted = "false";
+        temp.created_at = getCurrentDateAndTime();
+        temp.updated_at = "";
 
-        stuff.todoItems.push(temp);
+        data.todoItems.push(temp);
 
-        jsonfile.writeFile(file, stuff, (err) => {
+        jsonfile.writeFile(file, data, (err) => {
             if (err !== null) {
                 console.log(err)
             }
@@ -70,63 +82,76 @@ var addItem = function (toDoItem) {
     });
 }
 
-var deleteItem = function (id) {
-    jsonfile.readFile(file, (err, stuff) => {
-        let date = new Date();
-        let time = addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":"
-                    + addZero(date.getSeconds());
+var markTaskAsDone = function (id) {
+    jsonfile.readFile(file, (err, data) => {
+        if (checkForEmptyTasksList(data) === true) {
+            console.log("You have an empty task list. Add in something first.");
 
-        stuff.todoItems.forEach(function(item) {
-            if (item.id === Number(id)) {
-                item.deleted = "true";
-                item.updated_at = time;
-            }
-        });
+        } else {
+            data.todoItems.forEach(function(item) {
+                if (item.id === Number(id)) {
+                    item.done = "true";
+                    item.updated_at = getCurrentDateAndTime();;
+                }
+            });
 
-        jsonfile.writeFile(file, stuff, (err) => {
-            if (err !== null) {
-                console.log(err)
-            }
-        });
+            jsonfile.writeFile(file, data, (err) => {
+                if (err !== null) {
+                    console.log(err)
+                }
+            });
+        }
     });
 }
 
-var markItemAsDone = function (id) {
-    jsonfile.readFile(file, (err, stuff) => {
-        let date = new Date();
-        let time = addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":"
-                    + addZero(date.getSeconds());
+var deleteTask = function (id) {
+    jsonfile.readFile(file, (err, data) => {
+        if (checkForEmptyTasksList(data) === true) {
+            console.log("You have an empty task list. Add in something first.");
 
-        stuff.todoItems.forEach(function(item) {
-            if (item.id === Number(id)) {
-                item.done = "true";
-                item.updated_at = time;
-            }
-        });
+        } else {
+            data.todoItems.forEach(function(item) {
+                if (item.id === Number(id)) {
+                    item.deleted = "true";
+                    item.updated_at = getCurrentDateAndTime();
+                }
+            });
 
-        jsonfile.writeFile(file, stuff, (err) => {
-            if (err !== null) {
-                console.log(err)
-            }
-        });
+            jsonfile.writeFile(file, data, (err) => {
+                if (err !== null) {
+                    console.log(err)
+                }
+            });
+        }
     });
 }
 
-setMessage("Swee Chin - To Do List");
 
-if (userCommandType === "show") {
-    showItems();
+var main = function (userCommandType, userInput) {
+    switch (userCommandType) {
+        case "show":
+            showTasks();
+            break;
 
-} else if (userCommandType === "add") {
-    addItem(userInput);
-    console.log("Item added!")
+        case "add":
+            addTask(userInput);
+            console.log("Task added!");
+            break;
 
-} else if (userCommandType === "done"){
-    markItemAsDone(userInput);
-    console.log("Item marked as done!")
+        case "done":
+            markTaskAsDone(userInput);
+            console.log("Task marked as done!");
+            break;
 
-} else if (userCommandType === "delete"){
-    deleteItem(userInput);
-    console.log("Item deleted!")
+        case "delete":
+            deleteTask(userInput);
+            console.log("Task deleted!");
+            break;
 
+        default:
+            setConsoleMessages("Swee Chin - To Do List");
+            break;
+    }
 }
+
+main(process.argv[2], process.argv[3]);

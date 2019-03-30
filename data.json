@@ -1,1 +1,20 @@
-{"todoItems":[{"id":1,"item":"eating","done":"true","created_at":"20:30:02","updated_at":"20:30:57","deleted":"true"},{"id":2,"item":"swimming","done":"false","created_at":"20:30:06","updated_at":"","deleted":"false"},{"id":3,"item":"jumping","done":"false","created_at":"20:30:10","updated_at":"","deleted":"false"}]}
+{
+  "todoItems": [
+    {
+      "id": 1,
+      "task": "eat laksa",
+      "done": "false",
+      "deleted": "false",
+      "created_at": "31/3/2019 02:44:19",
+      "updated_at": ""
+    },
+    {
+      "id": 2,
+      "task": "buy fruit juice",
+      "done": "false",
+      "deleted": "false",
+      "created_at": "31/3/2019 02:44:28",
+      "updated_at": ""
+    }
+  ]
+}
