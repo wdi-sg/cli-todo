@@ -40,6 +40,12 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     }
     console.log(obj.toDoItems);
     console.log("***Done writing file***");
+    console.log(`
+        ___          _   ___ _    _ _
+      / __|___  ___| | / __| |_ (_) |_
+     | (__/ _ \/ _ \ | \__ \ ' \| |  _|
+      \___\___/\___/_| |___/_||_|_|\__|
+      `);
     });
   });
 
@@ -62,6 +68,12 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     }
     console.log(obj.toDoItems);
     console.log("***Done writing file***");
+    console.log(`
+      ___          _   ___ _    _ _
+      / __|___  ___| | / __| |_ (_) |_
+     | (__/ _ \/ _ \ | \__ \ ' \| |  _|
+      \___\___/\___/_| |___/_||_|_|\__|
+      `);
     });
   });
 
@@ -74,7 +86,7 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     console.log("***Reading file now***");
     delete obj.toDoItems[number-1];
 
-    console.log("***Done reading file***");
+    console.log("***Done deleting array toDo element***");
 
   jsonfile.writeFile(file, obj, { spaces: 2 }, (err) => {
     console.log("***Writing file now***");
@@ -83,6 +95,12 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     }
     console.log(obj.toDoItems);
     console.log("***Done writing file***");
+    console.log(`
+      ___          _   ___ _    _ _
+      / __|___  ___| | / __| |_ (_) |_
+     | (__/ _ \/ _ \ | \__ \ ' \| |  _|
+      \___\___/\___/_| |___/_||_|_|\__|
+      `);
     });
   });
 
@@ -94,6 +112,11 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     }
     console.log(obj.toDoItems);
     console.log("***Done reading file***");
+    console.log(`
+    ___          _   ___ _    _ _
+  / __|___  ___| | / __| |_ (_) |_
+ | (__/ _ \/ _ \ | \__ \ ' \| |  _|
+  \___\___/\___/_| |___/_||_|_|\__|`)
   });
 
 }else{
