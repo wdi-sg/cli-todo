@@ -60,7 +60,8 @@ const show = () => {
         } else {
             console.log("Your list of items to do:")
             for (var i = 0; i < obj.todoItems.length; i++) {
-                console.log(obj.todoItems[i])
+                let itemNumber = (i+1)
+                console.log(itemNumber + ". [ ] - " + obj.todoItems[i])
             }
         }
     });
