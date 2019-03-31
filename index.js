@@ -1,6 +1,13 @@
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
+var currentDateAndTime = function(){
+    let date = new Date();
+    let dateAndTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ` + `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+
+    return dateAndTime;
+}
+
 var addTasks = function(item){
     jsonfile.readFile(file, (err, list) =>{
         let thing = {};
@@ -9,7 +16,8 @@ var addTasks = function(item){
         thing.task = item;
         thing.done = false;
         thing.delete = false;
-        thing.timeCreated = currentDateAndTime();
+        thing.timeAdded = currentDateAndTime();
+        thing.updated_at = "";
         list.toDoItems.push(thing);
 
         jsonfile.writeFile(file, list, (err) =>{
@@ -34,10 +42,10 @@ var showTasks = function(){
             console.log("Please add items to your list!");
         } else {
             list.toDoItems.forEach(function(toDoItems,index){
-                if(toDoItems.done === false){
-                    console.log(toDoItems.id +". " + "[ ] - " + toDoItems.task);
-                } else {
-                    console.log(toDoItems.id +". " + "[X] - " + toDoItems.task)
+                if(toDoItems.done === false && toDoItems.delete === false){
+                    console.log(toDoItems.id +". " + "[ ] - " + toDoItems.task + " --- Added on: " + toDoItems.timeAdded);
+                } else if(toDoItems.done === true && toDoItems.delete === false){
+                    console.log(toDoItems.id +". " + "[X] - " + toDoItems.task + " --- Modified on: " + toDoItems.updated_at);
                 }
                 });
             }
@@ -47,24 +55,44 @@ var showTasks = function(){
 var doneWithTask = function(id){
     jsonfile.readFile(file, (err, list)=> {
         if( id > list.toDoItems.length){
-            console.log("Item not found");
+            console.log("Item not found. Please try again.");
         } else {
         list.toDoItems[id-1].done = true;
+        list.toDoItems[id-1].updated_at = currentDateAndTime();
         }
-
         jsonfile.writeFile(file, list, (err) =>{
+            if(err !== null){
+                console.log(err);
+            }
+        });
+    });
+}
+
+var deleteTask = function(id){
+    jsonfile.readFile(file, (err,list) => {
+        if(id > list.toDoItems.length){
+            console.log("Item not found. Please try again.")
+        } else {
+            list.toDoItems[id-1].delete = true;
+            list.toDoItems[id-1].updated_at = currentDateAndTime();
+        }
+        jsonfile.writeFile(file, list, (err) => {
+            if(err !== null){
+                console.log(err);
+            }
+        });
+    });
+}
+
+var clearList = function(){
+    jsonfile.readFile(file, (err,list) => {
+        list.toDoItems = [];
+        jsonfile.writeFile(file, list, (err) => {
             if(err !== null){
                 console.log(err);
             }
         })
     });
-}
-
-var currentDateAndTime = function(){
-    let date = new Date();
-    let dateAndTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ` + `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-
-    return dateAndTime;
 }
 
 var main = function(userCommand, userInput){
@@ -81,9 +109,14 @@ var main = function(userCommand, userInput){
         doneWithTask(userInput);
         break;
 
+        case "delete":
+        deleteTask(userInput);
+        break;
 
+        case "clear":
+        clearList();
+        break;
     }
-
 }
 
 main(process.argv[2],process.argv[3]);
