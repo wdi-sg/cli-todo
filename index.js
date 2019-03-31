@@ -39,18 +39,21 @@ const userInput = process.argv[3]
 const show = () => {
     jsonfile.readFile(file, (err, obj) => {
         if (obj.todoItems.length == 0) {
+            // if list is empty
             console.log("Your list is currently empty!")
         } else {
+            // generate list of items
             console.log("Your list of items to do:")
             for (var i = 0; i < obj.todoItems.length; i++) {
                 let itemNumber = (i+1);
                 let itemStatus = obj.doneStatus[i];
+                // displays status of item
                 if (itemStatus === "false") {
                     statusDisplay = " ";
                 } else {
                     statusDisplay = "x"
                 };
-                console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i])
+                console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i] + "   [Created on: " + obj.created_at[i] + "]")
             }
         }
     });
@@ -64,7 +67,10 @@ const add = (userInput) => {
         obj.todoItems.push(userInput);
         // create default item status of new item
         obj.doneStatus.push("false");
-
+        // pull the date
+        let dater = new Date();
+        let now = dater.toLocaleString();
+        obj.created_at.push(now)
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
         });
@@ -81,7 +87,6 @@ const done = (userInput) => {
         let itemNumber = (userInput-1);
         obj.doneStatus[itemNumber] = "true";
         // console.log(itemNumber);
-
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
         });
@@ -94,9 +99,6 @@ const done = (userInput) => {
 
 
 // what user sees when running node index.js
-console.log(`
-Welcome to your Todo List.
-`);
 
 // different input options
 if (commandType === "show") {
@@ -111,6 +113,8 @@ else if (commandType === "done") {
 else {
     // default
     console.log(`
+Welcome to your Todo List.
+
 Commands available:
 
 show : shows current todo list           [ node index.js show             ]
