@@ -42,6 +42,7 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     console.log("***Done writing file***");
     });
   });
+
 }else if(process.argv[2] == "done"){
   jsonfile.readFile(file, (err, obj) => {
     let number = process.argv[3];
@@ -63,6 +64,28 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
     console.log("***Done writing file***");
     });
   });
+
+}else if(process.argv[2] == "delete"){
+  jsonfile.readFile(file, (err, obj) => {
+    let number = process.argv[3];
+    if(err){
+      console.log("***Error found in reading file***");
+    }
+    console.log("***Reading file now***");
+    delete obj.toDoItems[number-1];
+
+    console.log("***Done reading file***");
+
+  jsonfile.writeFile(file, obj, { spaces: 2 }, (err) => {
+    console.log("***Writing file now***");
+    if(err){
+      console.log("***Error found in writing file***");
+    }
+    console.log(obj.toDoItems);
+    console.log("***Done writing file***");
+    });
+  });
+
 }else if((process.argv[2] == "show")){
   jsonfile.readFile(file, (err, obj) => {
     console.log("***Reading file now***");
@@ -78,8 +101,6 @@ if (process.argv[2] == "add"){ //so instead of being implicit, I now code the re
   Or did you want to see the 'to do list'?\
   If so then just say 'show'.***");
 }
-
-
 
 
 //Prompt: User, please enter number as the first input and 'to do item' as the second input.
