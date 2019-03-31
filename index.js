@@ -1,14 +1,6 @@
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
-//chooses options based on prcess.argv[2] inputs (add, show, done)
-// if(process.argv[2] == "add"){
-//     toDo.addToItems();
-//  } else if(process.argv[2] == "show" || process.argv[2] == "done"){
-//     toDo.accessList()
-//  } else {
-//     console.log("Choose your options? (Add to the list? Show your list? Or check Done for the list?)");
-// };
 var addTasks = function(item){
     jsonfile.readFile(file, (err, list) =>{
         let thing = {};
@@ -17,6 +9,7 @@ var addTasks = function(item){
         thing.task = item;
         thing.done = false;
         thing.delete = false;
+        thing.timeCreated = currentDateAndTime();
         list.toDoItems.push(thing);
 
         jsonfile.writeFile(file, list, (err) =>{
@@ -67,6 +60,13 @@ var doneWithTask = function(id){
     });
 }
 
+var currentDateAndTime = function(){
+    let date = new Date();
+    let dateAndTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ` + `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+
+    return dateAndTime;
+}
+
 var main = function(userCommand, userInput){
     switch (userCommand) {
         case "show":
@@ -80,6 +80,8 @@ var main = function(userCommand, userInput){
         case "done":
         doneWithTask(userInput);
         break;
+
+
     }
 
 }
