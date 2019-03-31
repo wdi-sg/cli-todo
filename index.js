@@ -57,8 +57,8 @@ const show = () => {
                 } else {
                     statusDisplay = "x";
                     console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i]);
-                    console.log("[Created on: " + obj.created_at[i]);
-                    console.log("[Updated on: " + obj.updated_at[i]);
+                    console.log("[Created on: " + obj.created_at[i] + "]");
+                    console.log("[Updated on: " + obj.updated_at[i] + "]");
                     console.log("");
                 };
             }
@@ -119,12 +119,13 @@ const del = (userInput) => {
         obj.todoItems.splice(itemNumber,1);
         obj.doneStatus.splice(itemNumber,1);
         obj.created_at.splice(itemNumber,1);
+        obj.updated_at.splice(itemNumber,1);
 
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
         });
 
-        console.log(`Item marked as done, showing list...
+        console.log(`Item deleted, showing list...
             `)
         show();
     });
