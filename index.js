@@ -71,6 +71,7 @@ const add = (userInput) => {
         let dater = new Date();
         let now = dater.toLocaleString();
         obj.created_at.push(now)
+
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
         });
@@ -97,9 +98,28 @@ const done = (userInput) => {
     });
 };
 
+// to add list items
+const del = (userInput) => {
+    // console.log(userInput)
+    jsonfile.readFile(file, (err, obj) => {
+        let itemNumber = (userInput-1);
+        // console.log(itemNumber);
+        obj.todoItems.splice(itemNumber,1);
+        obj.doneStatus.splice(itemNumber,1);
+        obj.created_at.splice(itemNumber,1);
+
+        jsonfile.writeFile(file, obj, (err) => {
+            if (err) { console.log(err) };
+        });
+
+        console.log(`Item marked as done, showing list...
+            `)
+        show();
+    });
+};
+
 
 // what user sees when running node index.js
-
 // different input options
 if (commandType === "show") {
     show();
@@ -109,6 +129,9 @@ else if (commandType === "add") {
 }
 else if (commandType === "done") {
     done(userInput);
+}
+else if (commandType === "del") {
+    del(userInput);
 }
 else {
     // default
