@@ -2,8 +2,31 @@
   "toDoItems": [
     {
       "1.": "eat bak kut teh",
+      "completion": "done",
+      "updated_at": "31/03/2019"
+    },
+    {
       "2.": "go shopping",
+      "completion": "done",
+      "updated_at": "31/03/2019"
+    },
+    {
       "3.": "feed dog"
-    }
+    },
+    {
+      "4.": "swim practice"
+    },
+    {
+      "5.": "code app",
+      "completion": "done",
+      "updated_at": "31/03/2019"
+    },
+    {
+      "6.": "meet gabriel"
+    },
+    {},
+    {},
+    {},
+    {}
   ]
 }
