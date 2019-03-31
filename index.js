@@ -1,19 +1,64 @@
-console.log("works!!", process.argv[2]);
-
-var commandType = process.argv[2];
-
-console.log("Your command was: "+commandType);
-
+// acquire the npm package we installed
 const jsonfile = require('jsonfile');
+// the JSON file that we created {}
+const file = 'data.json';
 
-const file = 'data.json'
+const commandType = process.argv[2];
+const secondArg = process.argv[3];
 
-jsonfile.readFile(file, (err, obj) => {
+const add = (todo) => {
+    jsonfile.readFile(file,(err, json) => {
+        const obj = {};
+        const arr = json["todoItems"];
+        const index = arr.length + 1;
+        obj.index = index;
+        obj.name = todo;
+        obj.completed = false;
+        arr.push(obj);
+        console.log(`${index}. [ ] - ${todo}`);
+        jsonfile.writeFile(file, json, (err) => {
+            if (err) {
+                console.log("ERROR");
+            }
+            // console.log(`${index}. [ ] - ${todo}`);
+        });
+    });
+}
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+const show = () => {
+    jsonfile.readFile(file,(err,json) => {
+        const arr = json["todoItems"];
+        for (let i = 0;i < arr.length; i++){
+            if (arr[i]["completed"] === false) {
+                console.log(`${arr[i]["index"]}. [ ] - ${arr[i]["name"]}`);
+            } else if (arr[i]["completed"] === true) {
+                console.log(`${arr[i]["index"]}. [x] - ${arr[i]["name"]}`);
+            }
+        }
+    });
+}
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+const done = (index) => {
+    jsonfile.readFile(file,(err,json) => {
+        const arr = json["todoItems"];
+        for (let i = 0;i < arr.length; i++){
+            if (parseInt(index) === arr[i]["index"]) {
+                arr[i]["completed"] = true;
+            }
+        }
+        jsonfile.writeFile(file, json, (err) => {
+            if (err) {
+                console.log("ERROR");
+            }
+        });
+    });
+}
+
+if (commandType === "add") {
+    add(secondArg);
+}  else if (commandType === "show") {
+    show();
+} else if (commandType === "done") {
+    done(secondArg);
+    show();
+}
