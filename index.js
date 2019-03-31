@@ -11,7 +11,7 @@ const file = 'data.json'
 jsonfile.readFile(file, (err, obj) => {
 
   console.log(obj);
-  obj["helloworld"] = "monkey";
+  obj["eat bak kut teh"] = "[ ]";
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
