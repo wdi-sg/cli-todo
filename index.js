@@ -43,17 +43,24 @@ const show = () => {
             console.log("Your list is currently empty!")
         } else {
             // generate list of items
-            console.log("Your list of items to do:")
+            console.log("Your list of items to do:");
+            console.log("");
             for (var i = 0; i < obj.todoItems.length; i++) {
                 let itemNumber = (i+1);
                 let itemStatus = obj.doneStatus[i];
                 // displays status of item
                 if (itemStatus === "false") {
                     statusDisplay = " ";
+                    console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i]);
+                    console.log("[Created on: " + obj.created_at[i] + "]");
+                    console.log("");
                 } else {
-                    statusDisplay = "x"
+                    statusDisplay = "x";
+                    console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i]);
+                    console.log("[Created on: " + obj.created_at[i]);
+                    console.log("[Updated on: " + obj.updated_at[i]);
+                    console.log("");
                 };
-                console.log(itemNumber + ". [" + statusDisplay + "] - " + obj.todoItems[i] + "   [Created on: " + obj.created_at[i] + "]")
             }
         }
     });
@@ -71,6 +78,7 @@ const add = (userInput) => {
         let dater = new Date();
         let now = dater.toLocaleString();
         obj.created_at.push(now)
+        obj.updated_at.push("")
 
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
@@ -87,7 +95,11 @@ const done = (userInput) => {
     jsonfile.readFile(file, (err, obj) => {
         let itemNumber = (userInput-1);
         obj.doneStatus[itemNumber] = "true";
-        // console.log(itemNumber);
+        // pull the date
+        let dater = new Date();
+        let now = dater.toLocaleString();
+        obj.updated_at[itemNumber] = now;
+
         jsonfile.writeFile(file, obj, (err) => {
             if (err) { console.log(err) };
         });
@@ -143,6 +155,6 @@ Commands available:
 show : shows current todo list           [ node index.js show             ]
 add  : creates new list items            [ node index.js add "boil water" ]
 done : marks list item as completed      [ node index.js done 2           ]
-del  : deletes list item                 [ (coming soon!)                 ]
+del  : deletes list item                 [ node index.js del  1           ]
 `);
 }
