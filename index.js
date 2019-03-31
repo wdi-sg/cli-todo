@@ -9,14 +9,17 @@ const file = 'data.json'
 // }
 
 jsonfile.readFile(file, (err, obj) => {
-
+  let number = process.argv[3];
+  let item = process.argv[4];
   console.log("Reading file now");
   // console.log(obj);
-  obj.toDoItems[0][process.argv[3]] = process.argv[4];
+  obj.toDoItems[0][number] = item; // after reading, index.js saves the read file into obj; then goes into the
+  //'toDoItems' property name, first element of array, and starts to populate this array with userinput1 = process.argv[3]  and userinput2 = process.argv[4].
+  //process.argv[2] is implicitly an 'add' word that user ought to type out in the terminal
   console.log("Done reading file");
 
 
-  jsonfile.writeFile(file, obj, { spaces: 2 }, (err) => {
+  jsonfile.writeFile(file, obj, { spaces: 2 }, (err) => { //used the spaces option so that JSON file contents' structure are always preserved. 
     console.log("Writing file now");
     console.log(err);
     console.log(obj);
