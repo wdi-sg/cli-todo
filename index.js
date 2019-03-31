@@ -1,5 +1,19 @@
+const figlet = require('figlet');
 const jsonfile = require('jsonfile');
+
 const file = 'data.json';
+
+
+var figletMessage = function(message){
+    figlet(message, function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+    });
+}
 
 var currentDateAndTime = function(){
     let date = new Date();
@@ -116,6 +130,9 @@ var main = function(userCommand, userInput){
         case "clear":
         clearList();
         break;
+        //set default
+        default:
+        figletMessage("The Not-SO \n Handy List Tracker")
     }
 }
 
