@@ -97,7 +97,7 @@ Add the ability to permanently delete an item.
 #### Further:
 Add a column named `updated_at` with data type date and display the date the item was marked completed.
 
-#### Further:
+#### Further: ✅
 Use an ascii art generator to add style to your app: [http://patorjk.com/software/taag](http://patorjk.com/software/taag) - here you could use the ES6 string interpolation syntax.
 
 #### Further:
