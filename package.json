@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kach92/cli-todo#readme",
   "dependencies": {
+    "figlet": "^1.2.3",
     "jsonfile": "^5.0.0"
   }
 }

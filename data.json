@@ -1,1 +1,13 @@
-{"todoItems":["1. [ ] - eat breakfast","2. [ ] - attend class","3. [ ] - eat lunch","4. [ ] - push git repo"],"counter":5}
+{
+  "todoItems": [
+    "1. [x] - eat breakfast\t\tCreated At: Fri Jul 12 2019 18:50:48 GMT+0800 (GMT+08:00) Updated at: Fri Jul 12 2019 18:56:03 GMT+0800 (GMT+08:00)",
+    "2. [ ] - do morning exercise\t\tCreated At: Fri Jul 12 2019 18:50:54 GMT+0800 (GMT+08:00)",
+    "3. [ ] - stand up\t\tCreated At: Fri Jul 12 2019 18:50:57 GMT+0800 (GMT+08:00)",
+    "4. [x] - Lunch\t\tCreated At: Fri Jul 12 2019 18:51:00 GMT+0800 (GMT+08:00)",
+    "5. [ ] - pairing exercise\t\tCreated At: Fri Jul 12 2019 18:51:03 GMT+0800 (GMT+08:00)",
+    "6. [ ] - dinner\t\tCreated At: Fri Jul 12 2019 18:51:06 GMT+0800 (GMT+08:00)",
+    "7. [x] - Assignment\t\tCreated At: Fri Jul 12 2019 18:51:10 GMT+0800 (GMT+08:00)",
+    "8. [x] - sleep\t\tCreated At: Fri Jul 12 2019 18:51:13 GMT+0800 (GMT+08:00) Updated at: Fri Jul 12 2019 18:55:50 GMT+0800 (GMT+08:00)"
+  ],
+  "counter": 9
+}
