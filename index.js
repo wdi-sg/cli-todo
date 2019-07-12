@@ -83,6 +83,8 @@ const deleteItem = function(itemNum) {
         } else {
             let parsedItemNum = parseInt(itemNum);
             obj.todoItems.splice(parsedItemNum - 1, 1);
+
+            //after deleting an item, change the number of the items below it to minus 1
             for (let i = parsedItemNum - 1; i < obj.todoItems.length; i++) {
                 let str = obj.todoItems[i].split("");
                 str[0] = parseInt(str[0]) - 1;
