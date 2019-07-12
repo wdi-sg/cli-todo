@@ -12,8 +12,8 @@ const createAscii = function(str) {
             console.log('Something went wrong...');
             console.dir(err);
             return;
-        }else{
-            console.log(data)
+        } else {
+            console.log(data);
         }
 
     });
@@ -69,7 +69,7 @@ const markAsDone = function(itemNum) {
             let tempArr = obj.todoItems[parsedItemNum - 1].split("");
             tempArr[4] = "x";
             obj.todoItems[parsedItemNum - 1] = tempArr.join("");
-            obj.todoItems[parsedItemNum - 1] += `\tUpdated at: ${updated_at}`;
+            obj.todoItems[parsedItemNum - 1] += `  Updated at: ${updated_at}`;
 
 
             jsonfile.writeFile(file, obj, (err) => {
@@ -113,8 +113,21 @@ const deleteItem = function(itemNum) {
     });
 }
 
-const showDescription = function() {
-    createAscii("Welcome");
+const showDescription = function(thenThis) {
+    createAscii("To-Do List");
+    setTimeout(() => {
+        console.log("Enter the following commands after execution command for different functions:");
+        console.log("1. show - Show all to-do list");
+        console.log("2. add [item] - Add new to-do item (use double quotes for item with spaces)");
+        console.log("3. done [item number] - Mark a task as done");
+        console.log("4. delete [item number] - delete an item");
+    }, 100)
+
+
+}
+
+const thenShowDescription = function() {
+
 }
 
 if (commandType === undefined) {
@@ -128,10 +141,18 @@ if (commandType === undefined) {
             showToDoList();
             break;
         case "done":
-            markAsDone(input1);
+            if (isNaN(parseInt(input1))) {
+                createAscii("Invalid input");
+            } else {
+                markAsDone(input1);
+            }
             break;
         case "delete":
-            deleteItem(input1);
+            if (isNaN(parseInt(input1))) {
+                createAscii("Invalid input");
+            } else {
+                deleteItem(input1);
+            }
             break;
         default:
             createAscii("ERROR!!!")
