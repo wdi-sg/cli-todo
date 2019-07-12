@@ -3,6 +3,8 @@ const file = 'data.json'
 
 const figlet = require('figlet');
 
+const program = require("commander");
+
 var commandType = process.argv[2];
 var input1 = process.argv[3];
 
