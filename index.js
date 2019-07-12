@@ -156,3 +156,16 @@ if (commandType === undefined) {
             break;
     }
 }
+
+// program
+//     .option('-s,--show','show the whole list of task')
+//     .option('-a,--add <type>','add new items into to-do list')
+//     .option('-m,--mark <type>','mark done item')
+//     .option('-d,--delete <type>','delete an item');
+
+// program.parse(process.argv);
+
+// if(program.show) showToDoList();
+// if(program.add) addItem(program.add);
+// if(program.mark) markAsDone(program.mark);
+// if(program.delete) deleteItem(program.delete);
