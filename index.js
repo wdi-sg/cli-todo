@@ -1,23 +1,13 @@
+#!/usr/bin/env node
+
 const jsonfile = require('jsonfile');
 const file = 'data.json'
-
 const figlet = require('figlet');
+const program = require('commander');
+
 
 var commandType = process.argv[2];
 var input1 = process.argv[3];
-
-const createAscii = function(str) {
-    figlet(str, function(err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        } else {
-            console.log(data);
-        }
-
-    });
-}
 
 
 const addItem = function(newItem) {
@@ -113,6 +103,19 @@ const deleteItem = function(itemNum) {
     });
 }
 
+const createAscii = function(str) {
+    figlet(str, function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        } else {
+            console.log(data);
+        }
+
+    });
+}
+
 const showDescription = function(thenThis) {
     createAscii("To-Do List");
     setTimeout(() => {
@@ -123,8 +126,9 @@ const showDescription = function(thenThis) {
         console.log("4. delete [item number] - delete an item");
     }, 100)
 
-
 }
+
+
 
 
 if (commandType === undefined) {
@@ -157,15 +161,17 @@ if (commandType === undefined) {
     }
 }
 
+
+////Algo for commander dynamic CLI
 // program
-//     .option('-s,--show','show the whole list of task')
-//     .option('-a,--add <type>','add new items into to-do list')
-//     .option('-m,--mark <type>','mark done item')
-//     .option('-d,--delete <type>','delete an item');
+//     .option('-s,--show', 'show the whole list of task')
+//     .option('-a,--add <type>', 'add new items into to-do list')
+//     .option('-m,--mark <type>', 'mark done item')
+//     .option('-d,--delete <type>', 'delete an item');
 
 // program.parse(process.argv);
-
-// if(program.show) showToDoList();
-// if(program.add) addItem(program.add);
-// if(program.mark) markAsDone(program.mark);
-// if(program.delete) deleteItem(program.delete);
+// if(!program.show&&!program.add&&!program.mark&&!program.delete) showDescription();
+// if (program.show) showToDoList();
+// if (program.add) addItem(program.add);
+// if (program.mark) markAsDone(program.mark);
+// if (program.delete) deleteItem(program.delete);
