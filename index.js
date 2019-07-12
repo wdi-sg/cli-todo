@@ -1,5 +1,6 @@
 const file = 'todo.json'
 const jsonfile = require('jsonfile');
+const columns = require('columnify');
 
 function displayOptions(){
   console.log(`-----------------------------------------------------------------`)

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MadnessAntipathy/cli-todo#readme",
   "dependencies": {
+    "columnify": "^1.5.4",
     "jsonfile": "^5.0.0"
   }
 }
