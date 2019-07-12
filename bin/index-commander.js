@@ -129,32 +129,45 @@ const showDescription = function(thenThis) {
 }
 
 
-if (commandType === undefined) {
-    showDescription();
-} else {
-    switch (commandType) {
-        case "add":
-            addItem(input1);
-            break;
-        case "show":
-            showToDoList();
-            break;
-        case "done":
-            if (isNaN(parseInt(input1))) {
-                createAscii("Invalid input");
-            } else {
-                markAsDone(input1);
-            }
-            break;
-        case "delete":
-            if (isNaN(parseInt(input1))) {
-                createAscii("Invalid input");
-            } else {
-                deleteItem(input1);
-            }
-            break;
-        default:
-            createAscii("ERROR!!!")
-            break;
-    }
-}
+// if (commandType === undefined) {
+//     showDescription();
+// } else {
+//     switch (commandType) {
+//         case "add":
+//             addItem(input1);
+//             break;
+//         case "show":
+//             showToDoList();
+//             break;
+//         case "done":
+//             if (isNaN(parseInt(input1))) {
+//                 createAscii("Invalid input");
+//             } else {
+//                 markAsDone(input1);
+//             }
+//             break;
+//         case "delete":
+//             if (isNaN(parseInt(input1))) {
+//                 createAscii("Invalid input");
+//             } else {
+//                 deleteItem(input1);
+//             }
+//             break;
+//         default:
+//             createAscii("ERROR!!!")
+//             break;
+//     }
+// }
+
+program
+    .option('-s,--show','show the whole list of task')
+    .option('-a,--add <type>','add new items into to-do list')
+    .option('-m,--mark <type>','mark done item')
+    .option('-d,--delete <type>','delete an item');
+
+program.parse(process.argv);
+
+if(program.show) showToDoList();
+if(program.add) addItem(program.add);
+if(program.mark) markAsDone(program.mark);
+if(program.delete) deleteItem(program.delete);
