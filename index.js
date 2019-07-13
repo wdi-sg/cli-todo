@@ -4,7 +4,7 @@ const jsonfile = require('jsonfile');
 const file = 'data.json';
 
 //store user command
-const userCommand = process.argv[2];
+let userCommand = process.argv[2];
 
 // add item function
 const addItem = () => {
@@ -45,11 +45,45 @@ const showItem = () => {
   })
 };
 
+// check item as done function
+const checkDone = () => {
+	//store user input
+	let userInput = parseInt(process.argv[3]);
+	// check if user input is a number
+	if (Number.isNaN(userInput)){
+		console.log("Please key in a valid number.");
+	}
+	else {
+		jsonfile.readFile(file,(err,obj) => {
+			if (!err) {
+				const todoList = obj.todoItems;
+				if (userInput > todoList.length || userInput < 0){
+					console.log("Please key in a valid item number.");
+				}
+				else {
+					if (todoList[userInput-1].check === "[x]") {
+						console.log(`'${userInput}. ${todoList[userInput - 1].item}' have already been checked as done.`);
+					}
+					else {
+						todoList[userInput - 1].check = "[x]";
+						jsonfile.writeFile(file, obj, (err) => {
+							if (!err) {
+								console.log(`'${userInput}. '${todoList[userInput - 1].item}' have been marked as done!`)
+							}
+						})
+					}
+				}
+			}
+		})
+	}
+};
+
 // show instructions
 const showInstructions = () => {
   console.log("To use any of the following commands, enter the command key:");
-  console.log("1. Add new item – add [item name]");
-  console.log("2. Show items – show");
+  console.log("add – Add new item (e.g. add buy groceries)");
+  console.log("show – Show items");
+  console.log("done – Check item as done (e.g. done 2)");
 };
 
 // if user did not enter a command
@@ -57,13 +91,16 @@ if (!userCommand) {
   showInstructions();
 }
 else {
+	userCommand = userCommand.toLowerCase();
   // check what command the user have entered
   switch (userCommand) {
     case "add" :
-      addItem();
-      break;
+	  	addItem();
+        break;
     case "show" :
       showItem();
       break;
+    case "done" :
+    	checkDone();
   }
 }
