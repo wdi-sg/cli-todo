@@ -1,5 +1,8 @@
 //include jsonfile node module
 const jsonfile = require('jsonfile');
+//include figlet node module, for ascii text art
+const figlet = require('figlet');
+
 //file path of json file
 const file = 'data.json';
 
@@ -32,7 +35,8 @@ const addItem = () => {
 	    todoList.push(newItem);
 	    jsonfile.writeFile(file, obj, (err) => {
 		    if (!err) {
-			    console.log(`'${userInput}' have been added to the todo list on ${dateDisplay}!`);
+			    asciiText("Added!");
+			    console.log(`'${userInput}' have been added to the todo list on ${dateDisplay}.`);
 		    }
 	    });
     }
@@ -44,6 +48,7 @@ const showItem = () => {
   jsonfile.readFile(file,(err,obj) => {
   	if (!err){
 	    const todoList = obj.todoItems;
+	    asciiText("To-Do List");
 	    if (todoList.length === 0) {
 	    	console.log("There are no items in the todo list.");
 	    }
@@ -76,6 +81,7 @@ const checkDone = () => {
 	let userInput = parseInt(process.argv[3]);
 	// check if user input is a number
 	if (Number.isNaN(userInput)){
+		asciiText("Oh no!");
 		console.log("Please key in a valid number.");
 	}
 	else {
@@ -83,10 +89,12 @@ const checkDone = () => {
 			if (!err) {
 				const todoList = obj.todoItems;
 				if (userInput > todoList.length || userInput < 0){
+					asciiText("Oh no!");
 					console.log("Please key in a valid item number.");
 				}
 				else {
 					if (todoList[userInput-1].check === "[x]") {
+						asciiText("Hold on!");
 						console.log(`'${userInput}. ${todoList[userInput - 1].item}' have already been checked as done.`);
 					}
 					else {
@@ -99,7 +107,8 @@ const checkDone = () => {
 						todoList[userInput - 1].check = "[x]";
 						jsonfile.writeFile(file, obj, (err) => {
 							if (!err) {
-								console.log(`'${userInput}. ${todoList[userInput - 1].item}' have been marked as done on ${dateDisplay}!`)
+								asciiText("Checked as done!");
+								console.log(`'${userInput}. ${todoList[userInput - 1].item}' have been checked as done on ${dateDisplay}.`)
 							}
 						})
 					}
@@ -114,6 +123,7 @@ const deleteItem = () => {
 	let userInput = parseInt(process.argv[3]);
 	// check if user input is a number
 	if (Number.isNaN(userInput)){
+		asciiText("Oh no!");
 		console.log("Please key in a valid number.");
 	}
 	else {
@@ -121,13 +131,15 @@ const deleteItem = () => {
 			if (!err) {
 				const todoList = obj.todoItems;
 				if (userInput > todoList.length || userInput < 0) {
+					asciiText("Oh no!");
 					console.log("Please key in a valid item number.");
 				}
 				else {
 					let removedItem = todoList.splice((userInput-1), 1);
 					jsonfile.writeFile(file, obj, (err) => {
 						if (!err) {
-							console.log(`'${userInput}. ${removedItem[0].item}' have been removed.`);
+							asciiText("Deleted!");
+							console.log(`'${userInput}. ${removedItem[0].item}' have been deleted.`);
 						}
 					})
 				}
@@ -142,6 +154,15 @@ const showInstructions = () => {
   console.log("show – Show items");
   console.log("done – Check item as done (e.g. done 2)");
 };
+
+//
+const asciiText = (string) => {
+	console.log(figlet.textSync(string, {
+		font: 'small',
+		horizontalLayout: 'default',
+		verticalLayout: 'default'
+	}));
+}
 
 // if user did not enter a command
 if (!userCommand) {
@@ -162,5 +183,10 @@ else {
     	break;
     case "delete" :
 	  	deleteItem();
+	  	break;
+    default:
+	    asciiText("Oh no!");
+	    console.log("Please key in a valid command.");
+	    break;
   }
 }
