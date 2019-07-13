@@ -5,10 +5,10 @@ var commandType = process.argv[2];
 var userInput  = process.argv[3];
 
 var moment = require('moment-timezone');
-// console.log(moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a'));
+
 
 // --------------------------------------------------------------------------------------------------
-// Part 1: Add todo as an object
+// Add todo as an object
 // --------------------------------------------------------------------------------------------------
 //
 // var addTodoObj = {
@@ -22,6 +22,10 @@ var moment = require('moment-timezone');
 //     console.log("worked");
 //   }
 // });
+
+
+
+
 
 // --------------------------------------------------------------------------------------------------
 // Add a task
