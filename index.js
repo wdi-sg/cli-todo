@@ -1,9 +1,9 @@
 const jsonfile = require( 'jsonfile' );
 const file = './data.json';
 const menuArr = [ 'Add Task', 'Show All Tasks', 'Mark As Done', 'Unmark An Task', 'Delete A Task' ];
+
 const commandType = parseInt( process.argv[ 2 ] );
 const parameter = process.argv[ 3 ];
-let newTask = "";
 
 let loadFrontPage = function() {
     let appTitle = `  ___  __    __    ____  __       ____   __     __    __  ____  ____
@@ -38,6 +38,7 @@ function AddTask( taskDescription, completedBoolean, dateCreated, dateCompleted 
 }
 
 let addNewTask = function() {
+    let newTask = new AddTask( parameter, false, dateStamp(), "" );
     jsonfile.readFile( file, ( err, obj ) => {
         if ( err ) {
             console.log( `ERROR DETECTED WHILE READING: ${err}` );
@@ -118,7 +119,6 @@ let deleteTask = function( index ) {
 if ( commandType <= menuArr.length ) {
     console.log( "Echo master's command: " + menuArr[ commandType - 1 ] );
     if ( commandType === 1 && parameter ) {
-        newTask = new AddTask( parameter, false, dateStamp(), "" );
         addNewTask();
     } else if ( commandType === 2 ) {
         showAllTasks();
