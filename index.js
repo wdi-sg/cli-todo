@@ -78,7 +78,7 @@ const checkDone = () => {
 						todoList[userInput - 1].check = "[x]";
 						jsonfile.writeFile(file, obj, (err) => {
 							if (!err) {
-								console.log(`'${userInput}. '${todoList[userInput - 1].item}' have been marked as done!`)
+								console.log(`'${userInput}. ${todoList[userInput - 1].item}' have been marked as done!`)
 							}
 						})
 					}
@@ -88,6 +88,32 @@ const checkDone = () => {
 	}
 };
 
+const deleteItem = () => {
+	//store user input
+	let userInput = parseInt(process.argv[3]);
+	// check if user input is a number
+	if (Number.isNaN(userInput)){
+		console.log("Please key in a valid number.");
+	}
+	else {
+		jsonfile.readFile(file,(err,obj) => {
+			if (!err) {
+				const todoList = obj.todoItems;
+				if (userInput > todoList.length || userInput < 0) {
+					console.log("Please key in a valid item number.");
+				}
+				else {
+					let removedItem = todoList.splice((userInput-1), 1);
+					jsonfile.writeFile(file, obj, (err) => {
+						if (!err) {
+							console.log(`'${userInput}. ${removedItem[0].item}' have been removed.`);
+						}
+					})
+				}
+			}
+		})
+	}
+};
 // show instructions
 const showInstructions = () => {
   console.log("To use any of the following commands, enter the command key:");
@@ -112,5 +138,8 @@ else {
       break;
     case "done" :
     	checkDone();
+    	break;
+    case "delete" :
+	  	deleteItem();
   }
 }
