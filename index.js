@@ -19,14 +19,19 @@ const addItem = () => {
   jsonfile.readFile(file,(err,obj) => {
   	if (!err) {
 	    const todoList = obj.todoItems;
+	    //create new date object with current date info
+	    const createdAt = new Date();
+	    //get date details from date object
+	    const dateDisplay = createdAt.getDate()+"/"+(createdAt.getMonth()+1)+"/"+createdAt.getFullYear();
 	    const newItem = {
 		    item: userInput,
-		    check: "[ ]"
+		    check: "[ ]",
+		    created_at: createdAt
 	    };
 	    todoList.push(newItem);
 	    jsonfile.writeFile(file, obj, (err) => {
 		    if (!err) {
-			    console.log(`'${userInput}' have been added to the todo list!`);
+			    console.log(`'${userInput}' have been added to the todo list on ${dateDisplay}!`);
 		    }
 	    });
     }
@@ -39,7 +44,12 @@ const showItem = () => {
   	if (!err){
 	    const todoList = obj.todoItems;
 	    for(let i=0;i<todoList.length;i++){
-	      console.log(`${i+1}. ${todoList[i].check} – ${todoList[i].item}`);
+	    	//create date object from item date info
+		    let createdAt = new Date(todoList[i]["created_at"]);
+		    //get date details from date object
+		    let dateDisplay = createdAt.getDate()+"/"+(createdAt.getMonth()+1)+"/"+createdAt.getFullYear();
+
+	        console.log(`${i+1}. ${todoList[i].check} – ${todoList[i].item} (created on ${dateDisplay})`);
 	    }
     }
   })
