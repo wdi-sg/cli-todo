@@ -8,21 +8,24 @@ var input = process.argv[3];
 
 console.log("Your command was: "+commandType);
 
-//create timestamp
+/////////////////////
+//create timestamp//
+///////////////////
 var now = new Date();
 var mins = ('0'+now.getMinutes()).slice(-2);
 var hour = ('0'+now.getHours()).slice(-2);
-console.log("hours is" + hour + mins);
 var timestamp = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} ${hour}${mins}H`;
 console.log(timestamp);
 
-//show todo list
+//////////////////
+//show todo list//
+//////////////////
 var showList = function() {
     jsonfile.readFile(file, (err, obj) => {
         if (obj["todo-list"].length === 0) {
             console.log("No tasks in your to-do list");
         } else {
-            console.log(`\n${obj["todo-list"].length} tasks in your to-do List \n`);
+            console.log(`\n${obj["todo-list"].length} tasks in your to-do list \n`);
             console.log(`S/N     Created           Updated    Check   Task`);
             for (i=0; i<obj["todo-list"].length; i++) {
                 if (obj["todo-list"][i].complete === true) {
@@ -35,6 +38,9 @@ var showList = function() {
     })
 }
 
+////////////////////////
+//add new task to list//
+///////////////////////
 var addToList = function(input) {
     jsonfile.readFile(file, (err, obj) => {
         var task = {};
@@ -44,6 +50,7 @@ var addToList = function(input) {
         task.created = timestamp;
         task.updated = "";
         obj["todo-list"].push(task);
+        console.log("New task added!")
 
         jsonfile.writeFile(file, obj, (err) => {
             if (err) {
@@ -53,7 +60,9 @@ var addToList = function(input) {
     })
 }
 
-
+/////////////////////////
+//mark task as complete//
+////////////////////////
 var markComplete = function(input) {
     jsonfile.readFile(file, (err, obj) => {
         for (i=0; i<obj["todo-list"].length; i++) {
@@ -71,16 +80,33 @@ var markComplete = function(input) {
     })
 }
 
+///////////////
+//delete task//
+//////////////
+var deleteTask = function(input) {
+    jsonfile.readFile(file, (err, obj) => {
+        for (i=0; i<obj["todo-list"].length; i++) {
+            if (parseInt(input) === obj["todo-list"][i].number) {
+                obj["todo-list"].splice(i,1);
+            }
+        }
+        for (i=0; i<obj["todo-list"].length; i++) {
+            obj["todo-list"][i].number = i+1;
+        }
+        console.log("Task Deleted");
 
+        jsonfile.writeFile(file, obj, (err) => {
+            if (err) {
+                console.log(err)
+            }
+        });
+    })
+}
 
-
-
-
-
-
-
-
-const instructions = function() {
+////////////////////
+//app instructions//
+///////////////////
+var instructions = function() {
     console.log(`
 
 ████████╗ ██████╗ ██████╗  ██████╗
@@ -123,8 +149,10 @@ if (commandType === "show") {
 } else if (commandType === "check") {
     markComplete(input);
     setTimeout(showList,100);
-}
-else {
+} else if (commandType === "delete") {
+    deleteTask(input);
+    setTimeout(showList,100);
+} else {
     instructions();
 }
 
