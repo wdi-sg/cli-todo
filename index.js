@@ -7,10 +7,11 @@ var item = process.argv[3];
 console.log("Your command was: " + " " + commandType + " " + item);
 
 const jsonfile = require('jsonfile');
-const file = 'data.json'
+const file = 'data.json';
 
 
 jsonfile.readFile(file, (err, obj) => {
+
     console.log("current list: ", obj);
 
     // Check if user input command is 'add'
@@ -19,8 +20,9 @@ jsonfile.readFile(file, (err, obj) => {
         obj["todoItems"].push(item);
 
         jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
+            // console.log(err)
         });
-            console.log("updated list: ", obj);
+
+        console.log("updated list: ", obj);
     }
 });
