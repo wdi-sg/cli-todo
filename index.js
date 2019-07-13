@@ -9,6 +9,7 @@ console.log("Your command was: " + commandType + " " + value);
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
+var gArr = [];
 
 // Add task to list
 var addToList = function(task) {
@@ -28,33 +29,32 @@ var addToList = function(task) {
 
 // how all items on list from json file
 var showList = function() {
-    let arr = [];
+    // let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
         for (let i=0; i < obj.todoItems.length; i++) {
-            arr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+            gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+            console.log(gArr[i]);
         }
-        console.log(arr);
     });
 };
 
 
 // if item = 4, then put an 'x' on item 4 to mark as done
-var markAsDone = function(index) {
-    let arr = [];
+var markAsDone = function (index) {
+    // let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
-
         for (let i=0; i < obj.todoItems.length; i++) {
             let tmpIndex = index - 1;
 
-            if (tmpIndex !== i) {
-                arr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+            if (tmpIndex == i) {
+                gArr.push((i+1) + '. [x] - ' + obj.todoItems[i]);
             } else {
-                arr.push((i+1) + '. [x] - ' + obj.todoItems[i]);
+                gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
             }
+            console.log(gArr[i]);
         }
-        console.log(arr);
     });
 };
 
@@ -66,5 +66,7 @@ if (commandType === 'add') {
 } else if (commandType === 'show' && value === undefined) {
     showList();
 } else if (commandType ==='done') {
-    markAsDone(value);
+    markAsDone(parseInt(value));
+} else {
+    console.log("invalid input");
 }
