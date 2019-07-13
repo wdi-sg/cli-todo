@@ -9,6 +9,7 @@ console.log("Your command was: " + " " + commandType + " " + item);
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
+
 // Add task to list
 var addToList = function(task) {
 
@@ -24,13 +25,18 @@ var addToList = function(task) {
     });
 };
 
+
+// how all items on list from json file
 var showList = function() {
-    // Show all items on list from json file
+
     jsonfile.readFile(file, (err, obj) => {
-        console.log("latest list: ", obj);
+        console.log("latest list: " , obj);
+
+        for (let i=0; i < obj.todoItems.length; i++) {
+            console.log((i+1) + '. [ ] - ' + obj.todoItems[i]);
+        }
     });
 };
-
 
 
 // Check if user input command is 'add'
