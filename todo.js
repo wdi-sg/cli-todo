@@ -160,24 +160,35 @@ else if (commandType === "add") {
 }
 else if (commandType === "done") {
 
-  if (userInput === undefined){
-    console.log(`Please indicate a task number`);
-  } else {
-    markDone(userInput);
-    setTimeout(function(){
-      show();
-    },100);
-  }
+  jsonfile.readFile(file, (err, data) => {
+      if (data.todoItems.length === 0){
+        console.log('There is no tasks to delete');
+      } else if (userInput === undefined){
+        console.log(`Please indicate a task number`);
+      } else {
+        markDone(userInput);
+        setTimeout(function(){
+          show();
+        },100);
+      }
+  });
+  
 }
 else if (commandType === "delete") {
-  if (userInput === undefined){
-    console.log(`Please indicate a task number`);
-  } else {
-    deleteTask(userInput);
-    setTimeout(function(){
-      show();
-    },500);
-  }
+
+  jsonfile.readFile(file, (err, data) => {
+      if (data.todoItems.length === 0){
+        console.log('There is no tasks to delete');
+      } else if (userInput === undefined){
+        console.log(`Please indicate a task number`);
+      } else {
+        deleteTask(userInput);
+        setTimeout(function(){
+          show();
+        },500);
+      }
+  });
+
 }
 else {
     //default
