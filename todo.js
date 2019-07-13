@@ -3,8 +3,9 @@ const file = 'data.json'
 
 var commandType = process.argv[2];
 var userInput  = process.argv[3];
+
 // --------------------------------------------------------------------------------------------------
-// Add todo as an object
+// Part 1: Add todo as an object
 // --------------------------------------------------------------------------------------------------
 //
 // var addTodoObj = {
@@ -27,12 +28,12 @@ var add = function (newItem) {
     jsonfile.readFile(file, (err, data) => {
         let item = {};
 
-        item.id        = data.todoItems.length + 1;
-        item.task      = newItem;
-        item.done = false;
-        // arr.deleted = "false";
-        // arr.created_at = getCurrentDateAndTime();
-        // arr.updated_at = "";
+        item.id         = data.todoItems.length + 1;
+        item.task       = newItem;
+        item.done       = false;
+        // both get current date on creation
+        item.created_at = new Date();
+        item.updated_at = new Date();
 
         data.todoItems.push(item);
 
@@ -56,9 +57,9 @@ var show = function () {
     } else {
       for (var i = 0; i < data.todoItems.length; i++){
         if (data.todoItems[i].done  === true){
-          console.log(data.todoItems[i].id + ". "+ "[x] " + data.todoItems[i].task);
+          console.log(data.todoItems[i].id + ". "+ "[x] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
         } else {
-          console.log(data.todoItems[i].id + ". "+ "[ ] " + data.todoItems[i].task);
+          console.log(data.todoItems[i].id + ". "+ "[ ] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
         }
       }
     }
@@ -78,8 +79,12 @@ var markDone = function (index) {
         // this if/else statement can uncheck
         if (data.todoItems[j].done === false){
           data.todoItems[j].done = true;
+          //update time
+          data.todoItems[j].updated_at = new Date();
         } else {
           data.todoItems[j].done = false;
+          //update time
+          data.todoItems[j].updated_at = new Date();
         }
 
         jsonfile.writeFile(file, data, (err) => {
