@@ -8,18 +8,27 @@ var input = process.argv[3];
 
 console.log("Your command was: "+commandType);
 
+//create timestamp
+var now = new Date();
+var mins = ('0'+now.getMinutes()).slice(-2);
+var hour = ('0'+now.getHours()).slice(-2);
+console.log("hours is" + hour + mins);
+var timestamp = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} ${hour}${mins}H`;
+console.log(timestamp);
 
+//show todo list
 var showList = function() {
     jsonfile.readFile(file, (err, obj) => {
         if (obj["todo-list"].length === 0) {
             console.log("No tasks in your to-do list");
         } else {
             console.log(`\n${obj["todo-list"].length} tasks in your to-do List \n`);
+            console.log(`S/N     Created           Updated    Check   Task`);
             for (i=0; i<obj["todo-list"].length; i++) {
                 if (obj["todo-list"][i].complete === true) {
-                    console.log(`${obj["todo-list"][i].number}. [X] - ${obj["todo-list"][i].desc}`);
+                    console.log(` ${obj["todo-list"][i].number}. ${obj["todo-list"][i].created}  ${obj["todo-list"][i].updated}  [X]  - ${obj["todo-list"][i].desc}`);
                 } else {
-                    console.log(`${obj["todo-list"][i].number}. [ ] - ${obj["todo-list"][i].desc}`);
+                    console.log(` ${obj["todo-list"][i].number}. ${obj["todo-list"][i].created}  ${obj["todo-list"][i].updated}                 [ ]  - ${obj["todo-list"][i].desc}`);
                 }
             }
         }
@@ -32,9 +41,9 @@ var addToList = function(input) {
         task.number = obj["todo-list"].length + 1;
         task.desc = input;
         task.complete = false;
+        task.created = timestamp;
+        task.updated = "";
         obj["todo-list"].push(task);
-
-
 
         jsonfile.writeFile(file, obj, (err) => {
             if (err) {
@@ -50,6 +59,7 @@ var markComplete = function(input) {
         for (i=0; i<obj["todo-list"].length; i++) {
             if (parseInt(input) === obj["todo-list"][i].number) {
                 obj["todo-list"][i].complete = true;
+                obj["todo-list"][i].updated = timestamp;
             }
         }
 
@@ -72,12 +82,28 @@ var markComplete = function(input) {
 
 const instructions = function() {
     console.log(`
-████████╗ ██████╗ ██████╗  ██████╗     ██╗     ██╗███████╗████████╗
-╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗    ██║     ██║██╔════╝╚══██╔══╝
-   ██║   ██║   ██║██║  ██║██║   ██║    ██║     ██║███████╗   ██║
-   ██║   ██║   ██║██║  ██║██║   ██║    ██║     ██║╚════██║   ██║
-   ██║   ╚██████╔╝██████╔╝╚██████╔╝    ███████╗██║███████║   ██║
-   ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝     ╚══════╝╚═╝╚══════╝   ╚═╝
+
+████████╗ ██████╗ ██████╗  ██████╗
+╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗
+   ██║   ██║   ██║██║  ██║██║   ██║
+   ██║   ██║   ██║██║  ██║██║   ██║
+   ██║   ╚██████╔╝██████╔╝╚██████╔╝
+   ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝
+
+    ██╗     ██╗███████╗████████╗
+    ██║     ██║██╔════╝╚══██╔══╝
+    ██║     ██║███████╗   ██║
+    ██║     ██║╚════██║   ██║
+    ███████╗██║███████║   ██║
+    ╚══════╝╚═╝╚══════╝   ╚═╝
+
+     █████╗ ██████╗ ██████╗
+    ██╔══██╗██╔══██╗██╔══██╗
+    ███████║██████╔╝██████╔╝
+    ██╔══██║██╔═══╝ ██╔═══╝
+    ██║  ██║██║     ██║
+    ╚═╝  ╚═╝╚═╝     ╚═╝
+
 
 `);
     console.log("How to use");
