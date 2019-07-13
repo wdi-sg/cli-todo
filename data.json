@@ -1,1 +1,19 @@
-{"todoItems":[{"id":1,"task":"Eat Bak Kut Teh","done":false,"created_at":"July 13th 2019, 3:43:04 pm","updated_at":"July 13th 2019, 3:43:04 pm"},{"id":2,"task":"Swim Practice","done":false,"created_at":"July 13th 2019, 3:43:11 pm","updated_at":"July 13th 2019, 3:43:11 pm"},{"id":3,"task":"Use Moment Timezone","done":true,"created_at":"July 13th 2019, 3:43:27 pm","updated_at":"July 13th 2019, 3:43:39 pm"}]}
+{"todoItems":[{
+	"id": 1,
+	"task": "Eat Bak Kut Teh",
+	"done": false,
+	"created_at": "July 13th 2019, 3:43:04 pm",
+	"updated_at": "July 13th 2019, 3:43:04 pm"
+}, {
+	"id": 2,
+	"task": "Swim Practice",
+	"done": false,
+	"created_at": "July 13th 2019, 3:43:11 pm",
+	"updated_at": "July 13th 2019, 3:43:11 pm"
+}, {
+	"id": 3,
+	"task": "Use Moment Timezone",
+	"done": true,
+	"created_at": "July 13th 2019, 3:43:27 pm",
+	"updated_at": "July 13th 2019, 3:43:39 pm"
+}]}
