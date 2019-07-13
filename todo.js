@@ -3,7 +3,6 @@ const file = 'data.json'
 
 var commandType = process.argv[2];
 var userInput  = process.argv[3];
-
 // --------------------------------------------------------------------------------------------------
 // Add todo as an object
 // --------------------------------------------------------------------------------------------------
@@ -28,9 +27,9 @@ var add = function (newItem) {
     jsonfile.readFile(file, (err, data) => {
         let arr = {};
 
-        arr.id = data.todoItems.length + 1;
-        arr.task = newItem;
-        // arr.done = "false";
+        arr.id        = data.todoItems.length + 1;
+        arr.task      = newItem;
+        arr.completed = false;
         // arr.deleted = "false";
         // arr.created_at = getCurrentDateAndTime();
         // arr.updated_at = "";
@@ -51,23 +50,45 @@ var add = function (newItem) {
 var show = function () {
   jsonfile.readFile(file, (err, data) => {
 
+    // if no tasks in the list, let user know, else display each item.
+    if (data.todoItems.length === 0 ){
+      console.log('There is no tasks in the todo list, please add some tasks');
+    } else {
       for (var i = 0; i < data.todoItems.length; i++){
-        console.log(data.todoItems[i].id + ". "+ "[ ] " + data.todoItems[i].task);
+        if (data.todoItems[i].completed  === true){
+          console.log(data.todoItems[i].id + ". "+ "[x] " + data.todoItems[i].task);
+        } else {
+          console.log(data.todoItems[i].id + ". "+ "[ ] " + data.todoItems[i].task);
+        }
       }
+    }
 
-      // data.todoItems.forEach(function(toDoItem, index) {
-      //     if (toDoItem.deleted === "false" && toDoItem.done == "false") {
-      //         console.log(`${ toDoItem.id }. [ ] - ${ toDoItem.task }`);
-      //
-      //     } else if (toDoItem.deleted === "false" && toDoItem.done == "true") {
-      //         console.log(`${ toDoItem.id }. [X] - ${ toDoItem.task }`);
-      //
-      //     }
-      // });
 
   });
 }
 
+// --------------------------------------------------------------------------------------------------
+// markDone function
+// --------------------------------------------------------------------------------------------------
+
+var check = function (index) {
+    jsonfile.readFile(file, (err, data) => {
+        var j = index - 1;
+        if (data.todoItems[j].completed === false){
+          data.todoItems[j].completed = true;
+        } else {
+          data.todoItems[j].completed = false;
+        }
+
+
+
+        jsonfile.writeFile(file, data, (err) => {
+            if (err) {
+                console.log(err)
+            }
+        });
+    });
+}
 
 
 // --------------------------------------------------------------------------------------------------
@@ -75,8 +96,10 @@ var show = function () {
 // --------------------------------------------------------------------------------------------------
 const instructions = function() {
     console.log("Welcome to the todo app, here is how you use it");
-    console.log("type  node todo.js add 'new task'  -  to add a new task");
-    console.log("type  node todo.js show            -  to show the to do list");
+    console.log("Type  node todo.js show            -  to show the to do list");
+    console.log("Type  node todo.js add 'new task'  -  to add a new task");
+    console.log("Type  node todo.js check 1         -  to mark task 1 done or not done");
+    console.log("Type  node todo.js delete 1        -  to delete task 1");
 }
 
 if (commandType === "show") {
@@ -84,26 +107,21 @@ if (commandType === "show") {
 }
 else if (commandType === "add") {
     add(userInput);
-    console.log("Task added");
     setTimeout(function(){
       show();
-    },200);
+    },100);
 }
-else if (commandType === "done") {
-    // markDone(userInput);
-    console.log('markDone ' + userInput);
-    console.log("Task marked done!");
+else if (commandType === "check") {
+    check(userInput);
     setTimeout(function(){
       show();
-    },200);
+    },100);
 }
 else if (commandType === "delete") {
     // delele(userInput);
-    console.log('delete ' + userInput);
-    console.log("Task deleted");
     setTimeout(function(){
       show();
-    },200);
+    },100);
 }
 else {
     //default
