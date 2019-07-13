@@ -1,3 +1,6 @@
+//include commander node module
+const program = require('commander');
+program.version('0.0.1');
 //include jsonfile node module
 const jsonfile = require('jsonfile');
 //include figlet node module, for ascii text art
@@ -5,9 +8,6 @@ const figlet = require('figlet');
 
 //file path of json file
 const file = 'data.json';
-
-//store user command
-let userCommand = process.argv[2];
 
 // add item function
 const addItem = () => {
@@ -164,29 +164,12 @@ const asciiText = (string) => {
 	}));
 }
 
-// if user did not enter a command
-if (!userCommand) {
-  showInstructions();
-}
-else {
-	userCommand = userCommand.toLowerCase();
-  // check what command the user have entered
-  switch (userCommand) {
-    case "add" :
-	  	addItem();
-        break;
-    case "show" :
-      showItem();
-      break;
-    case "done" :
-    	checkDone();
-    	break;
-    case "delete" :
-	  	deleteItem();
-	  	break;
-    default:
-	    asciiText("Oh no!");
-	    console.log("Please key in a valid command.");
-	    break;
-  }
-}
+//setting program options
+program
+	.option('-a, --add <item>', 'add item to todo list', addItem)
+	.option('-s, --show', 'show todo list', showItem)
+	.option('-c, --check <item>', 'check item as done', checkDone)
+	.option('-d, --delete <item>', 'delete item from todo list', deleteItem);
+
+//let commander program process the user's input
+program.parse(process.argv);
