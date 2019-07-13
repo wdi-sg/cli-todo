@@ -1,8 +1,11 @@
-const jsonfile = require('jsonfile')
-const file = 'data.json'
+const jsonfile = require('jsonfile');
+const file = 'data.json';
 
 var commandType = process.argv[2];
 var userInput  = process.argv[3];
+
+var moment = require('moment-timezone');
+// console.log(moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a'));
 
 // --------------------------------------------------------------------------------------------------
 // Part 1: Add todo as an object
@@ -32,8 +35,8 @@ var add = function (newItem) {
         item.task       = newItem;
         item.done       = false;
         // both get current date on creation
-        item.created_at = new Date();
-        item.updated_at = new Date();
+        item.created_at = moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a');
+        item.updated_at = moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a');
 
         data.todoItems.push(item);
 
@@ -80,11 +83,11 @@ var markDone = function (index) {
         if (data.todoItems[j].done === false){
           data.todoItems[j].done = true;
           //update time
-          data.todoItems[j].updated_at = new Date();
+          data.todoItems[j].updated_at = moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a');
         } else {
           data.todoItems[j].done = false;
           //update time
-          data.todoItems[j].updated_at = new Date();
+          data.todoItems[j].updated_at = moment().tz("Asia/Singapore").format('MMMM Do YYYY, h:mm:ss a');
         }
 
         jsonfile.writeFile(file, data, (err) => {

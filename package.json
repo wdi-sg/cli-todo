@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/artylope/cli-todo#readme",
   "dependencies": {
-    "jsonfile": "^5.0.0"
+    "jsonfile": "^5.0.0",
+    "moment-timezone": "^0.5.26"
   }
 }
