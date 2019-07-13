@@ -24,7 +24,19 @@ var addToList = function(task) {
     });
 };
 
-        // Check if user input command is 'add'
+var showList = function() {
+    // Show all items on list from json file
+    jsonfile.readFile(file, (err, obj) => {
+        console.log("latest list: ", obj);
+    });
+};
+
+
+
+// Check if user input command is 'add'
 if (commandType == 'add') {
     addToList(item);
+// Check if user input command is 'show'
+} else if (commandType == 'show') {
+    showList();
 }
