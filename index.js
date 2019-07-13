@@ -134,5 +134,3 @@ if ( commandType <= menuArr.length ) {
 } else {
     loadFrontPage();
 }
-
-// dateNow();
