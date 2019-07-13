@@ -2,8 +2,12 @@
 
 const jsonfile = require('jsonfile');
 const file = 'data.json'
+
+//figlet package for generating ascii art from string
 const figlet = require('figlet');
-const program = require('commander');
+
+//for the dynamic framework
+//const program = require('commander');
 
 
 var commandType = process.argv[2];
@@ -105,6 +109,7 @@ const deleteItem = function(itemNum) {
     });
 }
 
+//using figlet package to generate ascii art from string
 const createAscii = function(str) {
     figlet(str, function(err, data) {
         if (err) {
