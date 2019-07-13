@@ -123,11 +123,19 @@ var deleteTask = function (index) {
 // cli flow, show instructions or execute commands depending on userInput
 // --------------------------------------------------------------------------------------------------
 const instructions = function() {
-    console.log("Welcome to the todo app, here is how you use it");
-    console.log("Type  node todo.js show            -  to show the to do list");
-    console.log("Type  node todo.js add 'new task'  -  to add a new task");
-    console.log("Type  node todo.js done 1          -  to mark task 1 done or not done");
-    console.log("Type  node todo.js delete 1        -  to delete task 1");
+    console.log(`
+      ████████╗ ██████╗     ██████╗  ██████╗     ██╗     ██╗███████╗████████╗
+      ╚══██╔══╝██╔═══██╗    ██╔══██╗██╔═══██╗    ██║     ██║██╔════╝╚══██╔══╝
+         ██║   ██║   ██║    ██║  ██║██║   ██║    ██║     ██║███████╗   ██║
+         ██║   ██║   ██║    ██║  ██║██║   ██║    ██║     ██║╚════██║   ██║
+         ██║   ╚██████╔╝    ██████╔╝╚██████╔╝    ███████╗██║███████║   ██║
+         ╚═╝    ╚═════╝     ╚═════╝  ╚═════╝     ╚══════╝╚═╝╚══════╝   ╚═╝
+         `);
+    console.log("Instructions");
+    console.log("$ node todo.js show            -  to show the to do list");
+    console.log("$ node todo.js add 'new task'  -  to add a new task");
+    console.log("$ node todo.js done 1          -  to mark task 1 done or not done");
+    console.log("$ node todo.js delete 1        -  to delete task 1");
 }
 
 if (commandType === "show") {
