@@ -26,7 +26,8 @@ const addItem = () => {
 	    const newItem = {
 		    item: userInput,
 		    check: "[ ]",
-		    created_at: createdAt
+		    created_at: createdAt,
+		    updated_at: ""
 	    };
 	    todoList.push(newItem);
 	    jsonfile.writeFile(file, obj, (err) => {
@@ -43,13 +44,27 @@ const showItem = () => {
   jsonfile.readFile(file,(err,obj) => {
   	if (!err){
 	    const todoList = obj.todoItems;
-	    for(let i=0;i<todoList.length;i++){
-	    	//create date object from item date info
-		    let createdAt = new Date(todoList[i]["created_at"]);
-		    //get date details from date object
-		    let dateDisplay = createdAt.getDate()+"/"+(createdAt.getMonth()+1)+"/"+createdAt.getFullYear();
+	    if (todoList.length === 0) {
+	    	console.log("There are no items in the todo list.");
+	    }
+	    else {
+		    for (let i = 0; i < todoList.length; i++) {
+			    if (todoList[i]["updated_at"] === "") {
+				    //create date object from item date info
+				    let createdAt = new Date(todoList[i]["created_at"]);
+				    //get date details from date object
+				    let dateDisplay = createdAt.getDate() + "/" + (createdAt.getMonth() + 1) + "/" + createdAt.getFullYear();
 
-	        console.log(`${i+1}. ${todoList[i].check} – ${todoList[i].item} (created on ${dateDisplay})`);
+				    console.log(`${i + 1}. ${todoList[i].check} – ${todoList[i].item} (created on ${dateDisplay})`);
+			    } else {
+				    //create date object from item date info
+				    let updatedAt = new Date(todoList[i]["updated_at"]);
+				    //get date details from date object
+				    let dateDisplay = updatedAt.getDate() + "/" + (updatedAt.getMonth() + 1) + "/" + updatedAt.getFullYear();
+
+				    console.log(`${i + 1}. ${todoList[i].check} – ${todoList[i].item} (updated on ${dateDisplay})`);
+			    }
+		    }
 	    }
     }
   })
@@ -75,10 +90,16 @@ const checkDone = () => {
 						console.log(`'${userInput}. ${todoList[userInput - 1].item}' have already been checked as done.`);
 					}
 					else {
+						//create new date object with current date info
+						const updatedAt = new Date();
+						//get date details from date object
+						const dateDisplay = updatedAt.getDate()+"/"+(updatedAt.getMonth()+1)+"/"+updatedAt.getFullYear();
+						console.log(updatedAt);
+						todoList[userInput - 1].updated_at = updatedAt;
 						todoList[userInput - 1].check = "[x]";
 						jsonfile.writeFile(file, obj, (err) => {
 							if (!err) {
-								console.log(`'${userInput}. ${todoList[userInput - 1].item}' have been marked as done!`)
+								console.log(`'${userInput}. ${todoList[userInput - 1].item}' have been marked as done on ${dateDisplay}!`)
 							}
 						})
 					}
