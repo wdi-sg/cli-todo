@@ -1,75 +1,97 @@
 console.log("node.js running!");
 
-let input1 = process.argv[2];
-let input2 = process.argv[3];
-let parsedInt2 = parseInt(input2);
-
+//           GLOBAL VARIABLES
 const jsonfile = require('jsonfile');
 const file = 'data.json'
 
-let showInput = (obj) => {
-    console.log(obj['todoItems']);
-}
+let input1 = process.argv[2];
+let input2 = process.argv[3];
+let parsedInt2 = parseInt(input2);
+let date = new Date();
 
-let addInput = (obj) => {
-    let todoList = obj["todoItems"];
-    let unchecked = '[ ]';
+//          SHOWING / ADDING / CHECKING / DELETING - TODOS
+let showTodos = (obj) => {
 
-    todoList.push(input2);
+    let todoCheck = obj["todoCheck"];
+    let userInput = obj["userInput"];
+    let createdOn = obj["createdOn"];
+    let todoItems = obj["todoItems"];
 
-    for (let i=0; i< todoList.length; i++) {
-        console.log('what is value of todolist length?: ' + todoList.length);
-        if (i === todoList.length - 1) {
-            console.log('in if statement of addInput');
-            todoList[i] = (i+1) + '. ' + unchecked + ' ' + input2;
-        } else {
-            // todoList[i] = (i+1) + '. ' + unchecked + ' ' + input2;
+    if (userInput === 0) {
+        //nothing here;
+    } else {
+        for (let i=0; i<userInput.length; i++) {
+            let fullString = `${(i+1)} ${todoCheck[i]} ${userInput[i]} ${createdOn[i]}`;
+            todoItems.push(fullString);
         }
     }
-    return todoList;
+    console.log(todoItems);
 }
 
-let toggleInput = (obj) => {
-    let todoList = obj["todoItems"];
-    // let unchecked = '[ ]';
-    // let checked = '[x]';
-    let selectedTodo = todoList[parsedInt2 - 1];
-    console.log('selectedTodo: '+ selectedTodo)
-
-    for (let i=0; i<todoList.length; i++) {
-
-    }
-
-
-    if (selectedTodo.includes('x')){
-        console.log('in if of: selectedTodo includes x');
-        console.log('sel todo [4]:' + selectedTodo[4]);
-        selectedTodo = ' ';
-        // selectedTodo = `${input2}. ${unchecked} ${selectedTodo}`;
+let addTodos = (obj) => {
+    // WHY CAN'T I PLACE IT IN HERE?
+    // obj["todoItems"] = [];
+    if (input2) {
+        obj["userInput"].push(input2);
+        obj["todoCheck"].push(". [ ] - ");
+        obj["createdOn"].push(`--- created on ${date}`);
+        showTodos(obj);
     } else {
-        console.log('in if of: selectedTodo no x');
-        console.log('sel todo [4]:' + selectedTodo[4]);
-        selectedTodo[4] = 'x';
-        // selectedTodo = `${input2}. ${checked} ${selectedTodo}`;
-        console.log('selectedTodo: ' + selectedTodo )
+        console.log('Please add an input!');
     }
-    return todoList;
+
 }
 
-let errorMessages = () => {
-    console.log('Error! Write a valid statement!')
+let checkTodo = (obj) => {
+    // WHY CAN'T I PLACE IT IN HERE?
+    // let selectedTodo = obj["todoCheck"][parsedInt2-1];
+    let todoCheck = obj["todoCheck"];
+    if (todoCheck[parsedInt2-1].includes('x')) {
+        todoCheck[parsedInt2-1] = '. [ ] - ';
+    } else {
+        todoCheck[parsedInt2-1] = '. [x] - ';
+    }
+
+    obj["createdOn"][parsedInt2-1] = `--- updated on ${date}`
+    showTodos(obj);
+}
+
+let deleteTodo = (obj) => {
+
+    let todoCheck = obj["todoCheck"];
+    let userInput = obj["userInput"];
+    let createdOn = obj["createdOn"];
+
+    if (input2 === 'all') {
+        obj["todoCheck"] = [];
+        obj["userInput"] = [];
+        obj["createdOn"] = [];
+        console.log('No todos left!');
+    } else {
+        todoCheck.splice((parsedInt2-1), 1);
+        userInput.splice((parsedInt2-1), 1);
+        createdOn.splice((parsedInt2-1), 1);
+        showTodos(obj);
+    }
+}
+
+let showOptions = () => {
+    console.log(`What would you like to do? \n\n1. show : shows all todos \n2. add [new todo] : adds a todo \n3. check [todo #] : checks/unchecks a todo \n4. delete [todo #] : deletes selected todo`);
 }
 
 jsonfile.readFile(file, (err, obj) => {
 
+    obj["todoItems"] = [];
     if (input1 === 'show') {
-        showInput(obj);
+        showTodos(obj);
     } else if (input1 === 'add') {
-        addInput(obj);
-    } else if (input1 === 'done') {
-        toggleInput(obj);
+        addTodos(obj);
+    } else if (input1 === 'check') {
+        checkTodo(obj);
+    } else if (input1 === 'delete') {
+        deleteTodo(obj);
     } else {
-        errorMessages();
+        showOptions();
     }
 
     jsonfile.writeFile(file, obj, (err) => {
@@ -77,5 +99,13 @@ jsonfile.readFile(file, (err, obj) => {
             console.log(err)
         }
     });
-
 });
+
+console.log(`
+  __             .___       .__  .__          __
+_/  |_  ____   __| _/____   |  | |__| _______/  |_
+    __ /  _   / __ |/  _    |  | |  |/  ___/    __
+ |  | (  <_> ) /_/ (  <_> ) |  |_|  | ___    |  |
+ |__|   ____/ ____ | ____/  |____/__/____>   |__|
+
+ `)
