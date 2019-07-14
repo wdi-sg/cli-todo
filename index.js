@@ -48,16 +48,28 @@ const addNewItem = (inputValue) => {
 
         if (err) {
             console.log('there is an error!');
-        } else {
-            obj["todoItems"].push("[ ] - " + inputValue);
 
-            jsonfile.writeFile(file, obj, (err) => {
-                if (err) {
-                    console.log('there is an error!')
-                } else {
-                    console.log(obj);
-                }
-            });
+        } else {
+
+            if (inputValue === undefined) {
+                console.log('Please type in an item to add to the list');
+
+            } else {
+
+                obj["todoItems"].push("[ ] - " + inputValue);
+
+                jsonfile.writeFile(file, obj, (err) => {
+                    if (err) {
+                        console.log('there is an error!')
+
+                    } else {
+
+                        for (let i = 0; i < obj["todoItems"].length; i ++) {
+                            console.log((i + 1) + ". " + obj["todoItems"][i])
+                        };
+                    }
+                });
+            }
         };
     });
 }
@@ -72,19 +84,64 @@ const markDone = (numOnList) => {
             console.log('there is an error!');
         } else {
 
-            let itemInArray = obj["todoItems"][numOnList - 1];
+            if (numOnList === undefined) {
+                console.log('Please choose item from list to mark as done');
 
-            itemInArray = itemInArray.substring(0,1) + "x" + itemInArray.substring(2);
+            } else {
 
-            obj["todoItems"][numOnList - 1] = itemInArray;
+                let itemInArray = obj["todoItems"][numOnList - 1];
 
-            jsonfile.writeFile(file, obj, (err) => {
-                if (err) {
-                    console.log('there is an error!')
-                } else {
-                    console.log(obj);
-                }
-            });
+                itemInArray = itemInArray.substring(0,1) + "x" + itemInArray.substring(2);
+
+                obj["todoItems"][numOnList - 1] = itemInArray;
+
+                jsonfile.writeFile(file, obj, (err) => {
+                    if (err) {
+                        console.log('there is an error!')
+
+                    } else {
+
+                        for (let i = 0; i < obj["todoItems"].length; i ++) {
+                            console.log((i + 1) + ". " + obj["todoItems"][i])
+                        };
+                    }
+                });
+            }
+
+        };
+    });
+}
+
+//----- Function for deleting items from list -----//
+
+const deleteItem = (numOnList) => {
+
+    jsonfile.readFile(file, (err, obj) => {
+
+        if (err) {
+            console.log('there is an error!');
+
+        } else {
+
+            if (numOnList === undefined) {
+                console.log('Please type in item number to delete to the list');
+
+            } else {
+
+                obj["todoItems"].splice(numOnList - 1, 1)
+
+                jsonfile.writeFile(file, obj, (err) => {
+                    if (err) {
+                        console.log('there is an error!')
+
+                    } else {
+
+                        for (let i = 0; i < obj["todoItems"].length; i ++) {
+                            console.log((i + 1) + ". " + obj["todoItems"][i])
+                        };
+                    }
+                });
+            }
         };
     });
 }
@@ -94,13 +151,15 @@ const checkCommandType = (userInput) => {
     let commandType = process.argv[2];
 
     if (commandType === undefined ) {
-        console.log('Please choose one of the following options:\n show - See to-do list\n add - Add something to to-do list\n done - Mark an item on list as done')
+        console.log('Please choose one of the following options:\n show - See to-do list\n add - Add something to to-do list\n done - Mark an item on list as done\n delete - Delete item from list')
     } else if (commandType === "show") {
         readDataFile();
     } else if (commandType === "add") {
         addNewItem(userInput);
     } else if (commandType === "done") {
         markDone(userInput);
+    } else if (commandType === "delete") {
+        deleteItem(userInput);
     }
 }
 
