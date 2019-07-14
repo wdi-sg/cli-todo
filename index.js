@@ -16,6 +16,12 @@ let userInput = process.argv[3];
 let current_datetime = new Date()
 let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
 
+let asciiArt = `
+╔╦╗┌─┐  ╔╦╗┌─┐  ╦  ┬┌─┐┌┬┐
+ ║ │ │   ║║│ │  ║  │└─┐ │
+ ╩ └─┘  ═╩╝└─┘  ╩═╝┴└─┘ ┴
+ `
+
 
 //----- Function for reading data.json -----//
 
@@ -33,9 +39,12 @@ const readDataFile = () => {
 
             } else if (obj["todoItems"].length > 0) {
 
+                console.log(asciiArt);
+
                 for (let i = 0; i < obj["todoItems"].length; i ++) {
                     console.log((i + 1) + ". " + obj["todoItems"][i])
                 }
+                console.log("");
             }
         }
     });
@@ -66,9 +75,12 @@ const addNewItem = (inputValue) => {
 
                     } else {
 
+                        console.log(asciiArt);
+
                         for (let i = 0; i < obj["todoItems"].length; i ++) {
                             console.log((i + 1) + ". " + obj["todoItems"][i])
                         };
+                        console.log("");
                     }
                 });
             }
@@ -105,9 +117,12 @@ const markDone = (numOnList) => {
 
                     } else {
 
+                        console.log(asciiArt);
+
                         for (let i = 0; i < obj["todoItems"].length; i ++) {
                             console.log((i + 1) + ". " + obj["todoItems"][i])
                         };
+                        console.log("");
                     }
                 });
             }
@@ -140,9 +155,12 @@ const deleteItem = (numOnList) => {
 
                     } else {
 
+                        console.log(asciiArt);
+
                         for (let i = 0; i < obj["todoItems"].length; i ++) {
                             console.log((i + 1) + ". " + obj["todoItems"][i])
                         };
+                        console.log("");
                     }
                 });
             }
