@@ -1,33 +1,29 @@
 const jsonfile = require('jsonfile');
+
 var commandType = process.argv[2];
 var item = process.argv[3];
-// console.log(commandType);
 const file = 'data.json';
-var getInfo = jsonfile.readFile(file,(err, arr)=>{
-					if (err){
-					console.log("There's an error.");
-					}
-					return(arr);
-				});
-var saveInfo = function(getInfo){
-					jsonfile.writeFile(file,arr, (err)=>{
-						if(err){console.log("Hmm");}
-					});
-				};
 
 var storeData= function(item){
+	
 	//get the data
-					getInfo();
-		
+				jsonfile.readFile(file,(err, arr)=>{
+				if (err){
+				console.log("There's an error.");
+				}
+			
 	//change the data			
-					arr.push({todoItems:item,done:false,});//must have comma after "false" or or console log return undefined.
+				arr.push({todoItems:item,done:false,});
 
 	//write to data.json
-					saveInfo(getInfo);
-			
-				};		
 
-// storeData(item);
+				jsonfile.writeFile(file,arr, (err)=>{
+				if(err){console.log("Hmm");}
+				});
+			});
+		};
+					
+					
 var showData = function(){
 	//get the data
 				jsonfile.readFile(file,(err, arr)=>{
@@ -53,22 +49,44 @@ var showData = function(){
 var done =function(){
 			var item = process.argv[3];
 			//get the data
-			getInfo();
-				
+			jsonfile.readFile(file,(err, arr)=>{
+				if (err){
+				console.log("There's an error.");
+				}
+			
+	//change the data			
 			arr[item -1].done = !arr[item].done;//toggle the value : true and false
 
-			saveInfo(getInfo);
+	//write to data.json
 
+				jsonfile.writeFile(file,arr, (err)=>{
+				if(err){console.log("Hmm");}
+				});
+			});
 		};
+					
+				
+		
 
 var deleteItem =function(){
-					var item = process.argv[3];
-					//get the data
-					getInfo();
-						
-					arr.splice(item,1);
-					saveInfo(getInfo);
-				};
+				var item = process.argv[3];
+	//get the data
+				jsonfile.readFile(file,(err, arr)=>{
+				if (err){
+				console.log("There's an error.");
+				}
+			
+	//change the data			
+				arr.splice(item-1,1);
+	//write to data.json
+
+				jsonfile.writeFile(file,arr, (err)=>{
+				if(err){console.log("Hmm");}
+				});
+			});
+		};
+					
+					
 
 switch(commandType){
 	case "add":
