@@ -16,8 +16,12 @@ var addToList = function(task) {
 
     jsonfile.readFile(file, (err, obj) => {
         console.log("current list: ", obj);
-        // Add new item to array list
-        obj["todoItems"].push(task);
+
+        // Capture current time & data
+        let now = new Date();
+
+        // Add new item to array
+        obj["todoItems"].push(task + '\tCreated_At: ' + now);
 
         jsonfile.writeFile(file, obj, (err) => {
             console.log(err);
@@ -29,31 +33,43 @@ var addToList = function(task) {
 
 // how all items on list from json file
 var showList = function() {
-    // let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
         for (let i=0; i < obj.todoItems.length; i++) {
-            gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+            let tmpStr = (i+1) + '. [ ] - ';
+            gArr.push(tmpStr + obj.todoItems[i]);
             console.log(gArr[i]);
         }
+        // console.log(gArr);
     });
 };
 
 
 // if item = 4, then put an 'x' on item 4 to mark as done
 var markAsDone = function (index) {
-    // let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
-        for (let i=0; i < obj.todoItems.length; i++) {
-            let tmpIndex = index - 1;
 
-            if (tmpIndex == i) {
-                gArr.push((i+1) + '. [x] - ' + obj.todoItems[i]);
-            } else {
-                gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+        if (err) {
+            console.log(err);
+        } else {
+            for (let i=0; i < obj.todoItems.length; i++) {
+                let tmpIndex = index - 1;
+                if (tmpIndex == i) {
+                    // obj.todoItems.push((i+1) + '. [x] - ' + obj.todoItems[i]);
+                    gArr.push((i+1) + '. [x] - ' + obj.todoItems[i]);
+                } else {
+                    // obj.todoItems.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+                    gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+                }
+                console.log(gArr[i]);
             }
-            console.log(gArr[i]);
+
+            // console.log("list: ", gArr);
+            jsonfile.writeFile(file, obj, (err) => {
+                console.log(err);
+            });
+                console.log("Mark Done");
         }
     });
 };
@@ -67,6 +83,6 @@ if (commandType === 'add') {
     showList();
 } else if (commandType ==='done') {
     markAsDone(parseInt(value));
-} else {
-    console.log("invalid input");
+} else if (commandType === 'now') {
+    showDateAndTime();
 }
