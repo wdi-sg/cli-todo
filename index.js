@@ -9,6 +9,20 @@ const jsonfile = require("jsonfile");
 
 const file = "data.json";
 
+function ShowTodoItems(obj) {
+  for (var i = 0; i < obj["todoItems"].length; i++) {
+    var doneChar;
+    if (obj["todoItems"][i]["done"] === "yes") {
+      doneChar = "x";
+    } else {
+      doneChar = " ";
+    }
+    console.log(
+      i + 1 + ". [" + doneChar + "] - " + obj["todoItems"][i]["item"]
+    );
+  }
+};
+
 //main program flow:
 
 jsonfile.readFile(file, (err, obj) => {
@@ -18,21 +32,27 @@ jsonfile.readFile(file, (err, obj) => {
   if (!obj["todoItems"]) {
     obj["todoItems"] = [];
   }
-  if (commandType === "add" && itemName != undefined) {
-    obj["todoItems"].push({ item: itemName, done: "no" });
-  }
+  switch (commandType) {
+    case "show":
+      ShowTodoItems(obj);
+      break;
+    case "add":
+      obj["todoItems"].push({ item: itemName, done: "no" });
+      ShowTodoItems(obj);
+      break;
+    case "delete":
 
-  for (var i = 0; i < obj["todoItems"].length; i++) {
-      var doneChar;
-      if(obj["todoItems"][i]["done"]==="yes"){
-        doneChar="x";
-      }
-      else{
-        doneChar = " ";
-      }
-    console.log(
-      (i + 1) + ". [" + doneChar + "] - " + obj["todoItems"][i]["item"]
-    );
+      break;
+    case undefined:
+      console.log(
+        "\nPlease Enter an option arg after filename.\n\n" +
+          "[ show | add | delete ]" +
+          "\n\nExample:\n" +
+          "node index.js show"
+      );
+      break;
+    default:
+    console.log("\nPlease enter a valid option.\n");
   };
 
   jsonfile.writeFile(file, obj, err => {
