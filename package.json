@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/gitwenlei/cli-todo#readme",
   "dependencies": {
+    "commander": "^2.20.0",
+    "figlet": "^1.2.3",
     "jsonfile": "^5.0.0"
   }
 }
