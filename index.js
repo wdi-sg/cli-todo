@@ -1,10 +1,10 @@
 const jsonfile = require('jsonfile');
 
-var commandType = process.argv[2];
-var item = process.argv[3];
+// var commandType = process.argv[2];
+// var item = process.argv[3];
 const file = 'data.json';
 
-var storeData= function(item){
+const addItem = function(item){
 	
 	//get the data
 				jsonfile.readFile(file,(err, arr)=>{
@@ -24,14 +24,14 @@ var storeData= function(item){
 		};
 					
 					
-var showData = function(){
+const showList = function(){
 	//get the data
 				jsonfile.readFile(file,(err, arr)=>{
 				if (err){
 					console.log("There's an error.");
 				} else if( arr.length > 0){
 
-						console.log( " TO DO LIST"   );                                                 
+						console.log( " TO DO LIST".padStart(30)   );                                                 
 			                                                                                                                                     
 						console.log("");
 						console.log("Created_at".padStart(50),"Updated_at".padStart(15));
@@ -46,16 +46,17 @@ var showData = function(){
 				});
 			};
 
-var done =function(){
-			var item = process.argv[3];
+const checkItem =function(index){
+			// var item = process.argv[3];
 			//get the data
 			jsonfile.readFile(file,(err, arr)=>{
 				if (err){
 				console.log("There's an error.");
 				}
 			
-	//change the data			
-			arr[item -1].done = !arr[item].done;//toggle the value : true and false
+	//change the data
+
+			arr[index -1].done = !arr[index -1].done;//toggle the value : true and false
 
 	//write to data.json
 
@@ -68,8 +69,8 @@ var done =function(){
 				
 		
 
-var deleteItem =function(){
-				var item = process.argv[3];
+const deleteItem =function(index){
+				// var item = process.argv[3];
 	//get the data
 				jsonfile.readFile(file,(err, arr)=>{
 				if (err){
@@ -77,7 +78,7 @@ var deleteItem =function(){
 				}
 			
 	//change the data			
-				arr.splice(item-1,1);
+				arr.splice(index-1,1);
 	//write to data.json
 
 				jsonfile.writeFile(file,arr, (err)=>{
@@ -86,19 +87,24 @@ var deleteItem =function(){
 			});
 		};
 					
-					
+	module.exports = {
+		addItem,
+		showList,
+		checkItem,
+		deleteItem
+	}				
 
-switch(commandType){
-	case "add":
-			storeData(item);
-			break;
-	case "show":
-			showData();
-			break;
-	case "done":
-			done();
-			break;
-	case "delete":
-			deleteItem();
-			break;
-}
+// switch(commandType){
+// 	case "add":
+// 			addItem(item);
+// 			break;
+// 	case "show":
+// 			showList();
+// 			break;
+// 	case "done":
+// 			checkItem();
+// 			break;
+// 	case "delete":
+// 			deleteItem();
+// 			break;
+// }
