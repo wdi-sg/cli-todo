@@ -30,13 +30,19 @@ var showData = function(){
 		} else if( arr.length > 0){
 			//show the data
 			//use some formating for nicer looking text
-
+			console.log(" TO DO LIST");
+			console.log("");
+			console.log("Created_at".padStart(50),"Updated_at".padStart(15));
+			console.log("");
 			arr.forEach(function(todoItems,index){
-                console.log(index+1+"."," ["+(todoItems.done ? "X" : " ")+"] ",todoItems.todoItems);
+				let date = new Date();
+				let created_at = date.getDate() +"/"+date.getMonth()+"/"+date.getFullYear()
+			console.log(index+1+"."," ["+(todoItems.done ? "X" : " ")+"] ",todoItems.todoItems.padEnd(30), created_at, todoItems.done ? created_at.padStart(15) : " ");
 			});
 		}
 	});
 }
+
 
 var done =function(){
 	var item = process.argv[3];
