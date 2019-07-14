@@ -91,9 +91,11 @@ const markDone = (numOnList) => {
 
             } else {
 
-                let itemInArray = obj["todoItems"][numOnList - 1];
 
-                itemInArray = itemInArray.substring(0,1) + "x" + itemInArray.substring(2);
+                let itemInArray = obj["todoItems"][numOnList - 1];
+                let positionOfDate = itemInArray.indexOf("(");
+
+                itemInArray = itemInArray.substring(0,1) + "x" + itemInArray.substring(2, positionOfDate) + "(updated at: " + formatted_date + ")";
 
                 obj["todoItems"][numOnList - 1] = itemInArray;
 
