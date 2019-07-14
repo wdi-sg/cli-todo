@@ -52,7 +52,24 @@ var done =function(){
 		if(err){console.log("Hmm");}
 		});
 	});	
-}
+};
+
+var deleteItem =function(){
+	var item = process.argv[3];
+	//get the data
+	jsonfile.readFile(file,(err, arr)=>{
+		if (err){
+			console.log("There's an error.");
+		}
+		
+	arr.splice(item,1);
+	
+
+	jsonfile.writeFile(file,arr, (err)=>{
+		if(err){console.log("Hmm");}
+		});
+	});	
+};
 switch(commandType){
 	case "add":
 			storeData(item);
@@ -62,5 +79,8 @@ switch(commandType){
 			break;
 	case "done":
 			done();
+			break;
+	case "delete":
+			deleteItem();
 			break;
 }
