@@ -1,0 +1,22 @@
+{
+  "name": "cli-todolist",
+  "version": "1.0.0",
+  "description": "to do list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eenfeeneet/cli-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eenfeeneet/cli-todo/issues"
+  },
+  "homepage": "https://github.com/eenfeeneet/cli-todo#readme",
+  "dependencies": {
+    "jsonfile": "^5.0.0"
+  }
+}
