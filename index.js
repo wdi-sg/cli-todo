@@ -7,19 +7,12 @@ var value = process.argv[3];
 const jsonfile = require('jsonfile');
 const file = 'data.json';
 
-var gArr = [];
-
 // Add task to list
 var addToList = function(task) {
-
     jsonfile.readFile(file, (err, obj) => {
-        console.log("current list: ", obj);
-
         // Capture current time & data
         let now = new Date();
-
-        // Add new item to array
-        obj["todoItems"].push(task + '\tCreated_At: ' + now);
+        obj.todoItems.push(task + '\tCreated_At: ' + now);
 
         jsonfile.writeFile(file, obj, (err) => {
             console.log(err);
@@ -31,20 +24,20 @@ var addToList = function(task) {
 
 // how all items on list from json file
 var showList = function() {
+    let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
         for (let i=0; i < obj.todoItems.length; i++) {
-            let tmpStr = (i+1) + '. [ ] - ';
-            gArr.push(tmpStr + obj.todoItems[i]);
-            console.log(gArr[i]);
+            arr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
+            console.log(arr[i]);
         }
-        // console.log(gArr);
     });
 };
 
 
 // if item = 4, then put an 'x' on item 4 to mark as done
 var markAsDone = function (index) {
+    let arr = [];
 
     jsonfile.readFile(file, (err, obj) => {
 
@@ -54,18 +47,14 @@ var markAsDone = function (index) {
             for (let i=0; i < obj.todoItems.length; i++) {
                 let tmpIndex = index - 1;
                 if (tmpIndex == i) {
-                    // obj.todoItems.push((i+1) + '. [x] - ' + obj.todoItems[i]);
                     let now = new Date();
-                    let tmpStr = "\tUpdated at: " + now
-                    gArr.push((i+1) + '. [x] - ' + obj.todoItems[i] + tmpStr);
-                } else {
-                    // obj.todoItems.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
-                    gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
-                }
-                console.log(gArr[i]);
+                    let strFront = '[x] ';
+                    let dateStr = "\tUpdated at: " + now;
+                    obj.todoItems.splice(i, 1, strFront + obj.todoItems[i] + dateStr);
+                 }
+                console.log(obj.todoItems[i]);
             }
 
-            // console.log("list: ", gArr);
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err);
             });
@@ -87,7 +76,6 @@ var deleteItem = function(index) {
                 if (tmpIndex == i) {
                 var removed = obj.todoItems.splice (i, 1);
                 console.log(removed);
-                console.log(obj);
                 }
             }
         }
@@ -101,26 +89,23 @@ var deleteItem = function(index) {
 
 var showInstructions = function(){
     console.log("Enter the following command to perform your desired task");
-    console.log("1. show - To show all items on your to-do-list.");
-    console.log("2. add [name of task] - To add new item to your to-do-list.");
-    console.log("3. done [item number] - To mark item as done on your to-do-list.");
-    console.log("4. del [item number] - To delete an item from your to-do-list.");
+    console.log('1. show - To show all items on your to-do-list.');
+    console.log('2. add [task] - To add new item to your to-do-list. E.g. add "walk dog"');
+    console.log('3. done [item number] - To mark item as done on your to-do-list. E.g. done 2');
+    console.log("4. del [item number] - To delete an item from your to-do-list. E.g. del 3");
 }
 
 
 
-// Check if user input command is 'add'
+
 if (commandType === undefined) {
     showInstructions();
 } else if (commandType === 'add') {
     addToList(value);
-// Check if user input command is 'show'
-} else if (commandType === 'show' && value === undefined) {
+} else if (commandType === 'show') {
     showList();
 } else if (commandType ==='done') {
     markAsDone(parseInt(value));
-} else if (commandType === 'now') {
-    showDateAndTime();
 } else if (commandType === 'del') {
     deleteItem(parseInt(value));
 } else {
