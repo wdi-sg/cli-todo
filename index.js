@@ -13,6 +13,8 @@ const file = 'data.json'
 //----- Global Variables -----//
 let userInput = process.argv[3];
 
+let current_datetime = new Date()
+let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
 
 
 //----- Function for reading data.json -----//
@@ -56,7 +58,7 @@ const addNewItem = (inputValue) => {
 
             } else {
 
-                obj["todoItems"].push("[ ] - " + inputValue);
+                obj["todoItems"].push("[ ] - " + inputValue + " (created at: " + formatted_date + ")");
 
                 jsonfile.writeFile(file, obj, (err) => {
                     if (err) {
