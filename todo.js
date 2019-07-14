@@ -8,7 +8,7 @@ let add = (thingsToDo, obj) => {
     let newlist = {};
     newlist["task"]= thingsToDo;
     newlist["completed"]= "[ ]";
-    newlist["date created"] = new Date (year, monthIndex [, day [, hours [);
+    newlist["date created"] = new Date ();
     obj.todoItems.push(newlist);
 }
 
@@ -20,19 +20,18 @@ let done = (task, obj) => {
 
 
 
-// need a global variable for obj
-//problem statement..currently it adds in the list but it will replace..what should i do?
 jsonfile.readFile(file, (err, obj) => {
-    // I can only use this once? need to comment out after using it once?
-   // obj["todoItems"] = []
-    //add items
+    //checks if object is empty, if it is empty, start to initate a key value
+    if (Object.keys(obj).length === 0) {
+        obj["todoItems"] = [ ]
+    }
+    //add function
     if (process.argv[2] === "add" && process.argv[3] !== undefined) {
         add(process.argv[3], obj);
-        //check if task is done
+        //done function
     }   if  (process.argv[2] === "done" && process.argv[3] !== undefined) {
         done(process.argv[3], obj);
     }
-
     console.log(obj);
     jsonfile.writeFile(file, obj, (err) => {
         console.log(err)
