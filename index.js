@@ -1,24 +1,43 @@
+////For Debugging
 //console.log("works!!", process.argv[2]);
 
 var commandType = process.argv[2];
 var itemName = process.argv[3];
 
-console.log("Your command was: " + commandType+ ", item Name was: "+itemName);
+////For Debugging
+//console.log("Your command was: " + commandType+ ", item Name was: "+itemName);
 
 const jsonfile = require("jsonfile");
 
 const file = "data.json";
 
-function ShowTodoItems(obj) {
-  for (var i = 0; i < obj["todoItems"].length; i++) {
+// function filterArray(inputArray){
+//     var newArr = [];
+//     for (var i=0; i<inputArray.length; i++){
+//         if(inputArray[i]!= null){
+//             newArr.push(inputArray[i]);
+//         }
+//     }
+//     return newArr;
+// }
+
+function ShowTodoItems(arrayTodoItems) {
+  for (var i = 0; i < arrayTodoItems.length; i++) {
     var doneChar;
-    if (obj["todoItems"][i]["done"] === "yes") {
+    if (arrayTodoItems[i]["done"] === "yes") {
       doneChar = "x";
     } else {
       doneChar = " ";
     }
     console.log(
-      i + 1 + ". [" + doneChar + "] - " + obj["todoItems"][i]["item"]
+      i +
+        1 +
+        ". [" +
+        doneChar +
+        "] - " +
+        arrayTodoItems[i]["item"] +
+        " - " +
+        arrayTodoItems[i]["created_at"]
     );
   }
 };
@@ -26,22 +45,30 @@ function ShowTodoItems(obj) {
 //main program flow:
 
 jsonfile.readFile(file, (err, obj) => {
-  //Log obj json
-  //console.log(obj);
-  //check if json constains property todoItems
+
+    //var arrayTodoItems = obj["todoItems"];
+
+  //check if json contains property todoItems
   if (!obj["todoItems"]) {
     obj["todoItems"] = [];
   }
   switch (commandType) {
     case "show":
-      ShowTodoItems(obj);
+      ShowTodoItems(obj["todoItems"]);
       break;
     case "add":
-      obj["todoItems"].push({ item: itemName, done: "no" });
-      ShowTodoItems(obj);
+      obj["todoItems"].push({
+        item: itemName,
+        done: "no",
+        created_at: new Date()
+      });
+      ShowTodoItems(obj["todoItems"]);
       break;
     case "delete":
-
+      delete obj["todoItems"][itemName - 1];
+      //ShowTodoItems(obj["todoItems"]);
+      break;
+    case "done":
       break;
     case undefined:
       console.log(
@@ -52,7 +79,7 @@ jsonfile.readFile(file, (err, obj) => {
       );
       break;
     default:
-    console.log("\nPlease enter a valid option.\n");
+      console.log("\nPlease enter a valid option.\n");
   };
 
   jsonfile.writeFile(file, obj, err => {
