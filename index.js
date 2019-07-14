@@ -1,10 +1,8 @@
 
-console.log("works!!" + process.argv[2]);
+console.log("To-Do-List");
 
 var commandType = process.argv[2];
 var value = process.argv[3];
-
-console.log("Your command was: " + commandType + " " + value);
 
 const jsonfile = require('jsonfile');
 const file = 'data.json';
@@ -57,7 +55,9 @@ var markAsDone = function (index) {
                 let tmpIndex = index - 1;
                 if (tmpIndex == i) {
                     // obj.todoItems.push((i+1) + '. [x] - ' + obj.todoItems[i]);
-                    gArr.push((i+1) + '. [x] - ' + obj.todoItems[i]);
+                    let now = new Date();
+                    let tmpStr = "\tUpdated at: " + now
+                    gArr.push((i+1) + '. [x] - ' + obj.todoItems[i] + tmpStr);
                 } else {
                     // obj.todoItems.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
                     gArr.push((i+1) + '. [ ] - ' + obj.todoItems[i]);
@@ -99,9 +99,20 @@ var deleteItem = function(index) {
     });
 }
 
+var showInstructions = function(){
+    console.log("Enter the following command to perform your desired task");
+    console.log("1. show - To show all items on your to-do-list.");
+    console.log("2. add [name of task] - To add new item to your to-do-list.");
+    console.log("3. done [item number] - To mark item as done on your to-do-list.");
+    console.log("4. del [item number] - To delete an item from your to-do-list.");
+}
+
+
 
 // Check if user input command is 'add'
-if (commandType === 'add') {
+if (commandType === undefined) {
+    showInstructions();
+} else if (commandType === 'add') {
     addToList(value);
 // Check if user input command is 'show'
 } else if (commandType === 'show' && value === undefined) {
