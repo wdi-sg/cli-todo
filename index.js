@@ -74,6 +74,31 @@ var markAsDone = function (index) {
     });
 };
 
+var deleteItem = function(index) {
+
+    // Delete selected item
+    jsonfile.readFile(file, (err, obj) => {
+        if (err) {
+            console.log(err);
+        } else {
+            for (let i = 0; i < obj.todoItems.length; i++) {
+                let tmpIndex = index - 1;
+
+                if (tmpIndex == i) {
+                var removed = obj.todoItems.splice (i, 1);
+                console.log(removed);
+                console.log(obj);
+                }
+            }
+        }
+
+        jsonfile.writeFile(file, obj, (err) => {
+            console.log(err);
+        });
+            console.log("Item " + index + ". [ ] -  "+ removed + " was removed");
+    });
+}
+
 
 // Check if user input command is 'add'
 if (commandType === 'add') {
@@ -85,4 +110,8 @@ if (commandType === 'add') {
     markAsDone(parseInt(value));
 } else if (commandType === 'now') {
     showDateAndTime();
+} else if (commandType === 'del') {
+    deleteItem(parseInt(value));
+} else {
+    console.log("Invalid choice");
 }
