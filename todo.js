@@ -35,7 +35,7 @@ var add = function (newItem) {
     jsonfile.readFile(file, (err, data) => {
         let item = {};
 
-        item.id         = data.todoItems.length + 1;
+        // item.id         = data.todoItems.length + 1;
         item.task       = newItem;
         item.done       = false;
         // both get current date on creation
@@ -64,9 +64,9 @@ var show = function () {
     } else {
       for (var i = 0; i < data.todoItems.length; i++){
         if (data.todoItems[i].done  === true){
-          console.log(data.todoItems[i].id + ". "+ "[x] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
+          console.log((i+1) + ". "+ "[x] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
         } else {
-          console.log(data.todoItems[i].id + ". "+ "[ ] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
+          console.log((i+1) + ". "+ "[ ] " + data.todoItems[i].task + "   " + data.todoItems[i].updated_at);
         }
       }
     }
@@ -113,10 +113,10 @@ var deleteTask = function (index) {
         var j = index - 1;
         data.todoItems.splice(j,1);
 
-        //after deleting, reassigns index
-        for (var i=0; i< data.todoItems.length; i++){
-          data.todoItems[i].id = i+1;
-        }
+        // //after deleting, reassigns index
+        // for (var i=0; i< data.todoItems.length; i++){
+        //   data.todoItems[i].id = i+1;
+        // }
 
         jsonfile.writeFile(file, data, (err) => {
             if (err) {
@@ -172,7 +172,7 @@ else if (commandType === "done") {
         },100);
       }
   });
-  
+
 }
 else if (commandType === "delete") {
 
