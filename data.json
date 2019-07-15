@@ -1,0 +1,26 @@
+{
+    "todoItems" : [
+        {	 "itemNumber" : [],
+           "doneStatus" : [],
+           "task" : [],
+           "creationDate" : [],
+           "updateDate" : [],
+				},
+
+        // {
+        //    "doneStatus" : [],
+        //    "Task" : [],
+        //    "creationDate" : [],
+        //    "updateDate" : [],
+        // },
+
+        // {
+        //     "number": 3 ,
+        //     "task": "BUY FOOOOOOD",
+        //     "doneOrNot": "[]",
+        //     "dateCreated": "createDate",
+        //     "dateUpdated": "createDate",
+
+        // },
+    ]
+};
