@@ -1,7 +1,5 @@
 console.log("********");
 
-// var commandType = process.argv[2];
-// console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
 const file = 'data.json';
@@ -137,8 +135,6 @@ if(commandType === undefined){
 //             break;
 //     }
 // }
-
-
 
 
 // var checkIfEmpty = function(){
