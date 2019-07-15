@@ -61,10 +61,10 @@ if (commandType === "add"){
         let doneItemIndex = process.argv[3] - 1;
         console.log("doneitemindex: "+doneItemIndex)
 
-        let oldItem = obj.todoItems[doneItemIndex].task
+        let oldItem = obj.todoItems[doneItemIndex].task;
         console.log('oldItem : '+oldItem)
 
-        let newItem = oldItem.replace("[ ]", ["[x]"])
+        let newItem = oldItem.replace("[ ]", ["[x]"]);
         console.log('newItem : '+newItem)
 
         // oldItem = newItem;
@@ -75,6 +75,33 @@ if (commandType === "add"){
     console.log(err)
     });
     });
+
+} else if (commandType === "delete"){
+  jsonfile.readFile(file, (err, obj) => {
+    let deleteItemIndex = process.argv[3] - 1;
+    console.log("deleteItemIndex: "+deleteItemIndex);
+    obj.todoItems.splice(deleteItemIndex, 1);
+
+    for (let j=deleteItemIndex; j<obj.todoItems.length; j+=1){
+        let oldItem = obj.todoItems[j].task;
+        console.log('oldItem : '+oldItem)
+
+        let newItem = oldItem.replace((j+2), (j+1));
+        console.log('newItem : '+newItem)
+
+
+        obj.todoItems[j].task = newItem;
+    }
+
+
+
+
+
+
+  jsonfile.writeFile(file, obj, (err) => {
+    console.log(err)
+  });
+});
 
 }
 
