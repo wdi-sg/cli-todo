@@ -21,13 +21,7 @@ let loadFrontPage = function() {
 
 let dateStamp = function() {
     let date = new Date();
-    let dayOfMonth = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    return `${dayOfMonth}-${month}-${year}, ${hour}:${minutes}:${seconds}`;
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 }
 
 function AddTask( taskDescription, completedBoolean, dateCreated, dateCompleted ) {
@@ -59,13 +53,10 @@ let addNewTask = function() {
 
 let showAllTasks = function() {
     jsonfile.readFile( file, ( err, obj ) => {
-        for ( let i = 0; i < obj[ "tasks" ].length; i++ ) {
-            let check = " ";
-            if ( obj[ "tasks" ][ i ][ "completedBoolean" ] ) {
-                check = "X";
-            }
-            console.log( `${i+1}. [${check}] - ${obj[ "tasks" ][ i ]["taskDescription"]}, Date Created: \x1b[36m${obj[ "tasks" ][ i ]["dateCreated"]}\x1b[0m, Date Completed: \x1b[31m${obj[ "tasks" ][ i ]["dateCompleted"]}\x1b[0m` );
-        }
+        obj[ "tasks" ].forEach( ( taskObj, index ) => {
+            let check = taskObj[ "completedBoolean" ] ? "X" : " ";
+            console.log( `${index+1}. [${check}] - ${taskObj["taskDescription"]}, Date Created: \x1b[36m${taskObj["dateCreated"]}\x1b[0m, Date Completed: \x1b[31m${taskObj["dateCompleted"]}\x1b[0m` );
+        } )
     } );
 }
 
