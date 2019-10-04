@@ -17,7 +17,7 @@ jsonfile.readFile(file, (err, obj) => {
         case "add":
             {
                 if (!input) {
-                    console.log("*** Please specify new task to be added. ***");
+                    console.log("*** Please specify the name of the task to be added. ***");
                     return;
                 } else {
 
@@ -64,23 +64,25 @@ jsonfile.readFile(file, (err, obj) => {
                         console.log("*** Please specify the task to be marked done. ***");
                         obj.toDoItems.forEach(item => console.log(listItem(item)));
                         return;
-                    }
-
-
-                    let doneItem = obj.toDoItems[input - 1];
-
-                    doneItem.done = !doneItem.done;
-                    doneItem.updated = moment().format("LLLL");
-
-                    obj.toDoItems[input - 1] = doneItem;
-
-                    jsonfile.writeFile(file, obj, (err) => {
-                        if (err) {
-                            console.log("Error writing file");
-                            console.log(err);
-                        };
+                    } else if (input > obj.toDoItems.length || input <= 0) {
+                        console.log("*** Please specify a valid task number. ***");
                         obj.toDoItems.forEach(item => console.log(listItem(item)));
-                    });
+                    } else {
+                        let doneItem = obj.toDoItems[input - 1];
+
+                        doneItem.done = !doneItem.done;
+                        doneItem.updated = moment().format("LLLL");
+
+                        obj.toDoItems[input - 1] = doneItem;
+
+                        jsonfile.writeFile(file, obj, (err) => {
+                            if (err) {
+                                console.log("Error writing file");
+                                console.log(err);
+                            };
+                            obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        });
+                    }
                 }
                 break;
             }
@@ -116,12 +118,18 @@ jsonfile.readFile(file, (err, obj) => {
             {
                 console.log("add - add new task");
                 console.log("show - show tasks");
+                console.log("done - mark task as done");
+                console.log("delete - delete a task");
+                console.log("help - show this message");
                 break;
             }
         default:
             {
                 console.log("add - add new task");
                 console.log("show - show tasks");
+                console.log("done - mark task as done");
+                console.log("delete - delete a task");
+                console.log("help - show this message");
                 break;
             }
     }
