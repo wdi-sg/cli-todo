@@ -96,23 +96,26 @@ jsonfile.readFile(file, (err, obj) => {
                         console.log("*** Please specify the task to be deleted. ***");
                         obj.toDoItems.forEach(item => console.log(listItem(item)));
                         return;
-                    }
-
-                    let deleteItem = obj.toDoItems[input - 1];
-
-                    obj.toDoItems.splice(input - 1, 1);
-
-                    obj.toDoItems.forEach((item, index) => { item.index = index + 1 });
-
-                    jsonfile.writeFile(file, obj, (err) => {
-                        if (err) {
-                            console.log("*** Error writing file. ***");
-                            console.log(err);
-                        };
+                    } else if (input > obj.toDoItems.length || input <= 0) {
+                        console.log("*** Please specify a valid task number. ***");
                         obj.toDoItems.forEach(item => console.log(listItem(item)));
-                    });
+                    } else {
+                        let deleteItem = obj.toDoItems[input - 1];
+
+                        obj.toDoItems.splice(input - 1, 1);
+
+                        obj.toDoItems.forEach((item, index) => { item.index = index + 1 });
+
+                        jsonfile.writeFile(file, obj, (err) => {
+                            if (err) {
+                                console.log("*** Error writing file. ***");
+                                console.log(err);
+                            };
+                            obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        });
+                    }
+                    break;
                 }
-                break;
             }
         case "help":
             {
