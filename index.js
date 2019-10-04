@@ -1,5 +1,6 @@
 const jsonfile = require('jsonfile');
 const moment = require('moment');
+var figlet = require('figlet');
 
 const command = process.argv[2];
 const input = process.argv[3];
@@ -10,7 +11,13 @@ const listItem = (item) => {
     return `${item.index}. [${item.done ? 'X' : ' ' }] - ${item.task} - created: ${item.created} - updated: ${item.updated}`;
 }
 
-console.log("---To Do List---");
+console.log(figlet.textSync('To Do List', {
+    font: 'Larry 3D',
+    horizontalLayout: 'default',
+    verticalLayout: 'default'
+}));
+
+
 jsonfile.readFile(file, (err, obj) => {
 
     switch (command) {

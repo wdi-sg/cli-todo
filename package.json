@@ -4,6 +4,7 @@
   "description": "![https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp](https://i.giphy.com/media/26ufnwz3wDUli7GU0/giphy.webp)",
   "main": "index.js",
   "dependencies": {
+    "figlet": "^1.2.4",
     "jsonfile": "^5.0.0",
     "moment": "^2.24.0"
   },
