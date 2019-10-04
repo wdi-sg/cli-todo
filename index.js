@@ -10,8 +10,19 @@ const file = 'data.json'
 
 jsonfile.readFile(file, (err, obj) => {
 
+  //confirm current array
   console.log(obj);
-  obj["helloworld"] = "monkey";
+
+  //if commandType is 'add'
+  let todo = "";
+  if (commandType === 'add') {
+    for ( let i=3; i<process.argv.length; i++ ) {
+        todo += process.argv[i] + " ";
+    }
+    console.log(todo);
+    obj["todoItems"].push(todo);
+  }
+
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
