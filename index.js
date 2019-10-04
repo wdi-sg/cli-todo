@@ -35,6 +35,14 @@ const columnifyItems = (toDoItems) => {
     return columnifiedItems;
 }
 
+const instructions = {
+    add: "add new task",
+    show: "show tasks",
+    done: "check and uncheck task as done",
+    delete: "delete a task",
+    help: "show this message"
+};
+
 
 console.log(figlet.textSync('To Do List', {
     font: 'Larry 3D',
@@ -83,8 +91,6 @@ jsonfile.readFile(file, (err, obj) => {
             break;
         case "show":
             {
-                // console.log(columnifyItems(obj.toDoItems));
-                // const list = columnify(obj.toDoItems);
                 console.log(columnifyItems(obj.toDoItems));
                 break;
             }
@@ -153,20 +159,12 @@ jsonfile.readFile(file, (err, obj) => {
             }
         case "help":
             {
-                console.log("add - add new task");
-                console.log("show - show tasks");
-                console.log("done - check and uncheck task as done");
-                console.log("delete - delete a task");
-                console.log("help - show this message");
+                console.log(columnify(instructions, {columns: ['command', 'description']}));
                 break;
             }
         default:
             {
-                console.log("add - add new task");
-                console.log("show - show tasks");
-                console.log("done - check and uncheck task as done");
-                console.log("delete - delete a task");
-                console.log("help - show this message");
+                console.log(columnify(instructions, {columns: ['command', 'description']}));
                 break;
             }
     }
