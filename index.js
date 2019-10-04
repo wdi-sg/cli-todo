@@ -1,15 +1,40 @@
 const jsonfile = require('jsonfile');
 const moment = require('moment');
-var figlet = require('figlet');
+const figlet = require('figlet');
+const columnify = require('columnify');
 
 const command = process.argv[2];
 const input = process.argv[3];
 
 const file = 'data.json';
 
-const listItem = (item) => {
-    return `${item.index}. [${item.done ? 'X' : ' ' }] - ${item.task} - created: ${item.created} - updated: ${item.updated}`;
+const columnifyItems = (toDoItems) => {
+
+    const columnifiedItems = columnify(toDoItems, {
+        columnSplitter: ' | ',
+        config: {
+            index: {
+                headingTransform: () => "#",
+            },
+            done: {
+                headingTransform: () => "Done?",
+                dataTransform: done => done === "true" ? "✔" : ""
+            },
+            task: {
+                headingTransform: () => "Task",
+            },
+            created: {
+                headingTransform: () => "Created",
+            },
+            updated: {
+                headingTransform: () => "Updated",
+            }
+        }
+    })
+
+    return columnifiedItems;
 }
+
 
 console.log(figlet.textSync('To Do List', {
     font: 'Larry 3D',
@@ -51,14 +76,16 @@ jsonfile.readFile(file, (err, obj) => {
                             console.log("*** Error writing file. ***");
                             console.log(err);
                         };
-                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        console.log(columnifyItems(obj.toDoItems));
                     });
                 }
             }
             break;
         case "show":
             {
-                obj.toDoItems.forEach(item => console.log(listItem(item)));
+                // console.log(columnifyItems(obj.toDoItems));
+                // const list = columnify(obj.toDoItems);
+                console.log(columnifyItems(obj.toDoItems));
                 break;
             }
         case "done":
@@ -69,11 +96,11 @@ jsonfile.readFile(file, (err, obj) => {
                 } else {
                     if (!input) {
                         console.log("*** Please specify the task to be marked done. ***");
-                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        console.log(columnifyItems(obj.toDoItems));
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
                         console.log("*** Please specify a valid task number. ***");
-                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        console.log(columnifyItems(obj.toDoItems));
                     } else {
                         let doneItem = obj.toDoItems[input - 1];
 
@@ -87,7 +114,7 @@ jsonfile.readFile(file, (err, obj) => {
                                 console.log("Error writing file");
                                 console.log(err);
                             };
-                            obj.toDoItems.forEach(item => console.log(listItem(item)));
+                            console.log(columnifyItems(obj.toDoItems));
                         });
                     }
                 }
@@ -101,11 +128,11 @@ jsonfile.readFile(file, (err, obj) => {
                 } else {
                     if (!input) {
                         console.log("*** Please specify the task to be deleted. ***");
-                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        console.log(columnifyItems(obj.toDoItems));
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
                         console.log("*** Please specify a valid task number. ***");
-                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                        console.log(columnifyItems(obj.toDoItems));
                     } else {
                         let deleteItem = obj.toDoItems[input - 1];
 
@@ -118,7 +145,7 @@ jsonfile.readFile(file, (err, obj) => {
                                 console.log("*** Error writing file. ***");
                                 console.log(err);
                             };
-                            obj.toDoItems.forEach(item => console.log(listItem(item)));
+                            console.log(columnifyItems(obj.toDoItems));
                         });
                     }
                     break;
@@ -128,7 +155,7 @@ jsonfile.readFile(file, (err, obj) => {
             {
                 console.log("add - add new task");
                 console.log("show - show tasks");
-                console.log("done - mark task as done");
+                console.log("done - check and uncheck task as done");
                 console.log("delete - delete a task");
                 console.log("help - show this message");
                 break;
@@ -137,7 +164,7 @@ jsonfile.readFile(file, (err, obj) => {
             {
                 console.log("add - add new task");
                 console.log("show - show tasks");
-                console.log("done - mark task as done");
+                console.log("done - check and uncheck task as done");
                 console.log("delete - delete a task");
                 console.log("help - show this message");
                 break;
