@@ -4,6 +4,22 @@
 
 Create a commandline todo list app that you can use from your terminal and that will keep track of things you need to do.
 
+## How to run my app
+1. Install dependencies
+  > npm install
+2. Run app
+  * Add new todo
+    > todo add "new todo 1"
+  * List all todos
+    > todo show
+  * Set todo as completed
+    > todo edit <id> done
+  * Set todo as uncompleted
+    > todo edit <id> undone
+  * Remove todo
+    > todo remove <id>
+
+## Task Assigned
 ### Deliverables:
 
 #### Add to the list
