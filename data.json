@@ -1,1 +1,1 @@
-{"toDoItems":[{"index":1,"done":false,"task":"do something","created":"date and time","updated":"date and time"},{"index":2,"done":false,"task":"do something","created":"date and time","updated":"date and time"}]}
+{"toDoItems":[{"index":1,"done":true,"task":"do something","created":"date and time","updated":"date and time"},{"index":2,"done":false,"task":"do something","created":"date and time","updated":"date and time"}]}
