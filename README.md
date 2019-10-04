@@ -7,7 +7,8 @@ Create a commandline todo list app that you can use from your terminal and that 
 ## How to run my app
 1. Install dependencies
   > npm install
-2. Run app (adding a "node" before command is not required)
+2. JSON file will be created automatically into home directory if it does not exist.
+3. Run app (adding a "node" before command is not required)
   * Add new todo
     > todo add "new todo 1"
   * List all todos
