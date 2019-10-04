@@ -2,7 +2,7 @@ const jsonfile = require('jsonfile');
 const moment = require('moment');
 
 const command = process.argv[2];
-const newTask = process.argv[3];
+const input = process.argv[3];
 
 const file = 'data.json';
 
@@ -16,7 +16,7 @@ jsonfile.readFile(file, (err, obj) => {
     switch (command) {
         case "add":
             {
-                if (!newTask) {
+                if (!input) {
                     console.log("Please specify new task to be added.");
                     return;
                 }
@@ -32,9 +32,9 @@ jsonfile.readFile(file, (err, obj) => {
                 let newItem = {
                     "index": lastIndex + 1,
                     "done": false,
-                    "task": newTask,
+                    "task": input,
                     "created": moment().format("LLLL"),
-                    "updated": "04 Oct 2019"
+                    "updated": "-"
                 };
 
                 obj.toDoItems.push(newItem);
@@ -51,6 +51,28 @@ jsonfile.readFile(file, (err, obj) => {
         case "show":
             {
                 obj.toDoItems.forEach(item => console.log(listItem(item)));
+                break;
+            }
+        case "done":
+            {
+                if (!obj.toDoItems.length) {
+                    console.log("Please add a todo item first.");
+                    return;
+                } else {
+                let doneItem = obj.toDoItems[input - 1];
+
+                doneItem.done = !doneItem.done;
+
+                obj.toDoItems[input-1] = doneItem;
+
+                    jsonfile.writeFile(file, obj, (err) => {
+                        if (err) {
+                            console.log("Error writing file");
+                            console.log(err);
+                        };
+                        obj.toDoItems.forEach(item => console.log(listItem(item)));
+                    });
+                }
                 break;
             }
         case "help":
