@@ -62,6 +62,7 @@ jsonfile.readFile(file, (err, obj) => {
                 let doneItem = obj.toDoItems[input - 1];
 
                 doneItem.done = !doneItem.done;
+                doneItem.updated = moment().format("LLLL");
 
                 obj.toDoItems[input-1] = doneItem;
 
