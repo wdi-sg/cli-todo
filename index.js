@@ -2,6 +2,7 @@ const jsonfile = require('jsonfile');
 const moment = require('moment');
 const figlet = require('figlet');
 const columnify = require('columnify');
+var colors = require('colors');
 
 const command = process.argv[2];
 const input = process.argv[3];
@@ -48,7 +49,7 @@ console.log(figlet.textSync('To Do List', {
     font: 'Larry 3D',
     horizontalLayout: 'default',
     verticalLayout: 'default'
-}));
+}).rainbow);
 
 
 jsonfile.readFile(file, (err, obj) => {
@@ -57,7 +58,7 @@ jsonfile.readFile(file, (err, obj) => {
         case "add":
             {
                 if (!input) {
-                    console.log("*** Please specify the name of the task to be added. ***");
+                    console.log("*** Please specify the name of the task to be added. ***".red);
                     return;
                 } else {
 
@@ -97,15 +98,15 @@ jsonfile.readFile(file, (err, obj) => {
         case "done":
             {
                 if (!obj.toDoItems.length) {
-                    console.log("*** To do list is empty, please add a task ***");
+                    console.log("*** To do list is empty, please add a task ***".yellow);
                     return;
                 } else {
                     if (!input) {
-                        console.log("*** Please specify the task to be marked done. ***");
+                        console.log("*** Please specify the task to be marked done. ***".red);
                         console.log(columnifyItems(obj.toDoItems));
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
-                        console.log("*** Please specify a valid task number. ***");
+                        console.log("*** Please specify a valid task number. ***".red);
                         console.log(columnifyItems(obj.toDoItems));
                     } else {
                         let doneItem = obj.toDoItems[input - 1];
@@ -129,15 +130,15 @@ jsonfile.readFile(file, (err, obj) => {
         case "delete":
             {
                 if (!obj.toDoItems.length) {
-                    console.log("*** To do list is empty, please add a task. ***");
+                    console.log("*** To do list is empty, please add a task. ***".yellow);
                     return;
                 } else {
                     if (!input) {
-                        console.log("*** Please specify the task to be deleted. ***");
+                        console.log("*** Please specify the task to be deleted. ***".red);
                         console.log(columnifyItems(obj.toDoItems));
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
-                        console.log("*** Please specify a valid task number. ***");
+                        console.log("*** Please specify a valid task number. ***".red);
                         console.log(columnifyItems(obj.toDoItems));
                     } else {
                         let deleteItem = obj.toDoItems[input - 1];
@@ -159,12 +160,12 @@ jsonfile.readFile(file, (err, obj) => {
             }
         case "help":
             {
-                console.log(columnify(instructions, {columns: ['command', 'description']}));
+                console.log(columnify(instructions, { columns: ['command', 'description'] }));
                 break;
             }
         default:
             {
-                console.log(columnify(instructions, {columns: ['command', 'description']}));
+                console.log(columnifyItems(obj.toDoItems));
                 break;
             }
     }
