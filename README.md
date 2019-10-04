@@ -8,17 +8,17 @@ Create a commandline todo list app that you can use from your terminal and that 
 1. Install dependencies
   > npm install
 2. JSON file will be created automatically into home directory if it does not exist.
-3. Run app (adding a "node" before command is not required)
+3. Run app (adding a "node" before command is not required) (id is the number shown on the left with "todo show")
   * Add new todo
     > todo add "new todo 1"
   * List all todos
     > todo show
   * Set todo as completed
-    > todo edit <id> done
+    > todo edit id done
   * Set todo as uncompleted
-    > todo edit <id> undone
+    > todo edit id undone
   * Remove todo
-    > todo remove <id>
+    > todo remove id
 
 ## Task Assigned
 ### Deliverables:
