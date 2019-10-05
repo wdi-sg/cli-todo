@@ -98,7 +98,9 @@ const addData = function(obj) {
 console.log('addData call')
 let fullAdData = allDataProcess.slice(1);
 fullAdData = fullAdData.join(' '); 
-console.log('addData output' + fullAdData)
+// console.log('addData output' + fullAdData)
+obj.item.push([fullAdData, " ",  datetime])
+// console.log(obj);
 }
 
 const deleteData = function(obj) { 
