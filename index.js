@@ -8,35 +8,31 @@ console.log("Your command was: "+commandType);
 const jsonfile = require('jsonfile');
 
 const file = 'data.json'
-const command = "commands"
 
 class todoItem {
-    constructor(complete, item){
+    constructor(complete, item, date){
 
         this.complete = complete;
-        this.item = item
+        this.item = item;
+        this.date = date
     }
 }
-
-
 
 jsonfile.readFile(file, (err, obj) => {
 
     if (commandType === "add"){
 
-
-        newTodo = new todoItem (`[ ]`, process.argv[3])
+        newTodo = new todoItem (`[ ]`, process.argv[3], new Date())
         obj["todoList"].push(newTodo)
         newTodo.number = `${obj["todoList"].indexOf(newTodo)+1}`
 
-        console.log(`${newTodo["number"]}. ${newTodo["complete"]} - ${newTodo["item"]}`)
-        console.log(obj)
-        console.log(newTodo)
+        console.log(`${newTodo["number"]}. ${newTodo["complete"]} - ${newTodo["item"]}, created at: ${newTodo["date"]}`)
 
     } else if (commandType === "show"){
 
         for (i=0; i<obj["todoList"].length; i++){
-            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}`)
+            obj["todoList"][i]["number"] = `${obj["todoList"].indexOf(obj["todoList"][i])+1}`
+            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}, created at: ${obj["todoList"][i]["date"]}`)
         }
     } else if (commandType === "done"){
         const todoNum = process.argv[3]
@@ -45,10 +41,11 @@ jsonfile.readFile(file, (err, obj) => {
          for (i=0; i<obj["todoList"].length; i++){
             console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}`)
         }
-
-
-
-
+    } else if (commandType === "delete"){
+        const deleteItem = process.argv[3]
+        const deletedIndex = process.argv[3]-1
+        const deleted = obj["todoList"].splice(deletedIndex,1)
+        console.log(`Item ${deleteItem} was removed.`)
 
     }
 
