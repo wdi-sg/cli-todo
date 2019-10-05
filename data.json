@@ -1,1 +1,1 @@
-{"todoItems":["test","test2","test3","test banana","test fruit","help"]}
+{"todoList":[{"complete":"[ ]","item":"test","number":"1"},{"complete":"[x]","item":"feed the cat","number":"2"},{"complete":"[x]","item":"pet the cat","number":"3"}]}
