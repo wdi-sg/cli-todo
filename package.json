@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/nathanaeltan/cli-todo#readme",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "jsonfile": "^5.0.0"
-  }
+  },
+  "devDependencies": {}
 }
