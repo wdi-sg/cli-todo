@@ -6,11 +6,26 @@ const allDataProcess = [];
 // grab all the data from the console
 for (var i = 2; i < process.argv.length; i++) {
 console.log(process.argv[i]);
+allDataProcess.push(process.argv[i]);
 }
 
-// var commandType = process.argv[2];
+// get the current date/time
+const currentdate = new Date(); 
+let datetime =  currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
 
-// console.log("Your command was: "+commandType);
+// console.log(allDataProcess);
+
+// console.log(datetime);
+
+let commandType = allDataProcess[0];
+
+console.log("Your command was: "+commandType);
+
 
 // const jsonfile = require('jsonfile');
 
