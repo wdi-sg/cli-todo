@@ -94,10 +94,11 @@ obj.item[itemToChange][2] = datetime;
 
 }
 
-const addData = function(obj) { 
-	
+const addData = function(obj) { 	
 console.log('addData call')
-
+let fullAdData = allDataProcess.slice(1);
+fullAdData = fullAdData.join(' '); 
+console.log('addData output' + fullAdData)
 }
 
 const deleteData = function(obj) { 
