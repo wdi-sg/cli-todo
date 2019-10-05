@@ -5,7 +5,7 @@
 Create a commandline todo list app that you can use from your terminal and that will keep track of things you need to do.
 
 ## How to run my app
-1. Install dependencies (npm link command is required to work, adds to your bin)
+1. Install dependencies (npm link command is required to work, adds to /usr/local/lib/node_modules/)
 ```
 npm install
 npm link
