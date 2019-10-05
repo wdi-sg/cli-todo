@@ -8,10 +8,17 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
+const dateStamp = () => {
+    let date = new Date;
+    let dateString = date.toDateString();
+    return dateString;
+}
+
 class Item {
     constructor(name) {
         this._name = name;
         this._done = false;
+        this.createdAt = dateStamp();
     }
 }
 
@@ -29,11 +36,11 @@ jsonfile.readFile(file, (err, obj) => {
 // iterate every item in the list
         for (let i=0; i<obj['todoItems'].length; i++) {
 // destructure the object
-            let {_name, _done} = obj["todoItems"][i];
+            let {_name, _done, createdAt} = obj["todoItems"][i];
 // if else for checking if the list item is done
             let doneOrNot = _done ? 'X': ' ';
 // format the output in a proper list form
-            let formatOutput = `${i+1}. [${doneOrNot}] - ${_name}`
+            let formatOutput = `${i+1}. [${doneOrNot}] - ${_name} (created at ${createdAt}) `
             console.log(formatOutput);
         };
         break;
