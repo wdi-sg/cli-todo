@@ -9,6 +9,8 @@ for (var i = 2; i < process.argv.length; i++) {
 allDataProcess.push(process.argv[i]);
 }
 
+
+
 // get the current date/time
 const currentdate = new Date(); 
 let datetime =  currentdate.getDate() + "/"
@@ -57,6 +59,8 @@ jsonfile.readFile(file, (err, obj) => {
 		deleteData(obj);
 		showData(obj);
 	    break;
+	   default: 
+	   showData(obj);
 	}
 
 // write it out
