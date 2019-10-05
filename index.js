@@ -1,4 +1,9 @@
-console.log("works!!", process.argv[2]);
+console.log("To Do List");
+console.log("To add item: add 'thing to do'");
+console.log("To view list: show");
+console.log("Check off item: done 'number on list'");
+console.log("Delete item: delete 'number on list'");
+console.log(" ");
 
 let commandType = process.argv[2];
 
@@ -16,21 +21,21 @@ jsonfile.readFile(file, (err, obj) => {
         //add brackets
         let todo = "[ ] -";
         obj["todoItems"].push(todo);
-        //add item
+        //declare item to be added
         let item = "";
-
+        //add date
         let today = new Date();
         let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
         for ( let i=3; i<process.argv.length; i++ ) {
-            item += " " + process.argv[i] + " Date added:" + date;
+            item += " " + process.argv[i];
         }
         console.log(item);
-        obj["todoItems"].push(item);
-        jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
+        obj["todoItems"].push(item + " created_at:" + date);
+        jsonfile.writeFile(file, obj, function (err) {
+            if (err) console.error(err)
         });
-        console.log(obj);
+
         break;
 
     case 'show':
@@ -47,17 +52,36 @@ jsonfile.readFile(file, (err, obj) => {
         let checkItem = parseInt(process.argv[3]) + (parseInt(process.argv[3]) - 2);
         obj["todoItems"][checkItem] = "[x] -";
 
-        //call add to update array
-        jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
+        //update array
+        jsonfile.writeFile(file, obj, function (err) {
+            if (err) console.error(err)
         });
 
-        //call show to list again
+        //list
         let listNumDone=1;
         for ( let k=1; k<obj["todoItems"].length; k++ ) {
             if ( !!(k % 2) ) {  //output only odd index
                 console.log(`${listNumDone}. ${obj["todoItems"][k-1]} ${obj["todoItems"][k]}`)
                 listNumDone++;
+            }
+        }
+        break;
+
+    case 'delete':
+        let delItem = parseInt(process.argv[3]) + (parseInt(process.argv[3]) - 2);
+        obj["todoItems"].splice(delItem, 2);
+
+        //update array
+        jsonfile.writeFile(file, obj, function (err) {
+            if (err) console.error(err)
+        });
+
+        //list
+        let listNumDel=1;
+        for ( let k=1; k<obj["todoItems"].length; k++ ) {
+            if ( !!(k % 2) ) {  //output only odd index
+                console.log(`${listNumDel}. ${obj["todoItems"][k-1]} ${obj["todoItems"][k]}`)
+                listNumDel++;
             }
         }
         break;
