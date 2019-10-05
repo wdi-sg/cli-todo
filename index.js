@@ -1,4 +1,4 @@
-console.log("works!!", process.argv[2]);
+// console.log("works!!", process.argv[2]);
 
 const allDataProcess = [];
 
@@ -31,12 +31,25 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
+
+
+
+
 jsonfile.readFile(file, (err, obj) => {
 
-console.log(obj);
-//   obj["helloworld"] = "monkey";
 
-//   jsonfile.writeFile(file, obj, (err) => {
-//     console.log(err)
-//   });
+	if (allDataProcess[0]==='show') {
+	for (var i = 0; i < obj.item.length; i++) {
+				console.log(obj.item[i]);
+		}	
+	}
+	else {
+	console.log(obj);
+	//   obj["helloworld"] = "monkey";
+
+	  jsonfile.writeFile(file, obj, (err) => {
+	    console.log(err)
+	  });
+	}
+
 });
