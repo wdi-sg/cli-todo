@@ -1,19 +1,27 @@
 console.log("works!!", process.argv[2]);
 
-var commandType = process.argv[2];
+const allDataProcess = [];
 
-console.log("Your command was: "+commandType);
 
-const jsonfile = require('jsonfile');
+// grab all the data from the console
+for (var i = 2; i < process.argv.length; i++) {
+console.log(process.argv[i]);
+}
 
-const file = 'data.json'
+// var commandType = process.argv[2];
 
-jsonfile.readFile(file, (err, obj) => {
+// console.log("Your command was: "+commandType);
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+// const jsonfile = require('jsonfile');
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+// const file = 'data.json'
+
+// jsonfile.readFile(file, (err, obj) => {
+
+//   console.log(obj);
+//   obj["helloworld"] = "monkey";
+
+//   jsonfile.writeFile(file, obj, (err) => {
+//     console.log(err)
+//   });
+// });
