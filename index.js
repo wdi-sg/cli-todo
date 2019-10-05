@@ -15,6 +15,27 @@ const file = 'data.json'
 
 jsonfile.readFile(file, (err, obj) => {
 
+    function recordItems() {
+        jsonfile.writeFile(file, obj, function (err) {
+            if (err) console.error(err)
+        });
+    }
+
+    function listItems() {
+        let listNumShow=1;
+        for ( let j=1; j<obj["todoItems"].length; j++ ) {
+            if ( !!(j % 2) ) {  //output only odd index
+                console.log(`${listNumShow}. ${obj["todoItems"][j-1]} ${obj["todoItems"][j]}`)
+                    listNumShow++;
+            }
+        }
+    }
+
+    //add date
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+
   switch (commandType) {
 
     case 'add':
@@ -23,29 +44,18 @@ jsonfile.readFile(file, (err, obj) => {
         obj["todoItems"].push(todo);
         //declare item to be added
         let item = "";
-        //add date
-        let today = new Date();
-        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
         for ( let i=3; i<process.argv.length; i++ ) {
             item += " " + process.argv[i];
         }
         console.log(item);
         obj["todoItems"].push(item + " created_at:" + date);
-        jsonfile.writeFile(file, obj, function (err) {
-            if (err) console.error(err)
-        });
+        recordItems();
 
         break;
 
     case 'show':
-        let listNumShow=1;
-        for ( let j=1; j<obj["todoItems"].length; j++ ) {
-            if ( !!(j % 2) ) {  //output only odd index
-                console.log(`${listNumShow}. ${obj["todoItems"][j-1]} ${obj["todoItems"][j]}`)
-                listNumShow++;
-            }
-        }
+        listItems();
         break;
 
     case 'done':
@@ -58,13 +68,7 @@ jsonfile.readFile(file, (err, obj) => {
         });
 
         //list
-        let listNumDone=1;
-        for ( let k=1; k<obj["todoItems"].length; k++ ) {
-            if ( !!(k % 2) ) {  //output only odd index
-                console.log(`${listNumDone}. ${obj["todoItems"][k-1]} ${obj["todoItems"][k]}`)
-                listNumDone++;
-            }
-        }
+        listItems();
         break;
 
     case 'delete':
@@ -77,13 +81,7 @@ jsonfile.readFile(file, (err, obj) => {
         });
 
         //list
-        let listNumDel=1;
-        for ( let k=1; k<obj["todoItems"].length; k++ ) {
-            if ( !!(k % 2) ) {  //output only odd index
-                console.log(`${listNumDel}. ${obj["todoItems"][k-1]} ${obj["todoItems"][k]}`)
-                listNumDel++;
-            }
-        }
+        listItems();
         break;
 
   }
