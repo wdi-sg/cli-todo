@@ -1,14 +1,16 @@
-// 1. Install jsonfile using npm
+// Install jsonfile using npm
 const jsonfile = require('jsonfile');
-/*const add = require('./addItem');*/
 
-// 2. Create data.json file with empty object syntax
+// Create data.json file with empty object syntax
 const file = 'data.json';
 
-// 3. Read the third argument from command line to add into todoItems array
+// Create constant variable to indicate display format
+const bulletPoint = ". [ ] - ";
+
+// Read the third argument from command line to add into todoItems array
 jsonfile.readFile(file, (err, obj) => {
 
-    // 5. Declare a variable to for obj.todoItems
+    // Declare a variable to for obj.todoItems
     let toDoObject = obj.todoItems;
 
     if(process.argv[2] === "add") {
@@ -18,21 +20,16 @@ jsonfile.readFile(file, (err, obj) => {
 
     } else if(process.argv[2] === "show") {
 
-        console.log(toDoObject);
+        // Display list as per expected format
+            // e.g. 1. [ ] - eat bak kut teh
+        for(let i = 1; i < toDoObject.length; i++) {
+
+            console.log(i + bulletPoint + toDoObject[i]);
+        }
 
     }
-
-
-
-    /*obj.todoItems.push(process.argv[2]);
-    console.log(obj.todoItems);
-
-    // Try to get item number
-    console.log(obj.todoItems[0]);*/
 
     jsonfile.writeFile(file, obj, (err) => {
         console.log(err)
     });
 });
-
-// 4. Declare a function to add item to the list
