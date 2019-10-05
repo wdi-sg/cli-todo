@@ -47,10 +47,16 @@ jsonfile.readFile(file, (err, obj) => {
 // if command is done
     case 'done':
         let selected = obj["todoItems"][parseInt(listItem)-1];
+// toggle done or not done
         selected._done = !selected._done;
         break;
+// if command is delete
+    case 'delete':
+        obj["todoItems"].splice(parseInt(listItem)-1,1);
+        break;
+// if command is invalid
     default:
-        console.log('invalid command');
+        console.log('please enter command: add / show / done / delete ');
         break;
   };
 
