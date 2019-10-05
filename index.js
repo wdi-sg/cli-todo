@@ -25,16 +25,23 @@ const columnifyItems = (toDoItems) => {
                 headingTransform: () => "Task",
             },
             created: {
+                minWidth: 35,
                 headingTransform: () => "Created",
             },
             updated: {
+                minWidth: 35,
                 headingTransform: () => "Updated",
             }
         }
     })
 
     return columnifiedItems;
-}
+};
+
+const printList = (toDoItems) => {
+    console.log(columnifyItems(toDoItems).split("\n")[0].underline.bgGray);
+    console.log(columnifyItems(toDoItems).substring(columnifyItems(toDoItems).indexOf("\n") + 1).underline.gray);
+};
 
 const instructions = {
     add: "add new task",
@@ -85,14 +92,14 @@ jsonfile.readFile(file, (err, obj) => {
                             console.log("*** Error writing file. ***");
                             console.log(err);
                         };
-                        console.log(columnifyItems(obj.toDoItems));
+                        printList(obj.toDoItems);
                     });
                 }
             }
             break;
         case "show":
             {
-                console.log(columnifyItems(obj.toDoItems));
+                printList(obj.toDoItems);
                 break;
             }
         case "done":
@@ -103,11 +110,11 @@ jsonfile.readFile(file, (err, obj) => {
                 } else {
                     if (!input) {
                         console.log("*** Please specify the task to be marked done. ***".red);
-                        console.log(columnifyItems(obj.toDoItems));
+                        printList(obj.toDoItems);
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
                         console.log("*** Please specify a valid task number. ***".red);
-                        console.log(columnifyItems(obj.toDoItems));
+                        printList(obj.toDoItems);
                     } else {
                         let doneItem = obj.toDoItems[input - 1];
 
@@ -121,7 +128,7 @@ jsonfile.readFile(file, (err, obj) => {
                                 console.log("Error writing file");
                                 console.log(err);
                             };
-                            console.log(columnifyItems(obj.toDoItems));
+                            printList(obj.toDoItems);
                         });
                     }
                 }
@@ -135,11 +142,11 @@ jsonfile.readFile(file, (err, obj) => {
                 } else {
                     if (!input) {
                         console.log("*** Please specify the task to be deleted. ***".red);
-                        console.log(columnifyItems(obj.toDoItems));
+                        printList(obj.toDoItems);
                         return;
                     } else if (input > obj.toDoItems.length || input <= 0) {
                         console.log("*** Please specify a valid task number. ***".red);
-                        console.log(columnifyItems(obj.toDoItems));
+                        printList(obj.toDoItems);
                     } else {
                         let deleteItem = obj.toDoItems[input - 1];
 
@@ -152,7 +159,7 @@ jsonfile.readFile(file, (err, obj) => {
                                 console.log("*** Error writing file. ***");
                                 console.log(err);
                             };
-                            console.log(columnifyItems(obj.toDoItems));
+                            printList(obj.toDoItems);
                         });
                     }
                     break;
@@ -165,7 +172,7 @@ jsonfile.readFile(file, (err, obj) => {
             }
         default:
             {
-                console.log(columnifyItems(obj.toDoItems));
+                printList(obj.toDoItems);
                 break;
             }
     }
