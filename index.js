@@ -24,19 +24,19 @@ let datetime =  currentdate.getDate() + "/"
 
 let commandType = allDataProcess[0];
 
-console.log("Your command was: "+commandType);
+// console.log("Your command was: "+commandType);
 
 
-// const jsonfile = require('jsonfile');
+const jsonfile = require('jsonfile');
 
-// const file = 'data.json'
+const file = 'data.json'
 
-// jsonfile.readFile(file, (err, obj) => {
+jsonfile.readFile(file, (err, obj) => {
 
-//   console.log(obj);
+console.log(obj);
 //   obj["helloworld"] = "monkey";
 
 //   jsonfile.writeFile(file, obj, (err) => {
 //     console.log(err)
 //   });
-// });
+});
