@@ -5,8 +5,11 @@
 Create a commandline todo list app that you can use from your terminal and that will keep track of things you need to do.
 
 ## How to run my app
-1. Install dependencies
-  > npm install
+1. Install dependencies (npm link command is required to work, adds to your bin)
+```
+npm install
+npm link
+```
 2. JSON file will be created automatically into home directory if it does not exist.
 3. Run app (adding a "node" before command is not required) (id is the number shown on the left with "todo show")
   * Add new todo
