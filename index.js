@@ -38,8 +38,9 @@ jsonfile.readFile(file, (err, obj) => {
         const todoNum = process.argv[3]
         const index = todoNum - 1
         obj["todoList"][index]["complete"] = "[x]"
+        obj["todoList"][index]["updated"] = new Date()
          for (i=0; i<obj["todoList"].length; i++){
-            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}`)
+            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}, created at: ${obj["todoList"][i]["date"]}; marked complete at ${obj["todoList"][i]["updated"]}`)
         }
     } else if (commandType === "delete"){
         const deleteItem = process.argv[3]
