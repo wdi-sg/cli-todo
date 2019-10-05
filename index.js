@@ -34,24 +34,47 @@ const file = 'data.json'
 
 
 
-
 jsonfile.readFile(file, (err, obj) => {
 
 
-	if (allDataProcess[0]==='show') {
-	for (var i = 0; i < obj.item.length; i++) {
-		let displayNumber = i+1;
-				console.log(displayNumber +'. [' +obj.item[i][1]+'] - ' + obj.item[i][0] + ' updated: ' + obj.item[i][2]);
-
-		}	
+	switch(allDataProcess[0]) {
+	  case 'show':
+		showData(obj);
+	    break;
+	  case 'add':
+	  	addData(obj);
+	    break;
+	  case 'delete':
+		deleteData(obj);
+	    break;
 	}
-	else {
-	console.log(obj);
+
+// write it out
+	// console.log(obj);
 	//   obj["helloworld"] = "monkey";
 
 	  jsonfile.writeFile(file, obj, (err) => {
-	    console.log(err)
+	    if (err !== null) {
+	    	console.log(err);}
 	  });
-	}
 
 });
+
+
+const showData = function(obj) { 
+	for (var i = 0; i < obj.item.length; i++) {
+			let displayNumber = i+1;
+					console.log(displayNumber +'. [' +obj.item[i][1]+'] - ' + obj.item[i][0] + ' updated: ' + obj.item[i][2]);
+
+			}	
+}
+
+const addData = function(obj) { 
+	
+console.log('addData call')
+}
+
+const deleteData = function(obj) { 
+console.log('delete call')	
+	
+}
