@@ -5,7 +5,7 @@ const allDataProcess = [];
 
 // grab all the data from the console
 for (var i = 2; i < process.argv.length; i++) {
-console.log(process.argv[i]);
+// console.log(process.argv[i]);
 allDataProcess.push(process.argv[i]);
 }
 
@@ -43,15 +43,19 @@ jsonfile.readFile(file, (err, obj) => {
 	    break;
 	  case 'add':
 	  	addData(obj);
+	  	showData(obj);
 	    break;
 	  case 'done':
 		doneData(obj);
+		showData(obj);
 	    break;
 	  case 'todo':
 		todoData(obj);
+		showData(obj);
 	    break;   
 	  case 'delete':
 		deleteData(obj);
+		showData(obj);
 	    break;
 	}
 
@@ -77,33 +81,35 @@ const showData = function(obj) {
 
 
 const doneData = function(obj) { 
-	
-console.log('doneData call')
-let itemToChange = process.argv[3] -1;
-obj.item[itemToChange][1] = 'x';
-obj.item[itemToChange][2] = datetime;
+		
+	// console.log('doneData call')
+	let itemToChange = process.argv[3] -1;
+	obj.item[itemToChange][1] = 'x';
+	obj.item[itemToChange][2] = datetime;
 
 }
 
 const todoData = function(obj) { 
 	
-console.log('todoData call')
-let itemToChange = process.argv[3] -1;
-obj.item[itemToChange][1] = ' ';
-obj.item[itemToChange][2] = datetime;
+	// console.log('todoData call')
+	let itemToChange = process.argv[3] -1;
+	obj.item[itemToChange][1] = ' ';
+	obj.item[itemToChange][2] = datetime;
 
 }
 
 const addData = function(obj) { 	
-console.log('addData call')
-let fullAdData = allDataProcess.slice(1);
-fullAdData = fullAdData.join(' '); 
-// console.log('addData output' + fullAdData)
-obj.item.push([fullAdData, " ",  datetime])
-// console.log(obj);
+	// console.log('addData call')
+	let fullAdData = allDataProcess.slice(1);
+	fullAdData = fullAdData.join(' '); 
+	// console.log('addData output' + fullAdData)
+	obj.item.push([fullAdData, " ",  datetime])
+	// console.log(obj);
 }
 
 const deleteData = function(obj) { 
-console.log('delete call')	
-	
+	// console.log('delete call')	
+	let itemToChange = process.argv[3] -1;
+		obj.item.splice(itemToChange,1);
+		// console.log(obj);
 }
