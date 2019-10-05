@@ -44,6 +44,12 @@ jsonfile.readFile(file, (err, obj) => {
 	  case 'add':
 	  	addData(obj);
 	    break;
+	  case 'done':
+		doneData(obj);
+	    break;
+	  case 'todo':
+		todoData(obj);
+	    break;   
 	  case 'delete':
 		deleteData(obj);
 	    break;
@@ -69,9 +75,29 @@ const showData = function(obj) {
 			}	
 }
 
+
+const doneData = function(obj) { 
+	
+console.log('doneData call')
+let itemToChange = process.argv[3] -1;
+obj.item[itemToChange][1] = 'x';
+obj.item[itemToChange][2] = datetime;
+
+}
+
+const todoData = function(obj) { 
+	
+console.log('todoData call')
+let itemToChange = process.argv[3] -1;
+obj.item[itemToChange][1] = ' ';
+obj.item[itemToChange][2] = datetime;
+
+}
+
 const addData = function(obj) { 
 	
 console.log('addData call')
+
 }
 
 const deleteData = function(obj) { 
