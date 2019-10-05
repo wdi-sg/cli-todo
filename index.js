@@ -40,7 +40,9 @@ jsonfile.readFile(file, (err, obj) => {
 
 	if (allDataProcess[0]==='show') {
 	for (var i = 0; i < obj.item.length; i++) {
-				console.log(obj.item[i]);
+		let displayNumber = i+1;
+				console.log(displayNumber +'. [' +obj.item[i][1]+'] - ' + obj.item[i][0] + ' updated: ' + obj.item[i][2]);
+
 		}	
 	}
 	else {
