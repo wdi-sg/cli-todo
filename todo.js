@@ -22,6 +22,14 @@ class Item {
     }
 }
 
+const printUpdated = (updatedAt) => {
+    if (updatedAt) {
+        return `(updated at ${updatedAt})`;
+    } else {
+        return "";
+    }
+}
+
 jsonfile.readFile(file, (err, obj) => {
 
   switch (commandType) {
@@ -36,11 +44,11 @@ jsonfile.readFile(file, (err, obj) => {
 // iterate every item in the list
         for (let i=0; i<obj['todoItems'].length; i++) {
 // destructure the object
-            let {_name, _done, createdAt} = obj["todoItems"][i];
+            let {_name, _done, createdAt, updatedAt} = obj["todoItems"][i];
 // if else for checking if the list item is done
             let doneOrNot = _done ? 'X': ' ';
 // format the output in a proper list form
-            let formatOutput = `${i+1}. [${doneOrNot}] - ${_name} (created at ${createdAt}) `
+            let formatOutput = `${i+1}. [${doneOrNot}] - ${_name} (created at ${createdAt})${printUpdated(updatedAt)}`
             console.log(formatOutput);
         };
         break;
@@ -49,6 +57,7 @@ jsonfile.readFile(file, (err, obj) => {
         let selected = obj["todoItems"][parseInt(listItem)-1];
 // toggle done or not done
         selected._done = !selected._done;
+        selected['updatedAt'] = dateStamp();
         break;
 // if command is delete
     case 'delete':
