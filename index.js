@@ -1,6 +1,6 @@
 console.log("works!!", process.argv[2]);
 
-var commandType = process.argv[2];
+let commandType = process.argv[2];
 
 console.log("Your command was: "+commandType);
 
@@ -18,8 +18,12 @@ jsonfile.readFile(file, (err, obj) => {
         obj["todoItems"].push(todo);
         //add item
         let item = "";
+
+        let today = new Date();
+        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
         for ( let i=3; i<process.argv.length; i++ ) {
-            item += " " + process.argv[i];
+            item += " " + process.argv[i] + " Date added:" + date;
         }
         console.log(item);
         obj["todoItems"].push(item);
