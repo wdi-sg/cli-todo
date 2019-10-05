@@ -15,7 +15,7 @@ jsonfile.readFile(file, (err, obj) => {
 
   command[commandType](obj, value);
 
-  jsonfile.writeFile(file, obj, { spaces: 1 }, (err) => {
+  jsonfile.writeFile(file, obj, (err) => {
     console.log(err);
   });
 });
