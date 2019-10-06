@@ -6,6 +6,7 @@ var listCheck;
 console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
+const cats = require('cat-ascii-faces')
 
 const file = 'data.json'
 
@@ -53,8 +54,10 @@ jsonfile.readFile(file, (err, obj) => {
         console.log(`Item ${deleteItem} - ${deletedThing} - was removed.`)
 
     } else {
+        let cat = cats()
         console.log(`Invalid command, meow!
-            ଲ( ⓛ ω ⓛ *)ଲ,`)
+
+            ${cat}`)
     }
 
       jsonfile.writeFile(file, obj, {spaces:2},(err) => {
