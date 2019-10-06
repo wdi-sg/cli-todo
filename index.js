@@ -10,8 +10,9 @@ const jsonfile = require('jsonfile');
 const file = 'data.json'
 
 class todoItem {
-    constructor(complete, item, date, update){
+    constructor(number, complete, item, date, update){
 
+        this.number = number;
         this.complete = complete;
         this.item = item;
         this.date = date;
@@ -23,9 +24,10 @@ jsonfile.readFile(file, (err, obj) => {
 
     if (commandType === "add"){
 
-        newTodo = new todoItem (`[ ]`, process.argv[3], new Date(), null)
+        let newTodo = {}
+
+        newTodo = new todoItem (obj["todoList"].length+1, `[ ]`, process.argv[3], new Date(), null)
         obj["todoList"].push(newTodo)
-        newTodo.number = `${obj["todoList"].indexOf(newTodo)+1}`
 
         console.log(`${newTodo["number"]}. ${newTodo["complete"]} - ${newTodo["item"]}, created at: ${newTodo["date"]}`)
 
@@ -46,8 +48,9 @@ jsonfile.readFile(file, (err, obj) => {
     } else if (commandType === "delete"){
         const deleteItem = process.argv[3]
         const deletedIndex = process.argv[3]-1
+        const deletedThing = obj["todoList"][deletedIndex]["item"]
         const deleted = obj["todoList"].splice(deletedIndex,1)
-        console.log(`Item ${deleteItem} was removed.`)
+        console.log(`Item ${deleteItem} - ${deletedThing} - was removed.`)
 
     }
 
