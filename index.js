@@ -52,6 +52,9 @@ jsonfile.readFile(file, (err, obj) => {
         const deleted = obj["todoList"].splice(deletedIndex,1)
         console.log(`Item ${deleteItem} - ${deletedThing} - was removed.`)
 
+    } else {
+        console.log(`Invalid command, meow!
+            ଲ( ⓛ ω ⓛ *)ଲ,`)
     }
 
       jsonfile.writeFile(file, obj, {spaces:2},(err) => {
