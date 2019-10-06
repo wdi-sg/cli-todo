@@ -3,6 +3,8 @@ console.log("works!!", process.argv[2]);
 var commandType = process.argv[2];
 let task = process.argv[3];
 
+var currentCommand = require('./commands');
+
 console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
@@ -15,11 +17,13 @@ jsonfile.readFile(file, (err, obj) => {
   // obj["helloworld"] = "monkey";
   // add(obj, task);
   if (commandType === "add") {
-      add(obj, task);
+      currentCommand.add(obj, task);
   } else if (commandType === "done") {
-     done(obj, process.argv[3]);
+     currentCommand.done(obj, process.argv[3]);
   } else if (commandType === "undone") {
-    undone(obj, process.argv[3]);
+    currentCommand.undone(obj, process.argv[3]);
+  } else if (commandType === "show") {
+    currentCommand.show(obj);
   };
 
   jsonfile.writeFile(file, obj, (err) => {
@@ -27,44 +31,45 @@ jsonfile.readFile(file, (err, obj) => {
   });
 });
 
-add = (obj, task) => {
-  let id = obj.todoItems.length + 1;
-  obj.todoItems.push({ "id" : id, "done" : "[ ]", "task": task});
+// add = (obj, task) => {
+//   let id = obj.todoItems.length + 1;
+//   obj.todoItems.push({ "id" : id, "done" : "[ ]", "task": task});
 
-};
+// };
 
-show = (obj) => {
-  let showList = obj.todoItems.length;
+// show = (obj) => {
+//   let showList = obj.todoItems.length;
 
-  for (let i = 0; i < showList; i++) {
-    console.log(`${obj.todoItems[i]["id"]}.${obj.todoItems[i]["done"]} - ${obj.todoItems[i]["task"]}`);
-  }
-};
+//   for (let i = 0; i < showList; i++) {
+//     console.log(`${obj.todoItems[i]["id"]}.${obj.todoItems[i]["done"]} - ${obj.todoItems[i]["task"]}`);
+//   }
+//   // console.log('check show function');
+// };
 
-done = (obj, id) => {
-    let itemId = process.argv[3];
+// done = (obj, id) => {
+//     let itemId = process.argv[3];
 
-    for (let i = 0; i < obj.todoItems.length; i++) {
-        // console.log("for loop running");
-        // console.log(obj.todoItems[i].id);
-         if (parseInt(itemId) === parseInt(obj.todoItems[i].id)) {
+//     for (let i = 0; i < obj.todoItems.length; i++) {
+//         // console.log("for loop running");
+//         // console.log(obj.todoItems[i].id);
+//          if (parseInt(itemId) === parseInt(obj.todoItems[i].id)) {
 
-            // console.log("if statement running");
-            obj.todoItems[i].done = "[X]";
-         };
-    // } else {
-    //     console.log('condition not true')
-    // }
-    }
-};
+//             // console.log("if statement running");
+//             obj.todoItems[i].done = "[X]";
+//          };
+//     // } else {
+//     //     console.log('condition not true')
+//     // }
+//     }
+// };
 
-undone = (obj, id) => {
-    let itemId = process.argv[3];
+// undone = (obj, id) => {
+//     let itemId = process.argv[3];
 
-    for (let i = 0; i < obj.todoItems.length; i++) {
-         if (parseInt(itemId) === parseInt(obj.todoItems[i].id)) {
-            obj.todoItems[i].done = "[ ]";
-         };
+//     for (let i = 0; i < obj.todoItems.length; i++) {
+//          if (parseInt(itemId) === parseInt(obj.todoItems[i].id)) {
+//             obj.todoItems[i].done = "[ ]";
+//          };
 
-    }
-};
+//     }
+// };
