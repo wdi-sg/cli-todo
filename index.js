@@ -13,7 +13,7 @@ const file = 'data.json'
 
 jsonfile.readFile(file, (err, obj) => {
 
-  console.log(obj);
+  // console.log(obj);
 
       switch (commandType) {
         case "add":
@@ -30,6 +30,10 @@ jsonfile.readFile(file, (err, obj) => {
 
         case "undone":
         currentCommand.undone(obj, process.argv[3]);
+        break;
+
+        case "delete":
+        currentCommand.delete(obj, process.argv[3]);
         break;
 
       };

@@ -41,3 +41,27 @@ module.exports.undone = (obj, id) => {
 
     }
 };
+
+module.exports.delete = (obj, id) => {
+
+  let removeItemId = process.argv[3];
+  console.log(obj.todoItems.id);
+  for (let i = 0; i < obj.todoItems.length; i++) {
+         if (parseInt(removeItemId) === parseInt(obj.todoItems[i].id)) {
+          // console.log(obj.todoItems[i].id + "wooow");
+          // console.log(obj);
+          obj.todoItems.splice(i, 1);
+
+          // console.log(obj.todoItems.splice(i, 1));
+
+         };
+
+}
+
+  for(let j = 0; j < obj.todoItems.length; j++) {
+    obj.todoItems[j]["id"] = j+1;
+    // console.log(obj.todoItems[j]["id"]);
+  }
+
+
+}
