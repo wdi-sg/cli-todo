@@ -1,1 +1,56 @@
-{"todoItems":["hello","add and write it to file","exercise","exercise2","exercise3","sleep","do homework","have dinner"]}
+{
+        "todoItems": [
+        {
+                "taskNum": 1,
+                "taskDescription": "sleep",
+                "status": "incomplete"
+        },
+        {
+                "taskNum": 2,
+                "taskDescription": "sleep-more",
+                "status": "incomplete"
+        },
+        {
+                "taskNum": 3,
+                "taskDescription": "sleep-early-pls",
+                "status": "[ ]"
+        },
+        {
+                "taskNum": 4,
+                "taskDescription": "sleep-early-pls",
+                "status": "[ ]"
+        },
+        {
+                "taskNum": 5,
+                "taskDescription": "sleep-early-pls-1",
+                "status": "[ ]"
+        },
+        {
+                "taskNum": 6,
+                "taskDescription": "sleep-early-pls-2",
+                "status": "[ ]"
+        },
+        {
+                "taskNum": 7,
+                "taskDescription": "sleep-early-pls-3",
+                "status": "[ ]"
+        },
+        {
+                "taskNum": 8,
+                "taskDescription": "sleep-early-pls-4",
+                "status": "[x]"
+        },
+        {
+                "taskNum": 9,
+                "taskDescription": "go-to-sleep-now",
+                "status": "[ ]",
+                "created_at": "2019-10-06T14:58:41.245Z"
+        },
+        {
+                "taskNum": 10,
+                "taskDescription": "go-to-sleep-now-1",
+                "status": "[x]",
+                "created_at": "2019-10-06T15:02:09.727Z",
+                "updated_at": "2019-10-06T15:02:55.779Z"
+        }]
+}
