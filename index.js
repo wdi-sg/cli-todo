@@ -10,11 +10,12 @@ const jsonfile = require('jsonfile');
 const file = 'data.json'
 
 class todoItem {
-    constructor(complete, item, date){
+    constructor(complete, item, date, update){
 
         this.complete = complete;
         this.item = item;
-        this.date = date
+        this.date = date;
+        this.updated = update
     }
 }
 
@@ -22,7 +23,7 @@ jsonfile.readFile(file, (err, obj) => {
 
     if (commandType === "add"){
 
-        newTodo = new todoItem (`[ ]`, process.argv[3], new Date())
+        newTodo = new todoItem (`[ ]`, process.argv[3], new Date(), null)
         obj["todoList"].push(newTodo)
         newTodo.number = `${obj["todoList"].indexOf(newTodo)+1}`
 
@@ -32,7 +33,7 @@ jsonfile.readFile(file, (err, obj) => {
 
         for (i=0; i<obj["todoList"].length; i++){
             obj["todoList"][i]["number"] = `${obj["todoList"].indexOf(obj["todoList"][i])+1}`
-            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}, created at: ${obj["todoList"][i]["date"]}`)
+            console.log(`${obj["todoList"][i]["number"]}. ${obj["todoList"][i]["complete"]} - ${obj["todoList"][i]["item"]}, created at: ${obj["todoList"][i]["date"]}; marked complete at ${obj["todoList"][i]["updated"]}`)
         }
     } else if (commandType === "done"){
         const todoNum = process.argv[3]
@@ -50,7 +51,7 @@ jsonfile.readFile(file, (err, obj) => {
 
     }
 
-      jsonfile.writeFile(file, obj, (err) => {
+      jsonfile.writeFile(file, obj, {spaces:2},(err) => {
         console.log(err)
       });
 });
