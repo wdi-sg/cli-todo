@@ -13,7 +13,10 @@ jsonfile.readFile(file, (err, obj) => {
 
   console.log(obj);
   // obj["helloworld"] = "monkey";
-  add(obj, task);
+  // add(obj, task);
+  if (commandType === "add") {
+      add(obj, task);
+  };
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
@@ -23,4 +26,13 @@ jsonfile.readFile(file, (err, obj) => {
 add = (obj, task) => {
   let id = obj.todoItems.length + 1;
   obj.todoItems.push({ "id" : id, "task": task});
+
 };
+
+show = (obj) => {
+  let showList = obj.todoItems.length;
+
+  for (let i = 0; i < showList; i++) {
+    console.log(`${obj.todoItems[i]["id"]}.${obj.todoItems[i]["task"]}`);
+  }
+}
