@@ -1,13 +1,11 @@
 
 const fullList = process.argv;
 let commandType = fullList[2];
-
-
-
-// let itemNumber = fullList.length-1;
-
 let newTodo = fullList[3];
-console.log(newTodo);
+let doneNumber = fullList[3];
+
+
+
 let newItem = function(){
   return itemNumber + ". [ ] " + newTodo;
 }
@@ -19,15 +17,37 @@ const file = 'data.json'
 const list = require('./data')
 // const entireList =
 if (commandType == "add"){
+
     jsonfile.readFile(file, (err, obj) => {
-      console.log(obj);
+
+
       let n = obj.todoItems.length+1;
       obj["todoItems"].push(n + ". [ ] - " + newTodo);
+      obj["itemNames"].push(newTodo);
+      console.log(commandType + "ing new item: " + newTodo);
+      console.log(obj["todoItems"]);
 
       jsonfile.writeFile(file, obj, (err) => {
         console.log(err)
       })
       })
     } else if (commandType == "show"){
-       console.log(obj);
-    }
+      jsonfile.readFile(file, (err, obj) => {
+        console.log(obj["todoItems"]);
+
+        jsonfile.writeFile(file, obj, (err) => {
+          console.log(err)
+        })
+        })
+
+    } else if (commandType == "done"){
+      jsonfile.readFile(file, (err, obj) => {
+        console.log("Done: " + obj["todoItems"][doneNumber-1]);
+        obj["todoItems"][doneNumber-1] = doneNumber+"[X] " + obj["itemNames"][doneNumber-1]
+        console.log(obj["todoItems"]);
+
+        jsonfile.writeFile(file, obj, (err) => {
+          console.log(err)
+        })
+        })
+};
