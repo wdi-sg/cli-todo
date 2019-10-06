@@ -1,9 +1,9 @@
 console.log("works!!", process.argv[2]);
 
-var commandType = process.argv[2];
+let commandType = process.argv[2];
 let task = process.argv[3];
 
-var currentCommand = require('./commands');
+const currentCommand = require('./commands');
 
 console.log("Your command was: "+commandType);
 
@@ -14,21 +14,30 @@ const file = 'data.json'
 jsonfile.readFile(file, (err, obj) => {
 
   console.log(obj);
-  // obj["helloworld"] = "monkey";
-  // add(obj, task);
-  if (commandType === "add") {
-      currentCommand.add(obj, task);
-  } else if (commandType === "done") {
-     currentCommand.done(obj, process.argv[3]);
-  } else if (commandType === "undone") {
-    currentCommand.undone(obj, process.argv[3]);
-  } else if (commandType === "show") {
-    currentCommand.show(obj);
-  };
+
+      switch (commandType) {
+        case "add":
+        currentCommand.add(obj, task);
+        break;
+
+        case "show":
+        currentCommand.show(obj);
+        break;
+
+        case "done":
+        currentCommand.done(obj, process.argv[3]);
+        break;
+
+        case "undone":
+        currentCommand.undone(obj, process.argv[3]);
+        break;
+
+      };
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
   });
+
 });
 
 // add = (obj, task) => {
