@@ -25,7 +25,7 @@ if (commandType == "add"){
       obj["todoItems"].push(n + ". [ ] - " + newTodo);
       obj["itemNames"].push(newTodo);
       console.log(commandType + "ing new item: " + newTodo);
-      console.log(obj["todoItems"]);
+      console.log("Your To-Do List is now: " + obj["todoItems"]);
 
       jsonfile.writeFile(file, obj, (err) => {
         console.log(err)
@@ -33,7 +33,7 @@ if (commandType == "add"){
       })
     } else if (commandType == "show"){
       jsonfile.readFile(file, (err, obj) => {
-        console.log(obj["todoItems"]);
+        console.log("Your To-Do List is now: " + obj["todoItems"]);
 
         jsonfile.writeFile(file, obj, (err) => {
           console.log(err)
@@ -44,7 +44,17 @@ if (commandType == "add"){
       jsonfile.readFile(file, (err, obj) => {
         console.log("Done: " + obj["todoItems"][doneNumber-1]);
         obj["todoItems"][doneNumber-1] = doneNumber+"[X] " + obj["itemNames"][doneNumber-1]
-        console.log(obj["todoItems"]);
+        console.log("Your To-Do List is now: " + obj["todoItems"]);
+
+        jsonfile.writeFile(file, obj, (err) => {
+          console.log(err)
+        })
+        })
+    } else if (commandType == "delete"){
+      jsonfile.readFile(file, (err, obj) => {
+        console.log("Removed: " + obj["todoItems"][doneNumber-1]);
+        obj["todoItems"][doneNumber-1] = null;
+        console.log("Your To-Do List is now: " + obj["todoItems"]);
 
         jsonfile.writeFile(file, obj, (err) => {
           console.log(err)
