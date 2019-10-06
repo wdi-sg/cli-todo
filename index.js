@@ -1,19 +1,39 @@
-console.log("works!!", process.argv[2]);
+console.log("Hope this works");
 
-var commandType = process.argv[2];
-
-console.log("Your command was: "+commandType);
-
+// retained from original code
 const jsonfile = require('jsonfile');
+const file = 'data.json';
 
-const file = 'data.json'
+//define global variables
 
-jsonfile.readFile(file, (err, obj) => {
+var inputType = process.argv[2];
+var listItem = process.argv[3];
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+// write function to add to list
+const addItem = function (obj) {
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+    jsonfile.readFile(file, (err, obj) => {
+    console.log(obj);
+    obj.counter = 1
+    obj["todoItems"].push(`${obj.counter}. [ ] - ${listItem}`);
+    obj.counter++;
+
+      jsonfile.writeFile(file, obj, (err) => {
+      console.log(err)
+      });
+    });
+}
+
+// // write function that shows list
+let showList = (obj) => {
+    jsonfile.readFile(file, (err, obj) => {
+    console.log(obj['todoItems']);
+    });
+};
+
+//if statement for command
+if (inputType === "show") {
+    showList();
+} else if (inputType === "add") {
+    addItem();
+};
