@@ -13,14 +13,25 @@ var listItem = process.argv[3];
 const addItem = function (obj) {
 
     jsonfile.readFile(file, (err, obj) => {
-    console.log(obj);
-    obj.counter = 1
-    obj["todoItems"].push(`${obj.counter}. [ ] - ${listItem}`);
-    obj.counter++;
+    let modifiedList = obj["todoItems"];
+
+    console.log("pushing commences");
+    modifiedList.push(listItem);
+    for (let i=0; i< modifiedList.length; i++) {
+        // when loop first runs, i = 1
+        // need if condition to start from i = 0
+        if (i === modifiedList.length -1 ){
+            // remember that arrays start from i = 0
+            modifiedList[i] = (i+1) + '.' + " [ ] -" + ' ' + listItem;
+        }
+    }
+    console.log("successfully added to list");
+
 
       jsonfile.writeFile(file, obj, (err) => {
       console.log(err)
       });
+
     });
 }
 
