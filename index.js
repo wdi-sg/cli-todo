@@ -8,16 +8,19 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json';
 
+var dateCreated = new Date()
 
 jsonfile.readFile(file, (err, obj) => {
 
-    // clear obj
-    // obj["todoItems"] = [];
 
-    // format:   1. [] - eat bah kut teh
     if (commandType === "add") {
-        let count = obj["todoItems"].length
-        obj["todoItems"].push(`${count + 1}. [ ] - ${arg}`);
+
+        let count = obj["todoItems"].length;
+            if (count === undefined) {
+                count = 0;
+            }
+
+        obj["todoItems"].push(`${count + 1}. [ ] - ${arg} (Added on ${dateCreated})`);
         console.log(`You have added ${arg} to the to-do list!`)
         jsonfile.writeFile(file, obj, (err) => {
           if (err) {
@@ -25,26 +28,54 @@ jsonfile.readFile(file, (err, obj) => {
             return;
           }
         });
+
     } else if (commandType === "show") {
         console.log(obj['todoItems'].join("\n"));
+
     } else if (commandType === "done") {
         let index = arg - 1;
         console.log(obj["todoItems"][index])
 
         let crossOut = obj["todoItems"].splice(index, 1);
-        console.log(`crossOut is ${crossOut}`);
 
         let taskDone = crossOut[0].replace("[ ]", "[x]");
-        console.log(`taskDone is ${taskDone}`);
 
+        let dateUpdated = new Date();
+        taskDone.concat(taskDone, `Done on ${dateUpdated}`);
         obj["todoItems"].splice(index, 0, taskDone);
         console.log(obj["todoItems"]);
+
         jsonfile.writeFile(file, obj, (err) => {
           if (err) {
             console.log(err);
             return;
           }
         });
+
+
+    } else if (commandType === "delete") {
+        let index = arg - 1;
+        let toDelete = obj["todoItems"].splice(index, 1);
+        console.log(toDelete);
+
+        for (let i = arg; i <= obj["todoItems"].length; i++) {
+            let changeNum = obj["todoItems"].splice(i, 1);
+            changeNum = changeNum[0].substring(1);
+            changeNum = changeNum.concat(`${i}`, changeNum);
+
+            jsonfile.writeFile(file, obj, (err) => {
+                      if (err) {
+                        console.log(err);
+                        return;
+                      }
+                    });
+        }
+        jsonfile.writeFile(file, obj, (err) => {
+                      if (err) {
+                        console.log(err);
+                        return;
+                      }
+                    });
 
 
     }
