@@ -92,6 +92,10 @@ jsonfile.readFile(file, (err, obj) => {
     checkItem(obj);
   } else if (commandType === "clear") {
     clearList(obj);
+  } else {
+    console.log(
+      `\n Hello! Please enter a todo list \n The Commands Are \n\n 1.) Add \n 2.) done \n 3.) remove \n 4.) show \n 5.) clear \n`
+    );
   }
 
   jsonfile.writeFile(file, obj, err => {
