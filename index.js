@@ -18,11 +18,11 @@
 //   });
 // });
 
-console.log("works!!", process.argv[2]);
+console.log("working", process.argv[2]);
 
 var addTdl = process.argv[2];
 
-console.log("Your command was: "+ addTdl);
+console.log("command was: "+ addTdl);
 
 const jsonfile = require('jsonfile');
 
