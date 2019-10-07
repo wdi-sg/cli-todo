@@ -4,10 +4,6 @@ const jsonfile = require('jsonfile');
 // Create data.json file with empty object syntax
 const file = 'data.json';
 
-// Create constant variable to indicate if task is completed
-/*const taskIncomplete = ". [ ] - ";
-const taskComplete = ". [x] - ";*/
-
 // Read the third argument from command line to add into todoItems array
 jsonfile.readFile(file, (err, obj) => {
 
