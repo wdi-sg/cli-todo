@@ -16,6 +16,7 @@ class ToDoListItem {
         this.item = item;
         this.isDone = isDone;
         this.dateCreated = new Date();
+        this.dateUpdated = new Date();
     }
 }
 
@@ -79,13 +80,15 @@ const markedDone = (inputNo) => {
     }
     var indexNo = inputNo - 1;
     toDoItems[indexNo].isDone = true;
+    toDoItems[indexNo].dateUpdated = new Date();
 }
 
 const listToDoListItems = () => {
     for (let i = 0; i < toDoItems.length; i++) {
         let markedAsDone = toDoItems[i].isDone ? "X" : " ";
         const dateCreated = new Date(toDoItems[i].dateCreated);
-        console.log(`${i+1}. [${markedAsDone}] - ${toDoItems[i].item} - Created: ${dateCreated.getDate()}-${dateCreated.getMonth()+1}-${dateCreated.getFullYear()}`);
+        const dateUpdated = new Date(toDoItems[i].dateUpdated);
+        console.log(`${i+1}. [${markedAsDone}] - ${toDoItems[i].item} - Created: ${dateCreated.getDate()}-${dateCreated.getMonth()+1}-${dateCreated.getFullYear()} - Updated: ${dateUpdated.getDate()}-${dateUpdated.getMonth()+1}-${dateUpdated.getFullYear()}`);
     }
 }
 
