@@ -31,6 +31,9 @@ const whatCommand = () => {
         case 'done':
             markedDone(commandArg);
             break;
+        case 'delete':
+            deleteItem(commandArg);
+            break;
         default:
             console.log('Not a valid command');
             break;
@@ -84,6 +87,16 @@ const listToDoListItems = () => {
         const dateCreated = new Date(toDoItems[i].dateCreated);
         console.log(`${i+1}. [${markedAsDone}] - ${toDoItems[i].item} - Created: ${dateCreated.getDate()}-${dateCreated.getMonth()+1}-${dateCreated.getFullYear()}`);
     }
+}
+
+const deleteItem = (inputNo) => {
+  inputNo = parseInt(inputNo);
+  if (inputNo <= 0 || inputNo > toDoItems.length || !inputNo) {
+    console.log('Error please put in a valid number');
+    return;
+}
+  let indexNo = inputNo - 1;
+  toDoItems.splice(indexNo, 1);
 }
 
 jsonfile.readFile(file, onFileRead);
