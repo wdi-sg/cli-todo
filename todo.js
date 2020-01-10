@@ -8,19 +8,24 @@ var addToList = (task)=>{
  jsonfile.readFile(file, (err, obj) => {
 
   console.log(obj);
-  obj["todoItems"].push(task);
+  var taskObj = {
+    "task":task,
+    "completeTask":"[ ]"
+  }
+  obj["todoItems"].push(taskObj);
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err);
   });
-  console.log(obj["todoItems"]);
-  displayTask(obj["todoItems"]);
+   displayTask(obj["todoItems"]);
 });
 }
+
 var displayTask = (tasks) => {
     for(var i = 0; i <tasks.length; i++){
-        console.log((i+1)+'. [ ] - ' + tasks[i]);
+        console.log((i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]);
     }
 }
+
 if(commandType === "add" && task!== null){
     addToList(task);
 }
