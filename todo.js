@@ -14,6 +14,7 @@ var addToList = (task)=>{
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err);
   });
+      show();
 });
 }
 
@@ -25,10 +26,23 @@ var show = () => {
     }
 });
 }
-
+var done = (taskNum) =>{
+jsonfile.readFile(file, (err, obj) => {
+  if(taskNumber > 0 && taskNumber <= obj["todoItems"].length)
+     obj["todoItems"][taskNumber-1]["completeTask"] = '[X]';
+  jsonfile.writeFile(file, obj, (err) => {
+    console.log(err);
+  });
+       show();
+});
+}
 if(commandType === "add" && task!== null){
     addToList(task);
-    show();
 }else if(commandType === "show"){
     show();
+}else if(commandType === "done" && task!== null){
+   var taskNumber = parseInt(task);
+   if(isNaN(task)=== false){
+    done(taskNumber);
+}
 }
