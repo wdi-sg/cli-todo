@@ -72,9 +72,8 @@ var createTable = (rowData) =>{
 var showTable = ()=>{
     var displayData = [];
     jsonfile.readFile(file, (err, obj) => {
-        if(obj!==null){
            var tasks = obj["todoItems"];
-
+          if(tasks.length !== 0){
            for(var i = 0;i<tasks.length;i++){
             var taskCol =" "+ (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+" ";
             var createTaskAtCol = " "+tasks[i]["created_At"]+" ";
@@ -93,15 +92,19 @@ var showTable = ()=>{
 }
 
 var show = () => {
-   jsonfile.readFile(file, (err, obj) => {
-     var tasks = obj["todoItems"];
-     for(var i = 0; i <tasks.length; i++){
+ jsonfile.readFile(file, (err, obj) => {
+    var tasks = obj["todoItems"];
+    if(tasks.length !== 0){
+       for(var i = 0; i <tasks.length; i++){
         var msg = (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+ " [created at : "+ tasks[i]["created_At"]+"]";
         if(tasks[i]["update_At"] !== ""){
             msg += "[updated at : "+ tasks[i]["update_At"] + "]";
         }
         console.log(msg);
     }
+}else{
+    console.log("No tasks added");
+}
 });
 }
 
