@@ -2,12 +2,12 @@ const jsonfile = require('jsonfile');
 const Table = require('ascii-art-table');
 
 const file = 'data.json';
-var commandType = process.argv[2];
-var task = process.argv[3];
+const commandType = process.argv[2];
+const task = process.argv[3];
 
-var getDateTime = ()=>{
-       var currentDateTime = new Date();
-        var options = {
+const getDateTime = ()=>{
+       const currentDateTime = new Date();
+        const options = {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -15,14 +15,14 @@ var getDateTime = ()=>{
         hour12: true,
         minute: "2-digit",
     };
-    var dateFormat = currentDateTime.toLocaleString("en-GB",options);
+    const dateFormat = currentDateTime.toLocaleString("en-GB",options);
     return dateFormat;
 }
 
-var addToList = (task)=>{
+const addToList = (task)=>{
    jsonfile.readFile(file, (err, obj) => {
-    var currentDateTime = getDateTime();
-    var taskObj = {
+    const currentDateTime = getDateTime();
+    const taskObj = {
         "task":task,
         "completeTask":"[ ]",
         "created_At":currentDateTime.toLocaleString(),
@@ -37,7 +37,7 @@ var addToList = (task)=>{
     show();
 });
 }
-var createTable = (rowData) =>{
+const createTable = (rowData) =>{
         Table.create({
         width : 300,
         data : rowData,
@@ -69,19 +69,19 @@ var createTable = (rowData) =>{
         console.log(rendered);
     });
 }
-var showTable = ()=>{
-    var displayData = [];
+const showTable = ()=>{
+    const displayData = [];
     jsonfile.readFile(file, (err, obj) => {
-           var tasks = obj["todoItems"];
+           const tasks = obj["todoItems"];
           if(tasks.length !== 0){
-           for(var i = 0;i<tasks.length;i++){
-            var taskCol =" "+ (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+" ";
-            var createTaskAtCol = " "+tasks[i]["created_At"]+" ";
-            var updateTaskAtCol = "            ";
+           for(let i = 0;i<tasks.length;i++){
+            let taskCol =" "+ (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+" ";
+            let createTaskAtCol = " "+tasks[i]["created_At"]+" ";
+            let updateTaskAtCol = "            ";
             if(tasks[i]["update_At"] !== ""){
                 updateTaskAtCol = tasks[i]["update_At"];
             }
-            var currentRow = [taskCol,createTaskAtCol, updateTaskAtCol];
+            const currentRow = [taskCol,createTaskAtCol, updateTaskAtCol];
             displayData.push(currentRow);
         }
         createTable(displayData);
@@ -91,12 +91,12 @@ var showTable = ()=>{
 });
 }
 
-var show = () => {
+const show = () => {
  jsonfile.readFile(file, (err, obj) => {
-    var tasks = obj["todoItems"];
+    const tasks = obj["todoItems"];
     if(tasks.length !== 0){
-       for(var i = 0; i <tasks.length; i++){
-        var msg = (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+ " [created at : "+ tasks[i]["created_At"]+"]";
+       for(let i = 0; i <tasks.length; i++){
+        let msg = (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+ " [created at : "+ tasks[i]["created_At"]+"]";
         if(tasks[i]["update_At"] !== ""){
             msg += "[updated at : "+ tasks[i]["update_At"] + "]";
         }
@@ -108,13 +108,13 @@ var show = () => {
 });
 }
 
-var done = (taskNum) =>{
+const done = (taskNum) =>{
     jsonfile.readFile(file, (err, obj) => {
-        var tasks = obj["todoItems"];
+        const tasks = obj["todoItems"];
         if(taskNumber > 0 && taskNumber <= tasks.length){
-            var currentTask = tasks[taskNumber-1];
+            const currentTask = tasks[taskNumber-1];
             if( currentTask["completeTask"] !== '[X]'){
-                var currentDateTime = getDateTime();
+                const currentDateTime = getDateTime();
                 currentTask["completeTask"] = '[X]';
                 currentTask["update_At"] = currentDateTime.toLocaleString();
                 jsonfile.writeFile(file, obj, (err) => {
@@ -131,7 +131,7 @@ var done = (taskNum) =>{
     });
 }
 
-var remove = (taskNumber)=>{
+const remove = (taskNumber)=>{
   jsonfile.readFile(file, (err, obj) => {
       if(taskNumber > 0 && taskNumber <= obj["todoItems"].length){
          obj["todoItems"].splice((taskNumber-1),1);
