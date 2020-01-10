@@ -19,6 +19,16 @@ class ToDoListItem {
     }
 }
 
+// This is simpler (even simpler just making the item in the add to=do list function).
+function MyToDoListItem(item, isDone = false) {
+    return {
+        item: item,
+        isDone: isDone,
+        dateCreated: new Date(),
+        dateUpdated: new Date() // Update this each time the object is changed.
+    }
+}
+
 // Parse argument to see what command to do. By default just give an error and list the to-do items.
 const whatCommand = () => {
     switch (commandType) {
@@ -30,6 +40,9 @@ const whatCommand = () => {
         case 'display':
             break;
         case 'done':
+            markedDone(commandArg);
+            break;
+        case 'complete':
             markedDone(commandArg);
             break;
         case 'delete':
@@ -75,8 +88,12 @@ const onFileRead = (err, obj) => {
 
 const addToDoListItem = (inputArg) => {
     console.log('adding' + inputArg);
-    let itemToPush = new ToDoListItem(inputArg, false)
-    toDoItems.push(itemToPush);
+    toDoItems.push({
+        item: inputArg,
+        isDone: false,
+        dateCreated: new Date(),
+        dateUpdated: new Date() // Update this each time the object is changed.
+    });
 }
 
 // Returns true if input number is outside of range of to-do list items.
