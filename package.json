@@ -1,0 +1,22 @@
+{
+  "name": "cli-todo",
+  "version": "1.0.0",
+  "description": "unit 2 day 2 assignmen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachellesg/cli-todo.git"
+  },
+  "author": "rachelle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rachellesg/cli-todo/issues"
+  },
+  "homepage": "https://github.com/rachellesg/cli-todo#readme",
+  "dependencies": {
+    "jsonfile": "^5.0.0"
+  }
+}

@@ -10,10 +10,10 @@ const file = 'data.json'
 
 jsonfile.readFile(file, (err, obj) => {
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+    console.log(obj);
+    obj["helloworld"] = "monkey";
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
+    jsonfile.writeFile(file, obj, (err) => {
+        console.log(err)
+    });
 });
