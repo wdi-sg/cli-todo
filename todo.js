@@ -6,9 +6,11 @@ var task = process.argv[3];
 
 var addToList = (task)=>{
  jsonfile.readFile(file, (err, obj) => {
+    var currentDateTime = new Date();
   var taskObj = {
     "task":task,
-    "completeTask":"[ ]"
+    "completeTask":"[ ]",
+    "created_At":currentDateTime.toLocaleString()
   }
   obj["todoItems"].push(taskObj);
   jsonfile.writeFile(file, obj, (err) => {
@@ -22,7 +24,7 @@ var show = () => {
    jsonfile.readFile(file, (err, obj) => {
     var tasks = obj["todoItems"];
     for(var i = 0; i <tasks.length; i++){
-        console.log((i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]);
+        console.log((i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+ " [created at : "+ tasks[i]["created_At"]+"]");
     }
 });
 }
