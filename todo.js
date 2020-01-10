@@ -12,9 +12,15 @@ var addToList = (task)=>{
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err);
   });
+  console.log(obj["todoItems"]);
+  displayTask(obj["todoItems"]);
 });
 }
-
+var displayTask = (tasks) => {
+    for(var i = 0; i <tasks.length; i++){
+        console.log((i+1)+'. [ ] - ' + tasks[i]);
+    }
+}
 if(commandType === "add" && task!== null){
     addToList(task);
 }
