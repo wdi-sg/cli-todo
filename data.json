@@ -1,1 +1,1 @@
-{"helloworld":"monkey","toDoItems":["Eat Bak Kuh Teh","Study programming","Do Stuff","Do Something else","Do Another Thing"]}
+{"helloworld":"monkey","toDoItems":[{"item":"Eat Bak Kuh Teh","isDone":true},{"item":"Do Another Thing","isDone":false},{"item":"Program in Javascript","isDone":true},{"item":"blah","isDone":false}]}
