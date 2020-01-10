@@ -5,9 +5,23 @@ const file = 'data.json';
 var commandType = process.argv[2];
 var task = process.argv[3];
 
+var getDateTime = ()=>{
+       var currentDateTime = new Date();
+        var options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        hour12: true,
+        minute: "2-digit",
+    };
+    var dateFormat = currentDateTime.toLocaleString("en-GB",options);
+    return dateFormat;
+}
+
 var addToList = (task)=>{
    jsonfile.readFile(file, (err, obj) => {
-    var currentDateTime = new Date();
+    var currentDateTime = getDateTime();
     var taskObj = {
         "task":task,
         "completeTask":"[ ]",
@@ -90,29 +104,14 @@ var show = () => {
     }
 });
 }
-var getDateTime = ()=>{
-       var currentDateTime = new Date();
-        var options = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        hour12: true,
-        minute: "2-digit",
-    };
 
-    var dateFormat = currentDateTime.toLocaleString("en-GB",options);
-    console.log(dateFormat);
-}
-getDateTime();
 var done = (taskNum) =>{
     jsonfile.readFile(file, (err, obj) => {
         var tasks = obj["todoItems"];
         if(taskNumber > 0 && taskNumber <= tasks.length){
             var currentTask = tasks[taskNumber-1];
             if( currentTask["completeTask"] !== '[X]'){
-                var currentDateTime = new Date();
-
+                var currentDateTime = getDateTime();
                 currentTask["completeTask"] = '[X]';
                 currentTask["update_At"] = currentDateTime.toLocaleString();
                 jsonfile.writeFile(file, obj, (err) => {
