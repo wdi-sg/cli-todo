@@ -17,9 +17,9 @@ jsonfile.readFile(file, (err, obj) => {
       console.log(`${i+1}. ${obj.todoItems[i]}`)
     }
   }
+  let command = process.argv[2]
 
-
-  if (process.argv[2] === "add"){
+  if (command === "add"){
     //create date
     let date = new Date()
     //push input and date into temp storage
@@ -30,19 +30,19 @@ jsonfile.readFile(file, (err, obj) => {
     display()
   }
 
-  if (process.argv[2] === "done"){
+  if (command === "done"){
+    let date = new Date()
     let arrayItem = process.argv[3]-1
+    obj.tempStorage[arrayItem].updated = `updated at: ${date.toString()}`
     //set todoItem string to X
-    obj.todoItems[arrayItem] = `[X] - ${obj.tempStorage[arrayItem].input} - ${obj.tempStorage[arrayItem].created}`
-    
+    obj.todoItems[arrayItem] = `[X] - ${obj.tempStorage[arrayItem].input} - ${obj.tempStorage[arrayItem].created} - ${obj.tempStorage[arrayItem].updated}`
     display()
   }
 
-  if (process.argv[2] === "remove"){
+  if (command === "remove"){
     let arrayItem = process.argv[3]-1
     obj.todoItems.splice(arrayItem, 1)
     obj.tempStorage.splice(arrayItem, 1)
-
     display()
   }
 
