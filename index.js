@@ -15,6 +15,7 @@ class ToDoListItem {
     constructor(item, isDone = false) {
         this.item = item;
         this.isDone = isDone;
+        this.dateCreated = new Date();
     }
 }
 
@@ -80,7 +81,8 @@ const markedDone = (inputNo) => {
 const listToDoListItems = () => {
     for (let i = 0; i < toDoItems.length; i++) {
         let markedAsDone = toDoItems[i].isDone ? "X" : " ";
-        console.log(`${i+1}. [${markedAsDone}] - ${toDoItems[i].item}`);
+        const dateCreated = new Date(toDoItems[i].dateCreated);
+        console.log(`${i+1}. [${markedAsDone}] - ${toDoItems[i].item} - Created: ${dateCreated.getDate()}-${dateCreated.getMonth()+1}-${dateCreated.getFullYear()}`);
     }
 }
 
