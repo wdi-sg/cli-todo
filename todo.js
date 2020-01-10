@@ -69,6 +69,17 @@ const createTable = (rowData) =>{
         console.log(rendered);
     });
 }
+const createHeader = () =>{
+    const artStr = String.raw`
+                __________              __
+                \__    ___/____    _____|  | __  ______
+                  |    |  \__  \  /  ___/  |/ / /  ___/
+                  |    |   / __ \_\___ \|    <  \___ \
+                  |____|  (____  /____  >__|_ \/____  >
+                               \/     \/     \/     \/
+`;
+console.log(artStr);
+}
 const showTable = ()=>{
     const displayData = [];
     jsonfile.readFile(file, (err, obj) => {
@@ -79,11 +90,12 @@ const showTable = ()=>{
             let createTaskAtCol = " "+tasks[i]["created_At"]+" ";
             let updateTaskAtCol = "            ";
             if(tasks[i]["update_At"] !== ""){
-                updateTaskAtCol = tasks[i]["update_At"];
+                updateTaskAtCol = " "+tasks[i]["update_At"]+" ";
             }
             const currentRow = [taskCol,createTaskAtCol, updateTaskAtCol];
             displayData.push(currentRow);
         }
+        createHeader();
         createTable(displayData);
     }else{
         console.log("No task added");
