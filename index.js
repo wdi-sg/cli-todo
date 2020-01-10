@@ -10,8 +10,16 @@ const file = 'data.json'
 
 jsonfile.readFile(file, (err, obj) => {
 
+ /*   if (process.argv[2] === "add" ) {
+        obj[process.argv[3]] = process.argv[4]
+    }*/
+    if (process.argv[2] === "add") {
+        obj["todoItems"].push(process.argv[3])
+    }
+
   console.log(obj);
-  obj["helloworld"] = "monkey";
+
+
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
