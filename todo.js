@@ -1,4 +1,5 @@
 const jsonfile = require('jsonfile');
+const Table = require('ascii-art-table');
 
 const file = 'data.json';
 var commandType = process.argv[2];
@@ -22,6 +23,60 @@ var addToList = (task)=>{
     show();
 });
 }
+var createTable = (rowData) =>{
+        Table.create({
+        width : 300,
+        data : rowData,
+        bars : {
+            'ul_corner' : '┏',
+            'ur_corner' : '┓',
+            'lr_corner' : '┛',
+            'll_corner' : '┗',
+            'bottom_t' : '┻',
+            'top_t' : '┳',
+            'right_t' : '┫',
+            'left_t' : '┣',
+            'intersection' : '╋',
+            'vertical' : '┃',
+            'horizontal' : '━',
+        },
+        borderColor : 'bright_white',
+        columns : [
+                {
+                    value : ' Tasks'
+                }, {
+                    value : ' Created at'
+                                    },{
+                    value : ' Updated at'
+                                    }
+            ]
+    }, function(rendered){
+        // use rendered text
+        console.log(rendered);
+    });
+}
+var showTable = ()=>{
+    var displayData = [];
+    jsonfile.readFile(file, (err, obj) => {
+        if(obj!==null){
+           var tasks = obj["todoItems"];
+
+           for(var i = 0;i<tasks.length;i++){
+            var taskCol =" "+ (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+" ";
+            var createTaskAtCol = " "+tasks[i]["created_At"]+" ";
+            var updateTaskAtCol = "            ";
+            if(tasks[i]["update_At"] !== ""){
+                updateTaskAtCol = tasks[i]["update_At"];
+            }
+            var currentRow = [taskCol,createTaskAtCol, updateTaskAtCol];
+            displayData.push(currentRow);
+        }
+        createTable(displayData);
+    }else{
+        console.log("No task added");
+    }
+});
+}
 
 var show = () => {
    jsonfile.readFile(file, (err, obj) => {
@@ -35,6 +90,21 @@ var show = () => {
     }
 });
 }
+var getDateTime = ()=>{
+       var currentDateTime = new Date();
+        var options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        hour12: true,
+        minute: "2-digit",
+    };
+
+    var dateFormat = currentDateTime.toLocaleString("en-GB",options);
+    console.log(dateFormat);
+}
+getDateTime();
 var done = (taskNum) =>{
     jsonfile.readFile(file, (err, obj) => {
         var tasks = obj["todoItems"];
@@ -42,6 +112,7 @@ var done = (taskNum) =>{
             var currentTask = tasks[taskNumber-1];
             if( currentTask["completeTask"] !== '[X]'){
                 var currentDateTime = new Date();
+
                 currentTask["completeTask"] = '[X]';
                 currentTask["update_At"] = currentDateTime.toLocaleString();
                 jsonfile.writeFile(file, obj, (err) => {
@@ -86,5 +157,6 @@ if(task!==null){
     if(isNaN(taskNum) === false){
         remove(taskNum);
     }
-}
+}else if(commandType === "showTable")
+    showTable();
 }
