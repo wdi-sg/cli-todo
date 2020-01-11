@@ -4,11 +4,6 @@ var commandType = process.argv[2];
 
 //console.log("Your command was: "+commandType);
 
-// {
-//   "todoItems": [
-//   ]
-// }
-
 const jsonfile = require('jsonfile');
 
 const file = 'data.json'
@@ -21,10 +16,6 @@ jsonfile.readFile(file, (err, obj) => {
     var choreDone = false;
     var box = "[ ] - ";
 
-    // set boolean true or false for done-ness
-
-    // don't have to store in this format
-    // only need to display in this format
     var todoList = obj.todoItems.length;
     var listNo = todoList + ". ";
     // var todoListChore = obj.todoItemsChore.length;
@@ -57,7 +48,6 @@ jsonfile.readFile(file, (err, obj) => {
                 box = " [ ] - ";
             }
             console.log(obj.todoItems[i].indexNo + ". " + box + obj.todoItems[i].chore + ", created at "  + obj.todoItems[i].createDate);
-                // +
         }
     } else if (commandType === "done") {
         //mark empty as checked
@@ -69,7 +59,9 @@ jsonfile.readFile(file, (err, obj) => {
         //console.log(listNo + box + obj.todoItems);
     } else if (commandType === "delete") {
         var listNo = parseInt(process.argv[3]-1);
+        // split array to delete specific chore
         obj.todoItems.splice(listNo,1);
+        // re-assign index numbers
         for (i = listNo; i < todoList; i++) {
             obj.todoItems[listNo].indexNo = parseInt([i]);
         }
