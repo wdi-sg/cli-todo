@@ -39,8 +39,10 @@ jsonfile.readFile(file, (err, obj) => {
 
     if (commandType === "add") {
         choreDone === false;
+        var date = new Date();
         obj.todoItems.push(chore);
         obj.todoItemsChore.push(choreDone);
+        obj.todoItemsCreated.push(date);
     } else if (commandType === "show") {
         for (i = 0; i < todoList; i++) {
             checkDoneChores();
@@ -61,7 +63,11 @@ jsonfile.readFile(file, (err, obj) => {
         console.log(chore + box + obj.todoItems[listNo]);
         //console.log(listNo + box + obj.todoItems);
     } else if (commandType === "delete") {
-        obj.todoItems.pop()
+        var listNo = parseInt(process.argv[3]-1);
+        obj.todoItems.splice(listNo,1);
+        obj.todoItemsChore.splice(listNo,1);
+        obj.todoItemsCreated.splice(listNo,1);
+        // obj.todoItems.pop()
     }
 
     jsonfile.writeFile(file, obj, (err) => {
