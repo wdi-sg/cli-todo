@@ -19,54 +19,59 @@ jsonfile.readFile(file, (err, obj) => {
     // obj["helloworld"] = "monkey";
 
     var choreDone = false;
-    var box;
+    var box = "[ ] - ";
 
     // set boolean true or false for done-ness
 
     // don't have to store in this format
     // only need to display in this format
     var todoList = obj.todoItems.length;
-    var todoListChore = obj.todoItemsChore.length;
+    var listNo = todoList + ". ";
+    // var todoListChore = obj.todoItemsChore.length;
     let chore = process.argv[3];
 
     function checkDoneChores() {
-        if (choreDone === true) {
+        if (obj.todoItems.choreDone === true) {
             box = " [X] - ";
-        } else if (choreDone === false) {
+        } else if (obj.todoItems.choreDone === false) {
             box = " [ ] - ";
         }
     }
 
     if (commandType === "add") {
-        choreDone === false;
         var date = new Date();
-        obj.todoItems.push(chore);
-        obj.todoItemsChore.push(choreDone);
-        obj.todoItemsCreated.push(date);
+        obj.todoItems.push({
+            indexNo: parseInt(obj.todoItems.length+1),
+            chore: chore,
+            choreDone: false,
+            createDate: date
+        });
+        // obj.todoItems.push(chore);
+        // obj.todoItemsChore.push(choreDone);
+        // obj.todoItemsCreated.push(date);
     } else if (commandType === "show") {
         for (i = 0; i < todoList; i++) {
-            checkDoneChores();
-            var listNo = parseInt(parseInt([i]) + 1) + ". ";
-            if (obj.todoItemsChore[i] === true) {
+            if (obj.todoItems[i].choreDone === true) {
                 box = " [X] - ";
-            } else if (obj.todoItemsChore[i] = true === false) {
+            } else if (obj.todoItems[i].choreDone === false) {
                 box = " [ ] - ";
             }
-            console.log(listNo + box + obj.todoItems[i]);
+            console.log(obj.todoItems[i].indexNo + ". " + box + obj.todoItems[i].chore + ", created at "  + obj.todoItems[i].createDate);
                 // +
         }
     } else if (commandType === "done") {
         //mark empty as checked
         var listNo = parseInt(process.argv[3]-1);
-        obj.todoItemsChore[listNo] = true;
-        box = " [X] - ";
-        console.log(chore + box + obj.todoItems[listNo]);
+        obj.todoItems[listNo].choreDone = true;
+        box = "[X] - ";
+        console.log(obj.todoItems[listNo].indexNo + ". " + box + obj.todoItems[listNo].chore + ", created at "  + obj.todoItems[listNo].createDate);
+        // console.log(chore + box + obj.todoItems[listNo]);
         //console.log(listNo + box + obj.todoItems);
     } else if (commandType === "delete") {
         var listNo = parseInt(process.argv[3]-1);
-        obj.todoItems.splice(listNo,1);
-        obj.todoItemsChore.splice(listNo,1);
-        obj.todoItemsCreated.splice(listNo,1);
+        // obj.todoItems.splice(listNo,1);
+        // obj.todoItemsChore.splice(listNo,1);
+        // obj.todoItemsCreated.splice(listNo,1);
         // obj.todoItems.pop()
     }
 
