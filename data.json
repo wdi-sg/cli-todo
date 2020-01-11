@@ -1,28 +1,39 @@
 {
   "todoItems": [
     {
-      "chore": "sleep",
+      "chore": "eat",
       "choreDone": false,
-      "createDate": "2020-01-11T10:20:46.605Z",
-      "indexNo": 1
+      "createDate": "2020-01-11T10:40:32.314Z",
+      "indexNo": 1,
+      "updatedDate": "2020-01-11T10:40:32.314Z"
     },
     {
-      "chore": "eat",
-      "choreDone": true,
-      "createDate": "2020-01-11T10:20:49.127Z",
-      "indexNo": 2
+      "chore": "sleep",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:40:36.084Z",
+      "indexNo": 2,
+      "updatedDate": "2020-01-11T10:40:36.084Z"
     },
     {
       "chore": "do laundry",
-      "choreDone": false,
-      "createDate": "2020-01-11T10:27:51.981Z",
-      "indexNo": 3
+      "choreDone": true,
+      "createDate": "2020-01-11T10:40:40.724Z",
+      "indexNo": 3,
+      "updatedDate": "2020-01-11T10:40:40.724Z"
     },
     {
-      "chore": "mop floor",
+      "chore": "fix bug",
       "choreDone": false,
-      "createDate": "2020-01-11T10:27:56.028Z",
-      "indexNo": 4
+      "createDate": "2020-01-11T10:40:46.033Z",
+      "indexNo": 4,
+      "updatedDate": "2020-01-11T10:40:46.033Z"
+    },
+    {
+      "chore": "code app",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:40:49.667Z",
+      "indexNo": 5,
+      "updatedDate": "2020-01-11T10:40:49.667Z"
     }
   ]
 }

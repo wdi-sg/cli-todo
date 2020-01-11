@@ -15,6 +15,7 @@ jsonfile.readFile(file, (err, obj) => {
 
     var choreDone = false;
     var box = "[ ] - ";
+    var completedDate;
 
     var todoList = obj.todoItems.length;
     var listNo = todoList + ". ";
@@ -35,7 +36,8 @@ jsonfile.readFile(file, (err, obj) => {
             indexNo: parseInt(obj.todoItems.length+1),
             chore: chore,
             choreDone: false,
-            createDate: date
+            createDate: date,
+            updatedDate: date
         });
         // obj.todoItems.push(chore);
         // obj.todoItemsChore.push(choreDone);
@@ -44,15 +46,18 @@ jsonfile.readFile(file, (err, obj) => {
         for (i = 0; i < todoList; i++) {
             if (obj.todoItems[i].choreDone === true) {
                 box = " [X] - ";
+                completedDate = " completed at: " + obj.todoItems[i].updatedDate;
             } else if (obj.todoItems[i].choreDone === false) {
                 box = " [ ] - ";
+                completedDate = " ";
             }
-            console.log(obj.todoItems[i].indexNo + ". " + box + obj.todoItems[i].chore + ", created at "  + obj.todoItems[i].createDate);
+            console.log(obj.todoItems[i].indexNo + ". " + box + obj.todoItems[i].chore + ", created at "  + obj.todoItems[i].createDate +  completedDate);
         }
     } else if (commandType === "done") {
         //mark empty as checked
         var listNo = parseInt(process.argv[3]-1);
         obj.todoItems[listNo].choreDone = true;
+        updatedDate = new Date();
         box = "[X] - ";
         console.log(obj.todoItems[listNo].indexNo + ". " + box + obj.todoItems[listNo].chore + ", created at "  + obj.todoItems[listNo].createDate);
         // console.log(chore + box + obj.todoItems[listNo]);
