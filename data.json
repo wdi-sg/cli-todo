@@ -1,20 +1,28 @@
 {
   "todoItems": [
-    "mop floor",
-    "edit code",
-    "fix bug",
-    "walk the dog"
-  ],
-  "todoItemsChore": [
-    false,
-    false,
-    true,
-    false
-  ],
-  "todoItemsCreated": [
-    "2020-01-11T03:30:39.747Z",
-    "2020-01-11T03:30:44.407Z",
-    "2020-01-11T03:30:50.214Z",
-    "2020-01-11T03:31:03.451Z"
+    {
+      "chore": "sleep",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:20:46.605Z",
+      "indexNo": 1
+    },
+    {
+      "chore": "eat",
+      "choreDone": true,
+      "createDate": "2020-01-11T10:20:49.127Z",
+      "indexNo": 2
+    },
+    {
+      "chore": "do laundry",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:27:51.981Z",
+      "indexNo": 3
+    },
+    {
+      "chore": "mop floor",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:27:56.028Z",
+      "indexNo": 4
+    }
   ]
 }
