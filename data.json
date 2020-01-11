@@ -1,1 +1,28 @@
-{"todoItems":[{"chore":"sleep","choreDone":false,"createDate":"2020-01-11T10:20:46.605Z","indexNo":1},{"chore":"eat","choreDone":true,"createDate":"2020-01-11T10:20:49.127Z","indexNo":2},{"chore":"do laundry","choreDone":false,"createDate":"2020-01-11T10:27:51.981Z","indexNo":3},{"chore":"mop floor","choreDone":false,"createDate":"2020-01-11T10:27:56.028Z","indexNo":4}]}
+{
+  "todoItems": [
+    {
+      "chore": "sleep",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:20:46.605Z",
+      "indexNo": 1
+    },
+    {
+      "chore": "eat",
+      "choreDone": true,
+      "createDate": "2020-01-11T10:20:49.127Z",
+      "indexNo": 2
+    },
+    {
+      "chore": "do laundry",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:27:51.981Z",
+      "indexNo": 3
+    },
+    {
+      "chore": "mop floor",
+      "choreDone": false,
+      "createDate": "2020-01-11T10:27:56.028Z",
+      "indexNo": 4
+    }
+  ]
+}
