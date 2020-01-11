@@ -59,6 +59,7 @@ jsonfile.readFile(file, (err, obj) => {
         obj.todoItems[listNo].choreDone = true;
         updatedDate = new Date();
         box = "[X] - ";
+        obj.todoItems[listNo].updatedDate = updatedDate;
         console.log(obj.todoItems[listNo].indexNo + ". " + box + obj.todoItems[listNo].chore + ", created at "  + obj.todoItems[listNo].createDate);
         // console.log(chore + box + obj.todoItems[listNo]);
         //console.log(listNo + box + obj.todoItems);

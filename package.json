@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rachellesg/cli-todo#readme",
   "dependencies": {
+    "ascii-art": "^2.5.0",
     "jsonfile": "^5.0.0"
   }
 }

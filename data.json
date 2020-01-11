@@ -9,17 +9,17 @@
     },
     {
       "chore": "sleep",
-      "choreDone": false,
+      "choreDone": true,
       "createDate": "2020-01-11T10:40:36.084Z",
       "indexNo": 2,
-      "updatedDate": "2020-01-11T10:40:36.084Z"
+      "updatedDate": "2020-01-11T10:59:33.200Z"
     },
     {
       "chore": "do laundry",
       "choreDone": true,
       "createDate": "2020-01-11T10:40:40.724Z",
       "indexNo": 3,
-      "updatedDate": "2020-01-11T10:40:40.724Z"
+      "updatedDate": "2020-01-11T10:59:43.742Z"
     },
     {
       "chore": "fix bug",
