@@ -69,10 +69,10 @@ jsonfile.readFile(file, (err, obj) => {
         //console.log(listNo + box + obj.todoItems);
     } else if (commandType === "delete") {
         var listNo = parseInt(process.argv[3]-1);
-        // obj.todoItems.splice(listNo,1);
-        // obj.todoItemsChore.splice(listNo,1);
-        // obj.todoItemsCreated.splice(listNo,1);
-        // obj.todoItems.pop()
+        obj.todoItems.splice(listNo,1);
+        for (i = listNo; i < todoList; i++) {
+            obj.todoItems[listNo].indexNo = parseInt([i]);
+        }
     }
 
     jsonfile.writeFile(file, obj, (err) => {
