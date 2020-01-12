@@ -5,6 +5,7 @@ var commandType = process.argv[2];
 //console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
+const moment = require('moment');
 
 const file = 'data.json'
 
@@ -22,16 +23,8 @@ jsonfile.readFile(file, (err, obj) => {
     // var todoListChore = obj.todoItemsChore.length;
     let chore = process.argv[3];
 
-    function checkDoneChores() {
-        if (obj.todoItems.choreDone === true) {
-            box = " [X] - ";
-        } else if (obj.todoItems.choreDone === false) {
-            box = " [ ] - ";
-        }
-    }
-
     if (commandType === "add") {
-        var date = new Date();
+        var date = moment().format('MMMM Do YYYY, h:mm:ss a');;
         obj.todoItems.push({
             indexNo: parseInt(obj.todoItems.length+1),
             chore: chore,
@@ -57,10 +50,10 @@ jsonfile.readFile(file, (err, obj) => {
         //mark empty as checked
         var listNo = parseInt(process.argv[3]-1);
         obj.todoItems[listNo].choreDone = true;
-        updatedDate = new Date();
-        box = "[X] - ";
+        updatedDate = moment().format('MMMM Do YYYY, h:mm:ss a');;
+        // box = "[X] - ";
         obj.todoItems[listNo].updatedDate = updatedDate;
-        console.log(obj.todoItems[listNo].indexNo + ". " + box + obj.todoItems[listNo].chore + ", created at "  + obj.todoItems[listNo].createDate);
+        // console.log(obj.todoItems[listNo].indexNo + ". " + box + obj.todoItems[listNo].chore + ", created at "  + obj.todoItems[listNo].createDate);
         // console.log(chore + box + obj.todoItems[listNo]);
         //console.log(listNo + box + obj.todoItems);
     } else if (commandType === "delete") {
