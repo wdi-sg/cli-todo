@@ -5,15 +5,20 @@ const file = 'data.json'
 
 switch (commandType) {
     case "add":
-        jsonfile.readFile(file, (err, obj) => {
-            obj.toDoItems.push(commandString);
-            obj.done.push(false);
-            jsonfile.writeFile(file, obj, (err) => {
-                if (err != null) {
-                    console.log(err);
-                } // closing bracket for "if"
-            }); //closing bracket for "writeFile"
-        }); //closing bracket for "readFile"
+        if (process.argv[4] == undefined) {
+            jsonfile.readFile(file, (err, obj) => {
+                obj.toDoItems.push(commandString);
+                obj.done.push(false);
+                console.log("Added '" + commandString + "' to ToDo List.");
+                jsonfile.writeFile(file, obj, (err) => {
+                    if (err != null) {
+                        console.log(err);
+                    } // closing bracket for "if"
+                }); //closing bracket for "writeFile"
+            }); //closing bracket for "readFile"
+        } else {
+            console.log("Please keep the toDo Item in 1 string.")
+        } //closing bracket for if and else
     break;
     case "show":
         jsonfile.readFile(file, (err,obj) => {
