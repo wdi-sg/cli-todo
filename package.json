@@ -18,6 +18,7 @@
   "homepage": "https://github.com/JessT8/cli-todo#readme",
   "dependencies": {
     "ascii-art-table": "^1.0.1",
+    "commander": "^4.1.0",
     "jsonfile": "^5.0.0"
   }
 }
