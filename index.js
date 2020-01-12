@@ -1,6 +1,7 @@
 const jsonfile = require('jsonfile');
 const figlet = require('figlet')
 const file = 'data.json'
+const moment = require('moment')
 
 //ASCII Art
 figlet.text('To-do List', {
@@ -41,7 +42,7 @@ figlet.text('To-do List', {
 
     if (command === "add") {
       //create date
-      let date = new Date()
+      let date = moment().format('MMM Do YY, h:mm:ss a')
       //push input and date into temp storage
       obj.tempStorage.push({
         input: input,
@@ -54,11 +55,9 @@ figlet.text('To-do List', {
       obj.todoItems.push(`[ ] - ${input} - ${dateValue}`)
 
       display()
-    }
-
-    if (command === "done") {
+    } else if (command === "done") {
       //set update date to todo
-      let date = new Date()
+      let date = moment().format('MMM Do YY, h:mm:ss a')
 
       //variables for better readability
       let arrayItem = input - 1
@@ -74,16 +73,15 @@ figlet.text('To-do List', {
       obj.todoItems[arrayItem] = `[X] - ${todo} - ${createdDate} - ${updatedDate}`
 
       display()
-    }
-
-    if (command === "remove") {
+    } else if (command === "remove") {
       let arrayItem = input - 1
       //remove array item from todo and temp array
       obj.todoItems.splice(arrayItem, 1)
       obj.tempStorage.splice(arrayItem, 1)
       display()
-    }
-
+    } else {
+	console.log("Please type valid command: add <todo>, done <todo-number>, remove <todo-number>")
+}
     jsonfile.writeFile(file, obj, (err) => {
       if (err) {
         return console.log(err)
