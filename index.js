@@ -13,17 +13,15 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json';
 
-var counter = 0; // to track count of items in array
-
 
 jsonfile.readFile(file, (err, obj) => {
     console.log(obj);
 //generate number and brackets
+    var counter = 0; // to track count of items in array
     for (var i = 0 ; i <= obj['todoItems'].length ; i++) {
     counter = counter + 1;
     }
     let openTaskNum = `${counter}. [ ]`;
-
 
     if (process.argv[2] == 'add'){
         let task = process.argv[3];
