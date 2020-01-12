@@ -25,6 +25,9 @@ switch (commandType) {
     break;
     case "show":
         jsonfile.readFile(file, (err,obj) => {
+            if (obj.done.length <= 0) {
+                console.log("ToDo List is empty")
+            } //closing bracket for if statement
             for (var i = 0; i < obj.toDoItems.length; i++) {
                 if (obj.done[i] == false) {
                     console.log(i + 1 + ". [   ] - "+ obj.toDoItems[i]);
@@ -44,7 +47,7 @@ switch (commandType) {
                 obj.updatedAt[(praseCString - 1)] = Date();
                 console.log(commandString + ". '" + obj.toDoItems[(praseCString - 1)] + "' is done.");
             } else {
-                console.log("Invalid Input");
+                console.log("Invalid Input 'done'");
             }
                 jsonfile.writeFile(file, obj, (err) => {
                     if (err != null) {
@@ -54,7 +57,22 @@ switch (commandType) {
             }); //closing bracket for "readFile"
     break;
     case "remove":
-        console.log("Not quite done yet");
+        jsonfile.readFile(file, (err, obj) => {
+            if (obj.toDoItems[(praseCString - 1)] !== undefined) {
+                console.log(obj.toDoItems[(praseCString - 1)] + " is removed");
+                obj.toDoItems.splice((praseCString - 1), 1);
+                obj.done.splice((praseCString - 1), 1);
+                obj.createdAt.splice((praseCString - 1), 1);
+                obj.updatedAt.splice((praseCString - 1), 1);
+            } else {
+                console.log("Invalid Input 'remove'");
+            }
+                jsonfile.writeFile(file, obj, (err) => {
+                    if (err != null) {
+                        console.log(err);
+                    } // closing bracket for "if"
+                }); //closing bracket for "writeFile"
+            }); //closing bracket for "readFile"
     break;
     default:
         console.log("Please type a recognizable command. Eg. 'add', 'show' or 'done'");
