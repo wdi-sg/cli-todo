@@ -20,7 +20,7 @@ figlet.text('To-do List', {
   //ACTUAL PROGRAM
   jsonfile.readFile(file, (err, obj) => {
 
-    if (err){
+    if (err) {
       return console.log(err)
     }
     const display = () => {
@@ -40,7 +40,10 @@ figlet.text('To-do List', {
     let command = process.argv[2]
     let input = process.argv[3]
 
-    if (command === "add") {
+    if (command === "show") {
+      display()
+
+    } else if (command === "add") {
       //create date
       let date = moment().format('MMM Do YY, h:mm:ss a')
       //push input and date into temp storage
@@ -55,6 +58,7 @@ figlet.text('To-do List', {
       obj.todoItems.push(`[ ] - ${input} - ${dateValue}`)
 
       display()
+
     } else if (command === "done") {
       //set update date to todo
       let date = moment().format('MMM Do YY, h:mm:ss a')
@@ -63,7 +67,7 @@ figlet.text('To-do List', {
       let arrayItem = input - 1
       let todo = obj.tempStorage[arrayItem].input
       let createdDate = obj.tempStorage[arrayItem].created
-      
+
 
       //create updated key and create variable for it
       obj.tempStorage[arrayItem].updated = `updated at: ${date}`
@@ -73,15 +77,19 @@ figlet.text('To-do List', {
       obj.todoItems[arrayItem] = `[X] - ${todo} - ${createdDate} - ${updatedDate}`
 
       display()
+
     } else if (command === "remove") {
       let arrayItem = input - 1
       //remove array item from todo and temp array
       obj.todoItems.splice(arrayItem, 1)
       obj.tempStorage.splice(arrayItem, 1)
       display()
+
     } else {
-	console.log("Please type valid command: add <todo>, done <todo-number>, remove <todo-number>")
-}
+      display()
+      console.log("Please type valid command: show, add <todo>, done <todo-number>, remove <todo-number>")
+    }
+
     jsonfile.writeFile(file, obj, (err) => {
       if (err) {
         return console.log(err)
@@ -89,7 +97,4 @@ figlet.text('To-do List', {
 
     });
   });
-
-
-
 });
