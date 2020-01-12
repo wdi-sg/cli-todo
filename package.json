@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Flashrob/cli-todo#readme",
   "dependencies": {
+    "figlet": "^1.2.4",
     "jsonfile": "^5.0.0"
   }
 }
