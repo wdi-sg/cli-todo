@@ -1,3 +1,4 @@
+//package installed and to be used
 const jsonfile = require('jsonfile');
 const Table = require('ascii-art-table');
 
@@ -5,6 +6,7 @@ const file = 'data.json';
 const commandType = process.argv[2];
 const task = process.argv[3];
 
+//get formated date and time
 const getDateTime = ()=>{
        const currentDateTime = new Date();
         const options = {
@@ -19,24 +21,8 @@ const getDateTime = ()=>{
     return dateFormat;
 }
 
-const addToList = (task)=>{
-   jsonfile.readFile(file, (err, obj) => {
-    const currentDateTime = getDateTime();
-    const taskObj = {
-        "task":task,
-        "completeTask":"[ ]",
-        "created_At":currentDateTime.toLocaleString(),
-        "update_At" :""
-    }
-    obj["todoItems"].push(taskObj);
-    jsonfile.writeFile(file, obj, (err) => {
-      if(err!==null){
-        console.log(err);
-    }
-});
-    show();
-});
-}
+///////////////////////////For displaying tasks//////////////////////////////////
+/*table of ascii-table package installed format*/
 const createTable = (rowData) =>{
         Table.create({
         width : 300,
@@ -69,6 +55,7 @@ const createTable = (rowData) =>{
         console.log(rendered);
     });
 }
+//header of table to be shown with list of tasks
 const createHeader = () =>{
     const artStr = String.raw`
                 __________              __
@@ -80,7 +67,8 @@ const createHeader = () =>{
 `;
 console.log(artStr);
 }
-const showTable = ()=>{
+/*show the current list of tasks added using ascii-table package and string literal templates*/
+const show = ()=>{
     const displayData = [];
     jsonfile.readFile(file, (err, obj) => {
            const tasks = obj["todoItems"];
@@ -98,29 +86,36 @@ const showTable = ()=>{
         createHeader();
         createTable(displayData);
     }else{
-        console.log("No task added");
+        console.log("No task");
     }
 });
 }
 
-const show = () => {
- jsonfile.readFile(file, (err, obj) => {
-    const tasks = obj["todoItems"];
-    if(tasks.length !== 0){
-       for(let i = 0; i <tasks.length; i++){
-        let msg = (i+1)+'. '+tasks[i]["completeTask"] +' - ' + tasks[i]["task"]+ " [created at : "+ tasks[i]["created_At"]+"]";
-        if(tasks[i]["update_At"] !== ""){
-            msg += "[updated at : "+ tasks[i]["update_At"] + "]";
-        }
-        console.log(msg);
+
+///////////////////////////End of function related to showing tasks///////
+
+//add new tasks to list
+const addToList = (task)=>{
+   jsonfile.readFile(file, (err, obj) => {
+    const currentDateTime = getDateTime();
+    const taskObj = {
+        "task":task,
+        "completeTask":"[ ]",
+        "created_At":currentDateTime.toLocaleString(),
+        "update_At" :""
     }
-}else{
-    console.log("No tasks added");
-}
+    obj["todoItems"].push(taskObj);
+    jsonfile.writeFile(file, obj, (err) => {
+      if(err!==null){
+        console.log(err);
+    }
+});
+    show();
 });
 }
 
-const done = (taskNum) =>{
+/*update task based on number passed in using the taskNumber-1 to get the actual element in the array and updating the status of the task to change the string to '[x]' from '[]'*/
+const done = (taskNumber) =>{
     jsonfile.readFile(file, (err, obj) => {
         const tasks = obj["todoItems"];
         if(taskNumber > 0 && taskNumber <= tasks.length){
@@ -138,13 +133,15 @@ const done = (taskNum) =>{
                 console.log("Already updated!");
             }
             show();
-
+        }else{
+            console.log("Invalid input");
         }
     });
 }
-
+//remove task
 const remove = (taskNumber)=>{
   jsonfile.readFile(file, (err, obj) => {
+    //check if number is valid
       if(taskNumber > 0 && taskNumber <= obj["todoItems"].length){
          obj["todoItems"].splice((taskNumber-1),1);
          jsonfile.writeFile(file, obj, (err) => {
@@ -152,25 +149,31 @@ const remove = (taskNumber)=>{
                 console.log(err);
             }
         });
-         show;
+         console.log("Removed");
+         show();
+     }else{
+        console.log("Invalid input");
      }
  });
 }
-if(task!==null){
-    if(commandType === "add"){
-        addToList(task);
-    }else if(commandType === "show"){
-        show();
-    }else if(commandType === "done"){
-       var taskNumber = parseInt(task);
-       if(isNaN(task)=== false){
-        done(taskNumber);
+//Display according to user input
+var currentInput = function(){
+    if(task!==null){
+        if(commandType === "add"){
+            addToList(task);
+        }else if(commandType === "show"){
+            show();
+        }else if(commandType === "done"){
+         var taskNumber = parseInt(task);
+         if(isNaN(task)=== false){
+            done(taskNumber);
+        }
+    }else if(commandType === "remove"){
+        var taskNum = parseInt(task);
+        if(isNaN(taskNum) === false){
+            remove(taskNum);
+        }
     }
-}else if(commandType === "remove"){
-    var taskNum = parseInt(task);
-    if(isNaN(taskNum) === false){
-        remove(taskNum);
-    }
-}else if(commandType === "showTable")
-    showTable();
 }
+}
+currentInput();
