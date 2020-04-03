@@ -42,4 +42,16 @@ if(process.argv[2] === "done"){
     })
 }
 
-console.log(Date.now())
+if (process.argv[2] === 'del'){
+    jsonfile.readFile(file, (err, obj) => {
+        obj['toDoItems'].splice(process.argv[3], 1);
+
+        console.log(err);
+
+        jsonfile.writeFile(file, obj, (error) => {
+            console.log(obj);
+            console.log(error);
+        })
+    })
+
+}
