@@ -6,7 +6,7 @@ const file = 'data.json'
 if(process.argv[2] === "add"){
     jsonfile.readFile(file, (err, obj) => {
 
-      obj["toDoItems"].push(obj["toDoItems"].length + ". [ ] - " + process.argv[3]);
+      obj["toDoItems"].push(obj["toDoItems"].length + ". [ ] - " + process.argv[3] + " | created_at: " + Date());
 
       if(err){
         console.log(err);
@@ -41,3 +41,5 @@ if(process.argv[2] === "done"){
         })
     })
 }
+
+console.log(Date.now())
