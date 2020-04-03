@@ -136,7 +136,7 @@ function deleteObject(obj, idStatus){
             break;
         }
     }
-    return updateId(obj);
+    return updateId( obj );
 }
 
 function activateReadWrite(word, input)
@@ -151,57 +151,54 @@ jsonfile.readFile(file, (err, obj) => {
 
     if(isEmpty( obj ))
         {
-            console.log("test");
-            createNewObject(obj, input);
-            //console.log( "It is null" );
+            console.log( "test" );
+            createNewObject( obj, input );
+
         }
     else
         {
-            addNewObject(obj, input);
+            addNewObject( obj, input );
         }
 
     }
-    else if(word === "show")
+    else if( word === "show" )
     {
 
-        showData(obj);
+        showData( obj );
     }
 
-    else if(word=== "done" && !isNaN(parseInt(input)))
+    else if(word === "done" && !isNaN(parseInt(input)))
     {
         console.log(" we are here");
         let idCheck=parseInt(input);
-        changeStatus(obj,idCheck);
+        changeStatus( obj, idCheck );
 
     }
-    else if(word=== "delete" && !isNaN(parseInt(input)))
+    else if( word === "delete" && !isNaN(parseInt(input)))
     {
         //console.log(obj);
         console.log(" we are here");
-        let idDelete=parseInt(input);
-        obj=deleteObject(obj,idDelete);
+        let idDelete = parseInt( input );
+        obj = deleteObject( obj, idDelete );
         //console.log(obj);
 
     }
 
 
-  if(err){
-    console.log("The error from reading is is "+err);
+  if( err ){
+    console.log( "The error from reading is is " + err );
   }
 //  obj["helloworld"] = "monkey";
 
-jsonfile.writeFile(file, obj, (err) => {
-    if(err)
+jsonfile.writeFile( file, obj, ( err ) => {
+    if( err )
     {   console.log(err);
-        console.log("The writing error is " + err)
+        console.log("The writing error is " + err )
     }
   });
 });
 }
 
-function show(letter,value){
-    console.log(letter+"test"+value);
-}
 
 const { program } = require('commander');
 
@@ -213,7 +210,7 @@ const { program } = require('commander');
         .option("-d, --done <type>")
         .option("-de, --del <type>");
     program.parse(process.argv);
-    if(program.value) activateReadWrite ("add",program.value);
-    if (program.show) activateReadWrite ("show","");
-    if (program.done) activateReadWrite ("done",program.done);
-    if (program.del) activateReadWrite   ("delete", program.del);
+    if( program.value ) activateReadWrite ( "add" , program.value );
+    if ( program.show ) activateReadWrite ( "show" , "" );
+    if ( program.done ) activateReadWrite ( "done" , program.done );
+    if ( program.del ) activateReadWrite   ( "delete" , program.del );
