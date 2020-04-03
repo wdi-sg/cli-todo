@@ -72,9 +72,30 @@ function showData(obj){
     }
 }
 
+///////-------------------------------------------------------------------//////////
+///////-------------------------------------------------------------------//////////
+///////-------------------------------------------------------------------//////////
+///////-------------------------------------------------------------------//////////
+///////-------------------------------------------------------------------//////////
+///////-------------------------------------------------------------------//////////
+///////--------------------To change  status to done----------------------//////////
+function changeStatus(obj, idStatus){
+    for (let countObject = 0 ; countObject < obj["toDoItems"].length; countObject++)
+    {
+        if(idStatus===obj["toDoItems"][countObject]["id"])
+        {
+            obj["toDoItems"][countObject]["status"]="[X]";
+        }
+    }
+}
+
+
+
+
+
 jsonfile.readFile(file, (err, obj) => {
 
-  console.log( obj);
+
   //console.log( process.argv[3]);
 
   if(process.argv[ 2 ] === "add" && process.argv[ 3 ] !== undefined)
@@ -96,6 +117,12 @@ jsonfile.readFile(file, (err, obj) => {
         showData(obj);
     }
 
+    else if(process.argv[2]=== "done" && !isNaN(parseInt(process.argv[ 3 ])))
+    {
+        let idCheck=parseInt(process.argv[ 3 ]);
+        changeStatus(obj,idCheck);
+
+    }
 
 
   if(err){
