@@ -32,7 +32,7 @@ function createNewObject(obj){
                                 {   "id":1,
                                     "task":process.argv[3],
                                     "status":"[ ]",
-                                    "created at":"15/03/20",
+                                    "created at":Date(),
                                     "completed at": "Not Yet"
                                 }
                             ]
@@ -52,7 +52,7 @@ function addNewObject(obj){
                                     "id":obj["toDoItems"].length+1,
                                     "task":process.argv[3],
                                     "status":"[ ]",
-                                    "created at":"15/03/20",
+                                    "created at":Date(),
                                     "completed at": "Not Yet"
                                     }
                                 )
@@ -66,9 +66,18 @@ function addNewObject(obj){
 ///////-------------------------------------------------------------------//////////
 ///////--------------------To show data-----------------------------------//////////
 function showData(obj){
+
+    console.log(`#   ▄▀▀█▄▄   ▄▀▀█▄   ▄▀▀█▀▄   ▄▀▀▀▀▄  ▄▀▀▄ ▀▀▄      ▄▀▀▀█▀▀▄  ▄▀▀█▄   ▄▀▀▀▀▄  ▄▀▀▄ █
+#  █ ▄▀   █ ▐ ▄▀ ▀▄ █   █  █ █    █  █   ▀▄ ▄▀     █    █  ▐ ▐ ▄▀ ▀▄ █ █   ▐ █  █ ▄▀
+#  ▐ █    █   █▄▄▄█ ▐   █  ▐ ▐    █  ▐     █       ▐   █       █▄▄▄█    ▀▄   ▐  █▀▄
+#    █    █  ▄▀   █     █        █         █          █       ▄▀   █ ▀▄   █    █   █
+#   ▄▀▄▄▄▄▀ █   ▄▀   ▄▀▀▀▀▀▄   ▄▀▄▄▄▄▄▄▀ ▄▀         ▄▀       █   ▄▀   █▀▀▀   ▄▀   █
+#  █     ▐  ▐   ▐   █       █  █         █         █         ▐   ▐    ▐      █    ▐
+#  ▐                ▐       ▐  ▐         ▐         ▐                         ▐       `);
+
     for (let countObject = 0 ; countObject < obj["toDoItems"].length; countObject++)
     {
-        console.log(`${obj["toDoItems"][countObject]["id"]}: ${obj["toDoItems"][countObject]["status"]} - ${obj["toDoItems"][countObject]["task"]}`);
+        console.log(`${obj["toDoItems"][countObject]["id"]}: ${obj["toDoItems"][countObject]["status"]} - ${obj["toDoItems"][countObject]["task"]}. Created at ${obj["toDoItems"][countObject]["created at"]}. Completed status/date: ${obj["toDoItems"][countObject]["completed at"]}`);
     }
 }
 
@@ -85,6 +94,7 @@ function changeStatus(obj, idStatus){
         if(idStatus===obj["toDoItems"][countObject]["id"])
         {
             obj["toDoItems"][countObject]["status"]="[X]";
+            obj["toDoItems"][countObject]["completed at"]=Date();
         }
     }
 }
