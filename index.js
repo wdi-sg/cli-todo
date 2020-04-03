@@ -1,19 +1,20 @@
-console.log("works!!", process.argv[2]);
-
-var commandType = process.argv[2];
-
-console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
-jsonfile.readFile(file, (err, obj) => {
+if(process.argv[2] === "add"){
+    jsonfile.readFile(file, (err, obj) => {
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+      obj["toDoItems"].push(process.argv[3]);
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+      if(err){
+        console.log(err);
+      }
+
+      jsonfile.writeFile(file, obj, (error) => {
+        console.log(obj);
+        console.log(error)
+      });
+    });
+}
