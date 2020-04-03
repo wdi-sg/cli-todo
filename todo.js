@@ -31,7 +31,7 @@ function createNewObject(obj){
       return obj["toDoItems"]=[
                                 {   "id":1,
                                     "task":process.argv[3],
-                                    "status":"[]",
+                                    "status":"[ ]",
                                     "created at":"15/03/20",
                                     "completed at": "Not Yet"
                                 }
@@ -51,7 +51,7 @@ function addNewObject(obj){
                                     {
                                     "id":obj["toDoItems"].length+1,
                                     "task":process.argv[3],
-                                    "status":"[]",
+                                    "status":"[ ]",
                                     "created at":"15/03/20",
                                     "completed at": "Not Yet"
                                     }
@@ -66,7 +66,10 @@ function addNewObject(obj){
 ///////-------------------------------------------------------------------//////////
 ///////--------------------To show data-----------------------------------//////////
 function showData(obj){
-    console.log(obj["toDoItems"].length);
+    for (let countObject = 0 ; countObject < obj["toDoItems"].length; countObject++)
+    {
+        console.log(`${obj["toDoItems"][countObject]["id"]}: ${obj["toDoItems"][countObject]["status"]} - ${obj["toDoItems"][countObject]["task"]}`);
+    }
 }
 
 jsonfile.readFile(file, (err, obj) => {
