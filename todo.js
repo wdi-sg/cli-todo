@@ -3,6 +3,12 @@
 ///////-----------------------------Global Variable----------------------//////////
 const jsonfile = require('jsonfile');
 
+
+
+
+
+
+
 const file = 'data.json'
 ///////-------------------------------------------------------------------//////////
 ///////-------------------------------------------------------------------//////////
@@ -26,11 +32,11 @@ function isEmpty(obj) {
 ///////-------------------------------------------------------------------//////////
 ///////-------------------------------------------------------------------//////////
 ///////--------------------To create from an empty file-----------------//////////
-function createNewObject(obj){
+function createNewObject(obj, input){
 
       return obj["toDoItems"]=[
                                 {   "id":1,
-                                    "task":process.argv[3],
+                                    "task":input,
                                     "status":"[ ]",
                                     "created at":Date(),
                                     "completed at": "Not Yet"
@@ -45,12 +51,12 @@ function createNewObject(obj){
 ///////-------------------------------------------------------------------//////////
 ///////-------------------------------------------------------------------//////////
 ///////--------------------To add if file is not empty--------------------//////////
-function addNewObject(obj){
+function addNewObject(obj, input){
     //console.log(obj["toDoItems"][1]);
     obj["toDoItems"].push(
                                     {
                                     "id":obj["toDoItems"].length+1,
-                                    "task":process.argv[3],
+                                    "task":input,
                                     "status":"[ ]",
                                     "created at":Date(),
                                     "completed at": "Not Yet"
@@ -133,43 +139,48 @@ function deleteObject(obj, idStatus){
     return updateId(obj);
 }
 
-
+function activateReadWrite(word, input)
+{
 jsonfile.readFile(file, (err, obj) => {
 
-
+//console.log("we are in here");
   //console.log( process.argv[3]);
 
-  if(process.argv[ 2 ] === "add" && process.argv[ 3 ] !== undefined)
+  if(word === "add")
   {
 
     if(isEmpty( obj ))
         {
-            createNewObject(obj);
-            console.log( "It is null" );
+            console.log("test");
+            createNewObject(obj, input);
+            //console.log( "It is null" );
         }
     else
         {
-            addNewObject(obj);
+            addNewObject(obj, input);
         }
 
     }
-    else if(process.argv[2] === "show" && process.argv[ 3 ] === undefined)
+    else if(word === "show")
     {
+
         showData(obj);
     }
 
-    else if(process.argv[2]=== "done" && !isNaN(parseInt(process.argv[ 3 ])))
+    else if(word=== "done" && !isNaN(parseInt(input)))
     {
-        let idCheck=parseInt(process.argv[ 3 ]);
+        console.log(" we are here");
+        let idCheck=parseInt(input);
         changeStatus(obj,idCheck);
 
     }
-    else if(process.argv[2]=== "delete" && !isNaN(parseInt(process.argv[ 3 ])))
+    else if(word=== "delete" && !isNaN(parseInt(input)))
     {
-        console.log(obj);
-        let idDelete=parseInt(process.argv[ 3 ]);
+        //console.log(obj);
+        console.log(" we are here");
+        let idDelete=parseInt(input);
         obj=deleteObject(obj,idDelete);
-        console.log(obj);
+        //console.log(obj);
 
     }
 
@@ -186,3 +197,23 @@ jsonfile.writeFile(file, obj, (err) => {
     }
   });
 });
+}
+
+function show(letter,value){
+    console.log(letter+"test"+value);
+}
+
+const { program } = require('commander');
+
+    program
+
+        .description("Select an option. '-a value' to add value. -s to show. '-d value' to update what is done. '-de value' to delete task.")
+        .option("-a, --value <type>")
+        .option("-s,--show")
+        .option("-d, --done <type>")
+        .option("-de, --del <type>");
+    program.parse(process.argv);
+    if(program.value) activateReadWrite ("add",program.value);
+    if (program.show) activateReadWrite ("show","");
+    if (program.done) activateReadWrite ("done",program.done);
+    if (program.del) activateReadWrite   ("delete", program.del);
