@@ -69,7 +69,24 @@ const addItem = function (todoObj, newItems) {
     .catch((err) => console.log(err));
 };
 
-const delItem = function (todoObj, oldItem) {
+const delItem = function (todoObj, oldItems) {
+  let list = todoObj.todoList;
+  if (list.length === 0) {
+    console.log("No more items in todo-list, exiting");
+    return;
+  }
+  for (let i = 0; i < oldItems.length; i++) {
+    let index = Number(oldItems[i]) - 1;
+    console.log("Removing item: ", list[index].title);
+    list.splice(index, 1);
+  }
+
+  todoObj.todoList = list;
+  let writePromise = jsonfile.writeFile(file, todoObj);
+  writePromise
+    .then(console.log("Saved! Updated list:"))
+    .then(parseList(todoObj))
+    .catch((err) => console.log(err));
 };
 
 const markDone = function (todoObj, itemDoneId) {
@@ -78,6 +95,7 @@ const markDone = function (todoObj, itemDoneId) {
 const despatch = {
   "list": parseList,
   "add" : addItem,
+  "delete": delItem,
 };
 
 if (despatch[command] === undefined) {
