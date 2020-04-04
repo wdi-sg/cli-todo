@@ -18,6 +18,10 @@ const printList = (err, obj) => {
     let newStr = obj["todoItems"][index].replace("[ ]", "[x]");
     obj["todoItems"][index] = newStr;
   }
+  else if (inputArr[2] === "delete") {
+    let index = inputArr[3] - 1;
+    obj["todoItems"].splice(index, 1);
+  }
 
   for (let z = 0; z < obj["todoItems"].length; z++) {
     console.log(obj["todoItems"][z]);
