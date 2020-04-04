@@ -3,6 +3,13 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
+if (process.argv[2] === "read") {
+    jsonfile.readFile(file, (err, obj) => {
+        console.log(obj);
+        console.log(err);
+    })
+}
+
 if(process.argv[2] === "add"){
     jsonfile.readFile(file, (err, obj) => {
 
@@ -26,7 +33,7 @@ if(process.argv[2] === "done"){
         const item = obj["toDoItems"][process.argv[3]];
         itemSplit = item.split(' ')
         itemSplit.splice(2, 0, 'X');
-        console.log(itemSplit);
+        itemSplit.push(" | updated_at: " + Date());
 
         // Join back array into full string
         newObj = itemSplit.join(' ');
