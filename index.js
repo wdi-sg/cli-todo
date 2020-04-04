@@ -24,11 +24,27 @@ const parseDate = function (dateObj) {
 };
 
 const parseList = function (todoObj) {
-  let list = todoObj.todoList;
-  console.log(list);
+  let heading = [
+    "S/N",
+    "Done".padEnd(4),
+    "Item".padEnd(33, " "),
+    "Created at".padEnd(18, " "),
+    "Updated at".padEnd(18, " "),
+  ];
+  console.log(heading.join(" "));
+  console.log("-".repeat(80));
 
-  for (let index in list) {
-    console.log(`${index}: ${list[index].title}`);
+  let list = todoObj.todoList;
+  for (let i = 0; i < list.length; i++) {
+    let item = list[i];
+    let index = String(i + 1).padStart(3, " ");
+    let done = item.done ? "[x] " : "[ ] ";
+    let title = item.title.padEnd(33, " ");
+    let cDateObj = new Date(item.createdAt);
+    let cDateStr = parseDate(cDateObj).padEnd(18);
+    let uDateObj = (item.updatedAt === null) ? "" : new Date(item.updatedAt);
+    let uDateStr = parseDate(uDateObj).padEnd(18);
+    console.log(index, done, title, cDateStr, uDateStr);
   }
 };
 
