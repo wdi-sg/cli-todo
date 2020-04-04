@@ -7,14 +7,20 @@ const file = 'data.json';
 // returns readed obj and err if any
 let filePromise = jsonfile.readFile(file);
 
-const writeFile = function (file, obj) {
-  jsonfile.writeFile(file, obj, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Saved!");
-    }
-  });
+const parseDate = function (dateObj) {
+  if (dateObj === "") {
+    return "";
+  }
+  let options  = {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+  };
+  let dateStr = new Intl.DateTimeFormat('default', options).format(dateObj);
+  return dateStr;
 };
 
 const parseList = function (todoObj) {
