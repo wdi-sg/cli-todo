@@ -3,7 +3,7 @@ const command = input[0];
 const jsonfile = require('jsonfile');
 const file = 'data.json'
 const date = new Date();
-const today = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()
+const today = date.getDate() + "/" + date.getMonth()+1 + "/" + date.getFullYear()
 
 
 jsonfile.readFile(file, (err, obj) => {
