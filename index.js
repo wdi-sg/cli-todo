@@ -48,21 +48,25 @@ const parseList = function (todoObj) {
   }
 };
 
-const addItem = function (todoObj, newItem) {
-  console.log(newItem);
+const addItem = function (todoObj, newItems) {
   const list = todoObj.todoList;
-  const newItemIndex = Object.keys(list).length + 1;
-  console.log(newItemIndex);
-  const item = {
-    [newItemIndex]: {
-      "title": newItem,
+  const timeStamp = new Date();
+  for (let i = 0; i < newItems.length; i++) {
+    const item = {
+      "title": newItems[i],
       "done": false,
-      "createdAt": Date.now(),
+      "createdAt": timeStamp,
       "updatedAt": null
-    }
-  };
+    };
+    list.push(item);
+  }
 
-  console.log(item);
+  todoObj.todoList = list;
+  let writePromise = jsonfile.writeFile(file, todoObj);
+  writePromise
+    .then(console.log("Saved! Updated list:"))
+    .then(parseList(todoObj))
+    .catch((err) => console.log(err));
 };
 
 const delItem = function (todoObj, oldItem) {
