@@ -81,7 +81,7 @@ const delItem = function (todoObj, oldItems) {
       continue;
     }
     let index = Number(oldItems[i]) - 1;
-    console.log("Removing item: ", list[index].title);
+    console.log("Removing item:", list[index].title);
     list.splice(index, 1);
   }
 
