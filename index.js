@@ -48,6 +48,9 @@ jsonfile.readFile(file, (err, obj) => {
     case "done":
       done(obj);
       break;
+    case "remove":
+      remove(obj);
+      break;
     default:
       break;
   }
@@ -82,13 +85,13 @@ function add(object) {
   var input = inputString();
   input = input.trim();
   var inputArr = [];
-  if (input.includes(", ")){
+  if (input.includes(", ")) {
     inputArr = input.split(", ")
   } else {
     inputArr = [input];
   }
   var dateCreated = getDateTime();
-  for (id in inputArr){
+  for (id in inputArr) {
     inputArr[id] = inputArr[id] + dateCreated;
     object.todoItems.push(inputArr[id]);
   }
@@ -100,12 +103,12 @@ function done(object) {
   var input = inputString();
   input = input.trim();
   var inputArr = [];
-  if (input.includes(", ")){
+  if (input.includes(", ")) {
     inputArr = input.split(", ")
   } else {
     inputArr = [input];
   }
-  for (id in inputArr){
+  for (id in inputArr) {
     inputArr[id] = parseInt(inputArr[id]);
     var doneItem = object.todoItems[inputArr[id] - 1];
     object.doneItems.push(doneItem);
@@ -117,5 +120,23 @@ function getDateTime() {
   var date = new Date();
   var formatDate = date.toLocaleDateString();
   var formatTime = date.toLocaleTimeString();
-  return ` ,created_at: ${formatDate} ${formatTime}`;
+  return ` , created_at: ${formatDate} ${formatTime}`;
+}
+
+function remove(object) {
+  var input = inputString();
+  input = input.trim();
+  var inputArr = [];
+  if (input.includes(" ")) {
+    inputArr = input.split(" ")
+  } else {
+    inputArr = [input];
+  }
+  for (id in inputArr) {
+    var targetIndex = parseInt(inputArr[id])-1;
+    object.todoItems.splice(targetIndex,1);
+    object.doneItems.splice(targetIndex,1);
+
+  }
+  show(object);
 }
