@@ -89,13 +89,29 @@ const delItem = function (todoObj, oldItems) {
     .catch((err) => console.log(err));
 };
 
-const markDone = function (todoObj, itemDoneId) {
+const markDone = function (todoObj, itemsDone) {
+  let list = todoObj.todoList;
+  for (let i = 0; i < itemsDone.length; i++) {
+    let index = Number(itemsDone[i]) - 1;
+    list[index].done = true;
+    let uDateObj = new Date();
+    list[index].updatedAt = uDateObj;
+  }
+
+  todoObj.todoList = list;
+
+  let writePromise = jsonfile.writeFile(file, todoObj);
+  writePromise
+    .then(console.log("Saved! Updated list:"))
+    .then(parseList(todoObj))
+    .catch((err) => console.log(err));
 };
 
 const despatch = {
   "list": parseList,
   "add" : addItem,
   "delete": delItem,
+  "done": markDone,
 };
 
 if (despatch[command] === undefined) {
