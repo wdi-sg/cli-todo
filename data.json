@@ -1,18 +1,1 @@
-{
-    "todoItems": [
-        "eat bak kut teh",
-        "go shopping",
-        "feed dog",
-        "swim practice",
-        "code app",
-        "meet gabriel",
-        "dwedwe",
-        "dog walking"
-    ],
-    "doneItems": [
-        "meet gabriel",
-        "code app",
-        "feed dog",
-        "dog walking"
-    ]
-}
+{"todoItems":["eat bak kut teh ,created_at: 04/04/2020 09:45:17","go shopping ,created_at: 04/04/2020 09:45:17","feed dog ,created_at: 04/04/2020 09:45:17","swim practice ,created_at: 04/04/2020 09:45:17","code app ,created_at: 04/04/2020 09:45:17","meet gabriel ,created_at: 04/04/2020 09:45:17"],"doneItems":["eat bak kut teh ,created_at: 04/04/2020 09:45:17","go shopping ,created_at: 04/04/2020 09:45:17","feed dog ,created_at: 04/04/2020 09:45:17","swim practice ,created_at: 04/04/2020 09:45:17","code app ,created_at: 04/04/2020 09:45:17","meet gabriel ,created_at: 04/04/2020 09:45:17"]}

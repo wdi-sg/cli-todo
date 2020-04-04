@@ -81,14 +81,41 @@ function show(object) {
 function add(object) {
   var input = inputString();
   input = input.trim();
-  object.todoItems.push(input);
+  var inputArr = [];
+  if (input.includes(", ")){
+    inputArr = input.split(", ")
+  } else {
+    inputArr = [input];
+  }
+  var dateCreated = getDateTime();
+  for (id in inputArr){
+    inputArr[id] = inputArr[id] + dateCreated;
+    object.todoItems.push(inputArr[id]);
+  }
+  // input = input + dateCreated;
   show(object);
 }
 
 function done(object) {
-  var input = inputNum();
-  var doneItem = object.todoItems[input - 1];
-  object.doneItems.push(doneItem);
+  var input = inputString();
+  input = input.trim();
+  var inputArr = [];
+  if (input.includes(", ")){
+    inputArr = input.split(", ")
+  } else {
+    inputArr = [input];
+  }
+  for (id in inputArr){
+    inputArr[id] = parseInt(inputArr[id]);
+    var doneItem = object.todoItems[inputArr[id] - 1];
+    object.doneItems.push(doneItem);
+  }
   show(object);
 }
 
+function getDateTime() {
+  var date = new Date();
+  var formatDate = date.toLocaleDateString();
+  var formatTime = date.toLocaleTimeString();
+  return ` ,created_at: ${formatDate} ${formatTime}`;
+}
