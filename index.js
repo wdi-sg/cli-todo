@@ -16,5 +16,12 @@ if(process.argv[2] === "add"){
       console.log("Error detected: " + err);
     });
   });
+}
 
+if(process.argv[2] === "show"){
+  jsonfile.readFile(file, (err, obj) => {
+    for(let i = 0; i < obj["toDoItems"].length; i++){
+      console.log(obj["toDoItems"][i]);
+    }
+  });
 }
