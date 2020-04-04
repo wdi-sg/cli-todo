@@ -4,13 +4,17 @@ const jsonfile = require('jsonfile');
 const file = 'data.json'
 
 if(process.argv[2] === "add"){
-  let combinedArgument = "";
+  let task = "";
   for(let i = 3; i < process.argv.length; i++){
-    combinedArgument = combinedArgument + " " + process.argv[i];
+    task = task + " " + process.argv[i];
   }
+  let addObject = {
+    "task": task,
+    "isDone": "[ ]",
+  }
+
   jsonfile.readFile(file, (err, obj) => {
-    let line = String(obj["toDoItems"].length + 1) + ". [ ] - " + combinedArgument;
-    obj["toDoItems"].push(line);
+    obj["toDoItems"].push(addObject);
 
     jsonfile.writeFile(file, obj, (err) => {
       console.log("Error detected: " + err);
@@ -21,7 +25,8 @@ if(process.argv[2] === "add"){
 if(process.argv[2] === "show"){
   jsonfile.readFile(file, (err, obj) => {
     for(let i = 0; i < obj["toDoItems"].length; i++){
-      console.log(obj["toDoItems"][i]);
+      let line = (i + 1) + ". " + obj["toDoItems"][i].isDone + " -" + obj["toDoItems"][i].task;
+      console.log(line);
     }
   });
 }
