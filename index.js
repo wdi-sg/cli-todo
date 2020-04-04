@@ -76,6 +76,10 @@ const delItem = function (todoObj, oldItems) {
     return;
   }
   for (let i = 0; i < oldItems.length; i++) {
+    if (oldItems[i] > list.length || oldItems[i] < 1) {
+      console.log(`Item ${oldItems[i]} doesn't seem to exist, moving on.`);
+      continue;
+    }
     let index = Number(oldItems[i]) - 1;
     console.log("Removing item: ", list[index].title);
     list.splice(index, 1);
@@ -84,7 +88,7 @@ const delItem = function (todoObj, oldItems) {
   todoObj.todoList = list;
   let writePromise = jsonfile.writeFile(file, todoObj);
   writePromise
-    .then(console.log("Saved! Updated list:"))
+    .then(console.log("Current list:"))
     .then(parseList(todoObj))
     .catch((err) => console.log(err));
 };
@@ -92,6 +96,9 @@ const delItem = function (todoObj, oldItems) {
 const markDone = function (todoObj, itemsDone) {
   let list = todoObj.todoList;
   for (let i = 0; i < itemsDone.length; i++) {
+    if (itemsDone[i] > itemsDone.length || itemsDone[i] < 1) {
+      console.log(`Item ${itemsDone[i]} doesn't seem to exist, moving on.`);
+    }
     let index = Number(itemsDone[i]) - 1;
     list[index].done = true;
     let uDateObj = new Date();
@@ -102,7 +109,7 @@ const markDone = function (todoObj, itemsDone) {
 
   let writePromise = jsonfile.writeFile(file, todoObj);
   writePromise
-    .then(console.log("Saved! Updated list:"))
+    .then(console.log("Current list:"))
     .then(parseList(todoObj))
     .catch((err) => console.log(err));
 };
