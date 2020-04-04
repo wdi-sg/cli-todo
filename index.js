@@ -7,7 +7,10 @@ let inputArr = process.argv;
 const printList = (err, obj) => {
   if (inputArr[2] === "add") {
     for (let i = 3; i < inputArr.length; i++) {
-      obj["todoItems"].push(obj["todoItems"].length + 1 + ". [ ] - " + inputArr[i]);
+      let dateObj = new Date();
+      let mth = dateObj.getMonth() + 1;
+      let dateTdy = dateObj.getDate() + "-" + mth + "-" + dateObj.getFullYear();
+      obj["todoItems"].push(obj["todoItems"].length + 1 + ". [ ] - " + dateTdy + " - " + inputArr[i]);
     }
   }
   else if (inputArr[2] === "done") {
@@ -26,3 +29,4 @@ const printList = (err, obj) => {
 };
 
 jsonFile.readFile(dataFile, printList);
+
