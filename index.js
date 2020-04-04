@@ -6,41 +6,6 @@ const date = new Date();
 const today = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()
 
 
-//Function to format output of the todo list.
-const readList = (array) => {
-    array.forEach((obj, index) => {
-        let checkBox = `[ ]`
-        if (obj.status) {
-            checkBox = `[X]`
-        }
-        let output = `${index+1}. ${checkBox} - ${obj.item} | Added: ${obj.created_at} | Completed: ${obj.updated_at}`
-
-        colorLog(`lavender`, output);
-    });
-}
-
-const colorLog = (col, output) => {
-    let r;
-    let g;
-    let b
-    if (col === 'lavender') {
-        r = 181;
-        g = 126;
-        b = 220
-    } else if (col === 'red') {
-        r = 230;
-        g = 0;
-        b = 0;
-    } else if (col === 'green') {
-        r = 0;
-        g = 230;
-        b = 0
-    }
-
-    console.log(`\x1b[38;2;${r};${g};${b}m%s\x1b[0m`, output);
-}
-
-
 jsonfile.readFile(file, (err, obj) => {
 
     const toDoList = obj["todoItems"]
@@ -57,6 +22,8 @@ jsonfile.readFile(file, (err, obj) => {
         }
 
         toDoList.push(newTask)
+
+        //Write to file and log success or error.
 
         jsonfile.writeFile(file, obj, (err) => {
             if (!err) {
@@ -81,6 +48,7 @@ jsonfile.readFile(file, (err, obj) => {
         targetObj.status = true;
         targetObj.updated_at = today;
 
+        //Write to file and log success or error.
         jsonfile.writeFile(file, obj, (err) => {
             if (!err) {
                 colorLog('green', `Congrats on completing a task!`);
@@ -92,9 +60,14 @@ jsonfile.readFile(file, (err, obj) => {
         });
     }
 
+    //Permanently delete items.
+
     if (command === "del") {
         var targetIndex = input[1] - 1
         toDoList.splice(targetIndex, 1);
+
+        //Write to file and log success or error.
+
         jsonfile.writeFile(file, obj, (err) => {
             if (!err) {
                 colorLog('green', `Deleted item.`);
@@ -107,3 +80,40 @@ jsonfile.readFile(file, (err, obj) => {
     }
 
 });
+
+
+
+//Function to format output of the todo list.
+const readList = (array) => {
+    array.forEach((obj, index) => {
+        let checkBox = `[ ]`
+        if (obj.status) {
+            checkBox = `[X]`
+        }
+        let output = `${index+1}. ${checkBox} - ${obj.item} | Added: ${obj.created_at} | Completed: ${obj.updated_at}`
+
+        colorLog(`lavender`, output);
+    });
+}
+
+//Function to format colors of console logs: lavender, green or red.
+const colorLog = (col, output) => {
+    let r;
+    let g;
+    let b
+    if (col === 'lavender') {
+        r = 181;
+        g = 126;
+        b = 220
+    } else if (col === 'red') {
+        r = 230;
+        g = 0;
+        b = 0;
+    } else if (col === 'green') {
+        r = 0;
+        g = 230;
+        b = 0
+    }
+
+    console.log(`\x1b[38;2;${r};${g};${b}m%s\x1b[0m`, output);
+}
