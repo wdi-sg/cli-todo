@@ -10,7 +10,7 @@ const logArray = (array) => {
 
 jsonfile.readFile(file, (err, obj) => {
 
-    const toDoList = obj["todoItems"]
+  const toDoList = obj["todoItems"]
 
 //TO ADD STUFF INTO THE LIST.
   if (command === "add") {
@@ -32,5 +32,22 @@ jsonfile.readFile(file, (err, obj) => {
   if (command === "show") {
     logArray(toDoList)
   }
-  
+
+//TO MARK IT DONE
+  if (command === "done") {
+    let targetItem = toDoList[input[1]-1] //Target index should be the input number - 1
+    let doneItem = targetItem.slice(0,4) + "X" + targetItem.slice(5)
+    toDoList[targetIndex] = doneItem
+
+    jsonfile.writeFile(file, obj, (err) => {
+        if (!err) {
+          console.log(`Great job on completing a task!`);
+          logArray(toDoList);
+        } else {
+          console.log(`Sorry, there was an error with checking your task off the list.`);
+          console.log(err);
+        }
+    });
+  }
+
 });
