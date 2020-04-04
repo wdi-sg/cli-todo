@@ -1,19 +1,10 @@
 const jsonfile = require('jsonfile');
 const file = 'data.json'
-
 const processArgv = process.argv;
 
-
-
 jsonfile.readFile(file, (err, obj) => {
-
 const todoList = obj["todoItems"];
-let sqBrackets = "[ ]";
-let dot = ". ";
-let dash = " - ";
 let num = 0;
-
-
         if (process.argv[2] === 'add') {
             let todo = {};
             todo["task"] = process.argv[3];
