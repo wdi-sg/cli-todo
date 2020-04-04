@@ -10,6 +10,11 @@ const printList = (err, obj) => {
       obj["todoItems"].push(obj["todoItems"].length + 1 + ". [ ] - " + inputArr[i]);
     }
   }
+  else if (inputArr[2] === "done") {
+    let index = inputArr[3] - 1;
+    let newStr = obj["todoItems"][index].replace("[ ]", "[x]");
+    obj["todoItems"][index] = newStr;
+  }
 
   for (let z = 0; z < obj["todoItems"].length; z++) {
     console.log(obj["todoItems"][z]);
