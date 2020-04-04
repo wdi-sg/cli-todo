@@ -1,19 +1,21 @@
-console.log("works!!", process.argv[2]);
+const jsonFile = require("jsonfile");
 
-var commandType = process.argv[2];
+const dataFile = "data.json";
 
-console.log("Your command was: "+commandType);
+let inputArr = process.argv;
 
-const jsonfile = require('jsonfile');
+const printList = (err, obj) => {
+  for (let i = 2; i < inputArr.length; i++) {
+    obj["todoItems"].push(obj["todoItems"].length + 1 + ". [ ] - " + inputArr[i]);
+  }
 
-const file = 'data.json'
+  for (let z = 0; z < obj["todoItems"].length; z++) {
+    console.log(obj["todoItems"][z]);
+  }
 
-jsonfile.readFile(file, (err, obj) => {
-
-  console.log(obj);
-  obj["helloworld"] = "monkey";
-
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
+  jsonFile.writeFile(dataFile, obj, (err) => {
+    console.log(err);
   });
-});
+};
+
+jsonFile.readFile(dataFile, printList);
