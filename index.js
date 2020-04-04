@@ -69,10 +69,10 @@ function show(object) {
   } else if (object.todoItems.length > 0) {
     var listOut = "";
     for (id in object.todoItems) {
-      if (object.doneItems.includes(object.todoItems[id])) {
-        listOut += `${parseInt(id) + 1}. [X] - ${object.todoItems[id]}\n`;
+      if (object.todoItems[id][2] != undefined) {
+        listOut += `${parseInt(id) + 1}. [X] -${object.todoItems[id]}\n`;
       } else {
-        listOut += `${parseInt(id) + 1}. [ ] - ${object.todoItems[id]}\n`;
+        listOut += `${parseInt(id) + 1}. [ ] -${object.todoItems[id]}\n`;
       }
     }
     listOut = listOut.trim();
@@ -92,7 +92,7 @@ function add(object) {
   }
   var dateCreated = getDateTime();
   for (id in inputArr) {
-    inputArr[id] = inputArr[id] + dateCreated;
+    inputArr[id] = [inputArr[id],`\tcreated_at: ${dateCreated}`];
     object.todoItems.push(inputArr[id]);
   }
   // input = input + dateCreated;
@@ -111,7 +111,9 @@ function done(object) {
   for (id in inputArr) {
     inputArr[id] = parseInt(inputArr[id]);
     var doneItem = object.todoItems[inputArr[id] - 1];
-    object.doneItems.push(doneItem);
+    var updateDate = getDateTime();
+    doneItem[2] = (` updated_at: ${updateDate}`);
+    // object.doneItems.push(doneItem);
   }
   show(object);
 }
@@ -120,7 +122,7 @@ function getDateTime() {
   var date = new Date();
   var formatDate = date.toLocaleDateString();
   var formatTime = date.toLocaleTimeString();
-  return ` , created_at: ${formatDate} ${formatTime}`;
+  return `${formatDate} ${formatTime}`;
 }
 
 function remove(object) {
@@ -135,8 +137,6 @@ function remove(object) {
   for (id in inputArr) {
     var targetIndex = parseInt(inputArr[id])-1;
     object.todoItems.splice(targetIndex,1);
-    object.doneItems.splice(targetIndex,1);
-
   }
   show(object);
 }
