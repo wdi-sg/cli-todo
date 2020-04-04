@@ -122,7 +122,15 @@ const despatch = {
 };
 
 if (despatch[command] === undefined) {
-  console.log("GO AWAY");
+  console.log(
+    "Unexpected subcommand. Valid subcommands:\n" +
+      "  list: display all items in to-do list\n" +
+      "  add 'string': add an item to the to-do list named string.\n"+
+      "                accepts multiple quoted strings and adds all of them\n" +
+      "  delete <num>: delete item number <num> from the to-do list.\n"+
+      "                accepts multiple numbers and deletes all of them\n"+
+      "  done <num>: mark item number <num> done. accepts multiple numbers\n" +
+      "              and marks all of them");
 } else {
   filePromise
     .then((obj) => despatch[command](obj, arguments))
