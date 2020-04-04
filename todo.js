@@ -7,6 +7,8 @@
 //did without using modules ---------------------------
 var nodeArgv = process.argv;
 const jsonfile = require('jsonfile');
+var dateFormat = require('dateformat');
+
 const file = 'data.json';
 
 var listKey = "todoItems";
@@ -30,7 +32,11 @@ if (nodeArgv[2] === "add") {
                 var itemsNum = i+1;
             };
 
-            obj["todoItems"].push(notDoneStatus + " - " +items);
+            var currentdate = new Date();
+            datetime = dateFormat(currentdate, "yyyy-mm-dd, h:MM:ss TT");
+            console.log(datetime)
+
+            obj["todoItems"].push(notDoneStatus + " - " + items + " Updated_at " +datetime);
             console.log("Item updated")
 
             jsonfile.writeFile(file, obj, (err) => {
@@ -48,7 +54,7 @@ if (nodeArgv[2] === "add") {
         }
 
         for (var i = 0; i < obj["todoItems"].length; i++){
-            console.log((i+1) + ". " + obj["todoItems"][i]);
+            console.table((i+1) + ". " + obj["todoItems"][i]);
         };
 
     })
