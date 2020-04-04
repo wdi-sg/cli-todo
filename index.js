@@ -42,3 +42,13 @@ if(process.argv[2] === "done"){
     });
   });
 }
+
+if(process.argv[2] === "delete"){
+  jsonfile.readFile(file, (err, obj) => {
+    obj["toDoItems"].splice(process.argv[3] - 1, 1);
+
+    jsonfile.writeFile(file, obj, (err) => {
+      console.log("Error detected: " + err);
+    });
+  });
+}
