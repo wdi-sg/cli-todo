@@ -30,3 +30,13 @@ if(process.argv[2] === "show"){
     }
   });
 }
+
+if(process.argv[2] === "done"){
+  jsonfile.readFile(file, (err, obj) => {
+    obj["toDoItems"][process.argv[3] - 1].isDone = "[x]";
+
+    jsonfile.writeFile(file, obj, (err) => {
+      console.log("Error detected: " + err);
+    });
+  });
+}
