@@ -1,0 +1,46 @@
+{
+  "todoItems": [
+    {
+      "chore": "do laundry",
+      "choreDone": true,
+      "createDate": "January 12th 2020, 8:31:09 pm",
+      "indexNo": 1,
+      "updatedDate": "January 12th 2020, 8:33:43 pm"
+    },
+    {
+      "chore": "fix bug",
+      "choreDone": false,
+      "createDate": "January 12th 2020, 8:31:12 pm",
+      "indexNo": 2,
+      "updatedDate": "January 12th 2020, 8:31:12 pm"
+    },
+    {
+      "chore": "code app",
+      "choreDone": true,
+      "createDate": "January 12th 2020, 8:31:14 pm",
+      "indexNo": 3,
+      "updatedDate": "January 12th 2020, 8:31:32 pm"
+    },
+    {
+      "chore": "walk the dog",
+      "choreDone": false,
+      "createDate": "January 12th 2020, 8:31:18 pm",
+      "indexNo": 4,
+      "updatedDate": "January 12th 2020, 8:31:18 pm"
+    },
+    {
+      "chore": "wash the dishes",
+      "choreDone": false,
+      "createDate": "January 12th 2020, 8:31:26 pm",
+      "indexNo": 5,
+      "updatedDate": "January 12th 2020, 8:31:26 pm"
+    },
+    {
+      "chore": "empty the rubbish",
+      "choreDone": false,
+      "createDate": "January 12th 2020, 8:31:49 pm",
+      "indexNo": 6,
+      "updatedDate": "January 12th 2020, 8:31:49 pm"
+    }
+  ]
+}
