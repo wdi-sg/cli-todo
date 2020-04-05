@@ -22,8 +22,8 @@ if (process.argv[2] === "add"){
         //manipulate object
         obj["todoItems"].push(
             {"item": process.argv[3],
-             "done": " ",
-             "created at": createDate()}
+             "done": "[ ]",
+             "created at": "created_at: " + createDate()}
             );
         //write changes to file
         jsonfile.writeFile(file, obj, (err) => {
@@ -35,8 +35,12 @@ if (process.argv[2] === "add"){
 } else if (process.argv[2] === "show"){
     //read the file
     jsonfile.readFile(file, (err, obj) =>{
-        for (let i = 1; i <= obj["todoItems"].length; i++){
-            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
+        for (let item of obj["todoItems"]){
+            let display = (obj["todoItems"].indexOf(item) + 1) + ". ";
+            for (let property in item){
+                display += `- ${item[property]} `
+            }
+            console.log(display)
         }
     });
 } else if (process.argv[2] === "done"){
@@ -46,7 +50,8 @@ if (process.argv[2] === "add"){
             console.log("error at read file");
         }
         //manipulate object
-        obj["todoItems"][process.argv[3] - 1]["done"] = "x";
+        obj["todoItems"][process.argv[3] - 1]["done"] = "[x]";
+        obj["todoItems"][process.argv[3] - 1]["updated at"] = "updated_at: " + createDate();
         //write changes to file
         jsonfile.writeFile(file, obj, (err) => {
             if (err){
@@ -54,8 +59,12 @@ if (process.argv[2] === "add"){
             }
         });
 
-        for (let i = 1; i <= obj["todoItems"].length; i++){
-            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
+        for (let item of obj["todoItems"]){
+            let display = (obj["todoItems"].indexOf(item) + 1) + ". ";
+            for (let property in item){
+                display += `- ${item[property]} `
+            }
+            console.log(display)
         }
     });
 } else if (process.argv[2] === "delete"){
@@ -72,8 +81,12 @@ if (process.argv[2] === "add"){
             }
         });
 
-        for (let i = 1; i <= obj["todoItems"].length; i++){
-            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
+        for (let item of obj["todoItems"]){
+            let display = (obj["todoItems"].indexOf(item) + 1) + ". ";
+            for (let property in item){
+                display += `- ${item[property]} `
+            }
+            console.log(display)
         }
     });
 }else {
