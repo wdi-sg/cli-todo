@@ -9,6 +9,25 @@ var nodeArgv = process.argv;
 const jsonfile = require('jsonfile');
 var dateFormat = require('dateformat');
 const cTable = require('console.table');
+const CFonts = require('cfonts');
+
+//ascii font
+CFonts.say('To D0 List', {
+    font: 'chrome',              // define the font face
+    align: 'left',              // define text alignment
+    colors: ['#f80',"green", "blueBright"],         // define all colors
+    background: 'transparent',  // define the background color, you can also use `backgroundColor` here as key
+    letterSpacing: 1,           // define letter spacing
+    lineHeight: 1,              // define the line height
+    space: true,                // define if the output text should have empty lines on top and on the bottom
+    maxLength: '0',             // define how many character can be on one line
+    gradient: false,            // define your two gradient colors
+    independentGradient: false, // define if you want to recalculate the gradient for each new line
+    transitionGradient: false,  // define if this is a transition between colors directly
+    env: 'node'                 // define the environment CFonts is being executed in
+});
+
+
 
 const file = 'data.json';
 
@@ -37,7 +56,7 @@ if (nodeArgv[2] === "add") {
             };
 
             obj["todoItems"].push(notDoneStatus + " - " + items);
-            console.log("Item updated")
+            console.log(items+" updated");
 
             jsonfile.writeFile(file, obj, (err) => {
                 console.log(err)
@@ -67,11 +86,11 @@ if (nodeArgv[2] === "add") {
 } else if (nodeArgv[2] === "clear") {
     jsonfile.readFile(file, (err, obj) => {
         obj["todoItems"] = [];
+        console.log("All cleared.")
 
         jsonfile.writeFile(file, obj, (err) => {
             console.log(err);
         });
-
     });
 } else if (nodeArgv[2] === "done") {
     jsonfile.readFile(file, (err, obj) => {
