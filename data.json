@@ -1,1 +1,12 @@
-{"todoItems":[["eat bak kut teh"," "],["get crunk"," "],["poop twice","x"],["find my purpose in life","x"]]}
+{
+  "todoItems": [
+    {
+      "item": "eat bak kut teh",
+      "done": " "
+    },
+    {
+      "item": "sleep",
+      "done": "x"
+    }
+  ]
+}
