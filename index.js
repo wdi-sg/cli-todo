@@ -1,19 +1,8 @@
-console.log("works!!", process.argv[2]);
+#!/usr/bin/env node
+'use strict';
 
-var commandType = process.argv[2];
+const program = require('commander');
 
-console.log("Your command was: "+commandType);
+program  .version('0.0.1')  .option('-o, --option','option description')  .option('-m, --more','we can have as many options as we want')  .option('-i, --input [optional]','optional user input')  .option('-I, --another-input <required>','required user input')  .parse(process.argv); // end with parse to parse through the input
 
-const jsonfile = require('jsonfile');
-
-const file = 'data.json'
-
-jsonfile.readFile(file, (err, obj) => {
-
-  console.log(obj);
-  obj["helloworld"] = "monkey";
-
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+program.parse(process.argv);
