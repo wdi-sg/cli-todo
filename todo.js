@@ -58,7 +58,25 @@ if (process.argv[2] === "add"){
             console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
         }
     });
-} else {
+} else if (process.argv[2] === "delete"){
+    jsonfile.readFile(file, (err, obj) =>{
+         if (err){
+            console.log("error at read file");
+        }
+        //manipulate object
+        obj["todoItems"].splice(process.argv[3] - 1,1);
+        //write changes to file
+        jsonfile.writeFile(file, obj, (err) => {
+            if (err){
+                console.log(err)
+            }
+        });
+
+        for (let i = 1; i <= obj["todoItems"].length; i++){
+            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
+        }
+    });
+}else {
     console.log("input: node todo.js [show/add/done] [item number]")
 }
 
