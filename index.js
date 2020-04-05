@@ -1,19 +1,52 @@
-console.log("works!!", process.argv[2]);
+console.log("Mmmmyyyy TO-DO LISSSTSSSS")
+const command = require("./command")
 
-var commandType = process.argv[2];
+// node index.js add "eat bak kut teh"
+// node index.js show
+// node index.js mark 4
 
-console.log("Your command was: "+commandType);
+if (process.argv[2] === "add") {
+    console.log ("The list is getting longeeeerrrr!!!")
+    command.add ();
 
-const jsonfile = require('jsonfile');
+} else if (process.argv[2] === "show"){
+    console.log("Here is the list:")
+    command.show()
 
-const file = 'data.json'
+} else if (process.argv[2] === "mark"){
+    console.log("crossed means done")
 
-jsonfile.readFile(file, (err, obj) => {
+} else {
+    console.log("I dont understand your command")
+}
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+
+
+
+
+
+
+
+
+
+
+// console.log("works!!", process.argv[2]);
+
+// var commandType = process.argv[2];
+
+// console.log("Your command was: "+commandType);
+
+// const jsonfile = require('jsonfile');
+
+// const file = 'data.json'
+
+// jsonfile.readFile(file, (err, obj) => {
+
+//   console.log(obj);
+//   obj["helloworld"] = "monkey";
+
+//   jsonfile.writeFile(file, obj, (err) => {
+//     console.log(err)
+//   });
+// });
