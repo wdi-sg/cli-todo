@@ -8,6 +8,7 @@
 var nodeArgv = process.argv;
 const jsonfile = require('jsonfile');
 var dateFormat = require('dateformat');
+const cTable = require('console.table');
 
 const file = 'data.json';
 
@@ -17,6 +18,8 @@ var doneStatus = "[x]"
 var itemDone;
 var markDoneItem;
 var itemDelete;
+var currentdate;
+var datetime;
 
 if (nodeArgv[2] === "add") {
     jsonfile.readFile(file, (err, obj) => {
@@ -32,11 +35,7 @@ if (nodeArgv[2] === "add") {
                 var itemsNum = i+1;
             };
 
-            var currentdate = new Date();
-            datetime = dateFormat(currentdate, "yyyy-mm-dd, h:MM:ss TT");
-            console.log(datetime)
-
-            obj["todoItems"].push(notDoneStatus + " - " + items + " Updated_at " +datetime);
+            obj["todoItems"].push(notDoneStatus + " - " + items);
             console.log("Item updated")
 
             jsonfile.writeFile(file, obj, (err) => {
@@ -54,10 +53,17 @@ if (nodeArgv[2] === "add") {
         }
 
         for (var i = 0; i < obj["todoItems"].length; i++){
-            console.table((i+1) + ". " + obj["todoItems"][i]);
+            tableItems = obj["todoItems"][i].split(" Updated_at: ");
+            console.log(tableItems)
+            console.table([
+                {
+                    "Item No." : (i+1),
+                    "To Do List" : tableItems[0],
+                    "Updated_at" : tableItems[1]
+                }
+            ]);
         };
-
-    })
+    });
 } else if (nodeArgv[2] === "clear") {
     jsonfile.readFile(file, (err, obj) => {
         obj["todoItems"] = [];
@@ -71,8 +77,12 @@ if (nodeArgv[2] === "add") {
     jsonfile.readFile(file, (err, obj) => {
         itemDone = obj["todoItems"][nodeArgv[3]-1];
 
+        var currentdate = new Date();
+        datetime = dateFormat(currentdate, "yyyy-mm-dd");
+        console.log(datetime)
+
         markDoneItem = itemDone.toString().split(notDoneStatus).join(doneStatus);
-        obj["todoItems"][nodeArgv[3]-1] = markDoneItem;
+        obj["todoItems"][nodeArgv[3]-1] = markDoneItem + " Updated_at: " + datetime;
 
         jsonfile.writeFile(file, obj, (err) => {
             console.log(err);
