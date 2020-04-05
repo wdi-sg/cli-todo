@@ -12,9 +12,6 @@ let nDate;
 let dt;
 
 
-
-
-
 jsonfile.readFile(file, (err, obj) => {
     //----------------------------------show
     if( process.argv[2] == "show") {
@@ -25,6 +22,8 @@ jsonfile.readFile(file, (err, obj) => {
             let x = i+1;
             console.log(x+". "+obj.brac[i]+" - "+obj.todoItems[i]+", "+obj.cDate[i].blue+", "+obj.uDate[i].red);
         }
+
+
     }
     //------------------------------------clear
     if (process.argv[2] == "clear") {
