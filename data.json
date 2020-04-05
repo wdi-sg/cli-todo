@@ -1,12 +1,1 @@
-{
-  "todoItems": [
-    {
-      "item": "eat bak kut teh",
-      "done": " "
-    },
-    {
-      "item": "sleep",
-      "done": "x"
-    }
-  ]
-}
+{"todoItems":[{"item":"eat bak kut teh","done":"x","created at":"05/04/2020"}]}

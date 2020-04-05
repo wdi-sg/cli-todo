@@ -2,6 +2,15 @@ const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
+let createDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    return today
+}
+
 
 if (process.argv[2] === "add"){
     //read the file first
@@ -13,7 +22,8 @@ if (process.argv[2] === "add"){
         //manipulate object
         obj["todoItems"].push(
             {"item": process.argv[3],
-             "done": " "}
+             "done": " ",
+             "created at": createDate()}
             );
         //write changes to file
         jsonfile.writeFile(file, obj, (err) => {
@@ -26,7 +36,7 @@ if (process.argv[2] === "add"){
     //read the file
     jsonfile.readFile(file, (err, obj) =>{
         for (let i = 1; i <= obj["todoItems"].length; i++){
-            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]}`)
+            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
         }
     });
 } else if (process.argv[2] === "done"){
@@ -45,7 +55,7 @@ if (process.argv[2] === "add"){
         });
 
         for (let i = 1; i <= obj["todoItems"].length; i++){
-            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]}`)
+            console.log(`${i}. [${obj["todoItems"][i -1]["done"]}] - ${obj["todoItems"][i - 1]["item"]} - created_at: ${obj["todoItems"][i - 1]["created at"]}`)
         }
     });
 } else {
