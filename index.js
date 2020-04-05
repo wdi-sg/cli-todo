@@ -26,6 +26,14 @@ if (process.argv[2] === "add"){
     console.log("current to-do list is: =============");
     console.log(err);
     console.log(obj);
-
+    let afterSplit = obj["todoList"][(process.argv[3]-1)].split ("[ ]");
+    console.log(afterSplit[1]);
+    obj["todoList"][(process.argv[3]-1)] = parseInt(process.argv[3]) + ".[x]" + afterSplit[1];
+    jsonfile.writeFile(file, obj, (err) => {
+        console.log("error of writefile is: ==========")
+        console.log(err);
+        console.log(obj);
     });
+    });
+
 }
