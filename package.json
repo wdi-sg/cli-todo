@@ -18,5 +18,8 @@
   "homepage": "https://github.com/zachariahchow/cli-todo#readme",
   "dependencies": {
     "jsonfile": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
