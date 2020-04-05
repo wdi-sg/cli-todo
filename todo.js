@@ -40,6 +40,8 @@ var itemDelete;
 var currentdate;
 var datetime;
 var table = [];
+var tableItems;
+var tableItemsUpdate;
 
 if (nodeArgv[2] === "add") {
     jsonfile.readFile(file, (err, obj) => {
@@ -50,12 +52,15 @@ if (nodeArgv[2] === "add") {
 
         if(nodeArgv[3] !== undefined) {
             var items = nodeArgv[3];
+            currentdate = new Date();
+            datetime = dateFormat(currentdate, "yyyy-mm-dd, h:MM:ss TT");
+            console.log("Created_at: "+datetime);
 
             for (var i = 0; i <= obj["todoItems"].length; i++) {
                 var itemsNum = i+1;
             };
 
-            obj["todoItems"].push(notDoneStatus + " - " + items);
+            obj["todoItems"].push(notDoneStatus + " - " + items + " Created_at: " + datetime);
             console.log(items+" updated");
 
             jsonfile.writeFile(file, obj, (err) => {
@@ -73,11 +78,14 @@ if (nodeArgv[2] === "add") {
         }
 
         for (var i = 0; i < obj["todoItems"].length; i++){
-            tableItems = obj["todoItems"][i].split(" Updated_at: ");
+            tableItems = obj["todoItems"][i].split(" Created_at: ");
+            tableItemsUpdate = tableItems[1].split(" Updated_at: ");
+
             tableObj = {
                 "Item No." : (i+1),
                 "To Do List" : tableItems[0],
-                "Updated_at" : tableItems[1]
+                "Created_at" : tableItemsUpdate[0],
+                "Updated_at" : tableItemsUpdate[1]
             }
             table.push(tableObj);
         };
@@ -96,8 +104,8 @@ if (nodeArgv[2] === "add") {
     jsonfile.readFile(file, (err, obj) => {
         itemDone = obj["todoItems"][nodeArgv[3]-1];
 
-        var currentdate = new Date();
-        datetime = dateFormat(currentdate, "yyyy-mm-dd");
+        currentdate = new Date();
+        datetime = dateFormat(currentdate, "yyyy-mm-dd , h:MM:ss TT");
         console.log("Updated_by: "+datetime);
 
         markDoneItem = itemDone.toString().split(notDoneStatus).join(doneStatus);
