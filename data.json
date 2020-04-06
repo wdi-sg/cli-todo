@@ -1,0 +1,10 @@
+{
+  "todoItems": [
+    {
+      "created_at": "Sat Apr 04 2020",
+      "done": "[X]",
+      "thing": "to do list item 1",
+      "updated_at": "Sat Apr 04 2020"
+    }
+  ]
+}
