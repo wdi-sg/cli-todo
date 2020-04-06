@@ -6,14 +6,12 @@ console.log("Your command was: "+commandType);
 
 const jsonfile = require('jsonfile');
 
-const file = 'data.json'
+const file = 'data.json';
+const obj = process.argv[3];
+console.log(obj);
 
-jsonfile.readFile(file, (err, obj) => {
-
-  console.log(obj);
-  obj["helloworld"] = "monkey";
 
   jsonfile.writeFile(file, obj, (err) => {
     console.log(err)
   });
-});
+
