@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "To Do List ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrederickKu/cli-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrederickKu/cli-todo/issues"
+  },
+  "homepage": "https://github.com/FrederickKu/cli-todo#readme",
+  "dependencies": {
+    "commander": "^2.20.0",
+    "jsonfile": "^5.0.0"
+  }
+}
