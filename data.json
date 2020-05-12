@@ -1,0 +1,39 @@
+{
+  "todoList": [
+    {
+      "complete": "[ ]",
+      "item": "adopt a cat",
+      "date": "2019-10-06T01:20:49.987Z",
+      "updated": null,
+      "number": "1"
+    },
+    {
+      "complete": "[x]",
+      "item": "feed the cat",
+      "date": "2019-10-06T01:21:06.590Z",
+      "updated": "2019-10-06T01:22:02.781Z",
+      "number": "2"
+    },
+    {
+      "complete": "[ ]",
+      "item": "pet the cat",
+      "date": "2019-10-06T01:21:13.614Z",
+      "updated": null,
+      "number": "3"
+    },
+    {
+      "complete": "[x]",
+      "item": "buy groceries",
+      "date": "2019-10-06T01:21:22.700Z",
+      "updated": "2019-10-06T01:21:56.085Z",
+      "number": "4"
+    },
+    {
+      "complete": "[ ]",
+      "item": "eat lunch",
+      "date": "2019-10-06T01:21:30.419Z",
+      "updated": null,
+      "number": "5"
+    }
+  ]
+}
