@@ -2,18 +2,32 @@ console.log("works!!", process.argv[2]);
 
 var commandType = process.argv[2];
 
-console.log("Your command was: "+commandType);
-
 const jsonfile = require('jsonfile');
 
 const file = 'data.json'
 
-jsonfile.readFile(file, (err, obj) => {
+const addItem = () =>{
+    let userInput = "";
+    for(let i=0; i<process.argv.length-3; i++){
+        userInput += process.argv[i+3]+ " ";
+    }
+    userInput = userInput.substring(0, userInput.length-1);
 
-  console.log(obj);
-  obj["helloworld"] = "monkey";
+    jsonfile.readFile(file,(err,obj) => {
+        if(!err){
+            const todoList = obj.todoItems;
+            const createdAt = new Date();
 
-  jsonfile.writeFile(file, obj, (err) => {
-    console.log(err)
-  });
-});
+            const newItem = {
+                item: userInput,
+                created_at: createdAt
+            };
+            todoList.push(newItem);
+            jsonfile.writeFile(file.obj,(err) => {
+                if(!err){
+                    console.log("todo list has been updated");
+                }
+            })
+        }
+    })
+}
