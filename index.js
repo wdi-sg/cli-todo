@@ -23,3 +23,11 @@ if(operation=== 'add'){
 
 // everytime a user adds something, push it into file.toDoItems array so you can use .length property to track number of items in the list
 
+jsonfile.readFile(file, (err, obj)=> {
+  if(operation=== 'add'){
+    //add function
+    obj.toDoItems.push({
+      listNum : listItem 
+    })
+  }
+})
