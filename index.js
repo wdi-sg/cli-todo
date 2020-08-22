@@ -26,11 +26,13 @@ function addList () {
       console.log("Error at jsonreadfile!")
     }
     let num = `${obj["todoItems"].length+ 1}. [ ] - `.toString();
-    console.log(num,chore);
-    const value = chore;
     
+    let dateAdded = new Date();
+    const value = chore + " date added: " + dateAdded
+    console.log(num,value);
     obj["todoItems"].push({
-      num : value
+      num : value,
+      
     });
     //write changes into the file
     jsonfile.writeFile(file, obj, (err) =>{
@@ -86,10 +88,10 @@ function markDone(numberToParse) {
 
 //COMMAND LINE STUFF
 if(operation=== "add"){
-  console.log(addList())
+  addList()
 } else if(operation === "show") {
-  console.log(showList())
+  showList()
 } else if (operation=== "done"){
-  console.log(markDone(chore))
+  markDone(chore)
 }
 
