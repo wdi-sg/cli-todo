@@ -4,18 +4,14 @@ const file = 'data.json'
 const ENV = process.argv[0];
 const PATH = process.argv[1];
 const operation = process.argv[2];
-const listItem = process.argv[3];
+const chore = process.argv[3];
 
 //status is either [x] or [ ]
 let status;
 
-let toDoList = file.toDoList.length + 1;
-let listNum = listNum + ".";
 
 
-if(operation=== 'add'){
-  console.log(add (listItem))
-}
+
 
 //helper functions
 
@@ -23,11 +19,28 @@ if(operation=== 'add'){
 
 // everytime a user adds something, push it into file.toDoItems array so you can use .length property to track number of items in the list
 
-jsonfile.readFile(file, (err, obj)=> {
-  if(operation=== 'add'){
-    //add function
-    obj.toDoItems.push({
-      listNum : listItem 
+function addList () {
+  jsonfile.readFile(file, (err, obj) => {
+    //check for error, if not will return a promis
+    if(err) {
+      console.log("Error at jsonreadfile!")
+    }
+    let num = `${obj["todoItems"].length+ 1}. [ ] - `.toString();
+    console.log(num,chore);
+    const value = chore;
+    
+    obj["todoItems"].push({
+      num : value
+    });
+    //write changes into the file
+    jsonfile.writeFile(file, obj, (err) =>{
+      if(err){
+        console.log(err, "error at write file!")
+      }
     })
-  }
-})
+  })
+}
+
+if(operation=== "add"){
+  console.log(addList())
+}
