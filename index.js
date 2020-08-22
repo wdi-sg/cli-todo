@@ -85,6 +85,24 @@ function markDone(numberToParse) {
   })
 }
 
+//remove function
+
+function removeItem (removeNum) {
+  jsonfile.readFile(file, (err, obj) => {
+    if(err){
+      console.log("error at jsonRead")
+    }
+    let removeIndex = removeNum -1;
+    obj["todoItems"].splice(removeIndex, 1);
+    jsonfile.writeFile(file, obj, (err) =>{
+      if(err){
+        console.log(err, "error at write file!")
+      }
+      showList();
+    })
+  })
+}
+
 
 //COMMAND LINE STUFF
 if(operation=== "add"){
@@ -93,5 +111,7 @@ if(operation=== "add"){
   showList()
 } else if (operation=== "done"){
   markDone(chore)
+} else if (operation === "remove") {
+  removeItem(chore)
 }
 
