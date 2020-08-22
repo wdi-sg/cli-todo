@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/loribean/cli-todo#readme",
   "dependencies": {
+    "font-ascii": "^1.2.0",
     "jsonfile": "^6.0.1"
   }
 }

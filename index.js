@@ -1,4 +1,5 @@
 const jsonfile = require('jsonfile');
+const formPhrase = require("font-ascii").default;
 const file = 'data.json'
 
 const ENV = process.argv[0];
@@ -30,6 +31,7 @@ function addList () {
     if(err) {
       console.log("Error at jsonreadfile!")
     }
+    
     number = obj["todoItems"].length+ 1
     num = number.toString();
     status = ". [ ] - ";
@@ -40,6 +42,7 @@ function addList () {
       num : value,
       
     });
+    formPhrase("Added to the list", { typeface: "Small", color: "magenta" })
     //write changes into the file
     jsonfile.writeFile(file, obj, (err) =>{
       if(err){
@@ -55,6 +58,7 @@ function showList () {
     if(err) {
       console.log("Error at json read file")
     }
+    formPhrase("To do List", { typeface: "FlowerPower", color: "cyan" });
     // for loop to console everything in the array
     for(i=0; i< obj["todoItems"].length; i++){
       let showNum = i + 1 
@@ -86,6 +90,7 @@ function markDone(numberToParse) {
         obj["todoItems"].splice(arrayNum,0, {num: newValue});
       }
     }
+    
 
 
     jsonfile.writeFile(file, obj, (err) =>{
