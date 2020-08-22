@@ -41,6 +41,7 @@ function addList () {
   })
 }
 
+// show to do list function
 function showList () {
   jsonfile.readFile( file, (err, obj) => {
     if(err) {
@@ -55,7 +56,32 @@ function showList () {
   })
 }
 
+// mark as done function 
 
+function markDone(numberToParse) {
+  jsonfile.readFile( file, (err,obj) => {
+    if(err){
+      console.log("error at jsonReadfile")
+    }
+    for(i=0; i< obj["todoItems"].length; i++){
+      let arrayNum = parseInt(numberToParse) - 1;
+      if(i !==arrayNum){
+        let showNum = i + 1 + ". [ ] - "
+        let value = obj["todoItems"][i].num
+        console.log(showNum, value)
+      } else {
+        let doneNum =  i + 1 + ". [X] - "
+        let doneValue = obj["todoItems"][i].num
+        console.log(doneNum, doneValue)
+      }
+    }
+    jsonfile.writeFile(file, obj, (err) =>{
+      if(err){
+        console.log(err, "error at write file!")
+      }
+    })
+  })
+}
 
 
 //COMMAND LINE STUFF
@@ -63,4 +89,7 @@ if(operation=== "add"){
   console.log(addList())
 } else if(operation === "show") {
   console.log(showList())
+} else if (operation=== "done"){
+  console.log(markDone(chore))
 }
+
