@@ -6,8 +6,13 @@ const PATH = process.argv[1];
 const operation = process.argv[2];
 const chore = process.argv[3];
 
+
 //status is either [x] or [ ]
 let status;
+let num;
+let value;
+let number;
+let newValue;
 
 
 
@@ -25,10 +30,11 @@ function addList () {
     if(err) {
       console.log("Error at jsonreadfile!")
     }
-    let num = `${obj["todoItems"].length+ 1}. [ ] - `.toString();
-    
+    number = obj["todoItems"].length+ 1
+    num = number.toString();
+    status = ". [ ] - ";
     let dateAdded = new Date();
-    const value = chore + " date added: " + dateAdded
+     value = status + chore + " date added: " + dateAdded
     console.log(num,value);
     obj["todoItems"].push({
       num : value,
@@ -51,9 +57,9 @@ function showList () {
     }
     // for loop to console everything in the array
     for(i=0; i< obj["todoItems"].length; i++){
-      let showNum = i + 1 + ". [ ] - "
-      let value = obj["todoItems"][i].num
-      console.log(showNum, value)
+      let showNum = i + 1 
+       let showvalue = obj["todoItems"][i].num
+      console.log(showNum, showvalue)
     }
   })
 }
@@ -65,19 +71,23 @@ function markDone(numberToParse) {
     if(err){
       console.log("error at jsonReadfile")
     }
+    let arrayNum = parseInt(numberToParse) - 1;
     for(i=0; i< obj["todoItems"].length; i++){
-      let arrayNum = parseInt(numberToParse) - 1;
       if(i !==arrayNum){
-        let showNum = i + 1 + ". [ ] - "
-        let value = obj["todoItems"][i].num
-        console.log(showNum, value)
+        num = i + 1 ;
+        value = obj["todoItems"][i].num;
+        console.log(num, value)
       } else {
-        let doneNum =  i + 1 + ". [X] - ";
+       num =  i + 1;
         const dateUpdated = new Date();
-        let doneValue = obj["todoItems"][i].num +" date done:" + dateUpdated
-        console.log(doneNum, doneValue)
+        newValue = obj["todoItems"][i].num.replace(". [ ] - ",". [X] - ") + " date updated: " + dateUpdated;
+        console.log(num, newValue);
+        obj["todoItems"].splice(arrayNum, 1 );
+        obj["todoItems"].splice(arrayNum,0, {num: newValue});
       }
     }
+
+
     jsonfile.writeFile(file, obj, (err) =>{
       if(err){
         console.log(err, "error at write file!")
