@@ -1,4 +1,5 @@
-console.log("works!!", process.argv);
+
+var formPhrase = require("font-ascii").default;
 
 var commandType = process.argv[2];
 
@@ -19,14 +20,18 @@ jsonfile.readFile(file, (err, obj) => {
 obj["todoItems"].push(`${listNo}.${notDone}${task}`);
 obj["created_at"].push(new Date().toLocaleString());
 obj["updated_at"].push("");
+
   console.log(obj)
+  formPhrase("Item Added", { typeface: "Small", color: "blue" });
 } if(commandType === "done"){
     let listNo = process.argv[3];
     // console.log(obj["todoItems"][listNo-1]);
     let doneTask = obj["todoItems"][listNo-1].split(" ").slice(4).join(' ');
     obj["todoItems"][listNo-1] = `${listNo}.${done}${doneTask}`
     obj["updated_at"][listNo-1] = new Date().toLocaleString();
+
     console.log(obj);
+    formPhrase("Item Done", { typeface: "Small", color: "green" });
 } if (commandType === "delete"){
     let listNo = process.argv[3];
     obj["todoItems"].splice(listNo-1,1);
@@ -37,6 +42,7 @@ obj["updated_at"].push("");
         task[0] = `${i+1}.`;
         obj["todoItems"][i] = task.join(" ");
     }
+    formPhrase("Item Deleted", { typeface: "Small", color: "red" });
     console.log(obj);
 }
 
