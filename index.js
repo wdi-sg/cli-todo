@@ -41,6 +41,26 @@ function addList () {
   })
 }
 
+function showList () {
+  jsonfile.readFile( file, (err, obj) => {
+    if(err) {
+      console.log("Error at json read file")
+    }
+    // for loop to console everything in the array
+    for(i=0; i< obj["todoItems"].length; i++){
+      let showNum = i + 1 + ". [ ] - "
+      let value = obj["todoItems"][i].num
+      console.log(showNum, value)
+    }
+  })
+}
+
+
+
+
+//COMMAND LINE STUFF
 if(operation=== "add"){
   console.log(addList())
+} else if(operation === "show") {
+  console.log(showList())
 }
