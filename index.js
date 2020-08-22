@@ -72,8 +72,9 @@ function markDone(numberToParse) {
         let value = obj["todoItems"][i].num
         console.log(showNum, value)
       } else {
-        let doneNum =  i + 1 + ". [X] - "
-        let doneValue = obj["todoItems"][i].num
+        let doneNum =  i + 1 + ". [X] - ";
+        const dateUpdated = new Date();
+        let doneValue = obj["todoItems"][i].num +" date done:" + dateUpdated
         console.log(doneNum, doneValue)
       }
     }
