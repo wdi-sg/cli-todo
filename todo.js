@@ -25,11 +25,11 @@ if(command=="add"){
         }
 
         var columnheaders = obj.todoItems[0]
-        console.log(" ".repeat(12+longestString), columnheaders.createdAt, " ".repeat(12), columnheaders.updatedAt)
+        console.log(" ".repeat(12+longestString), columnheaders.createdAt, " ".repeat(10), columnheaders.updatedAt)
 
         for(i=1;i<obj.todoItems.length;i++){
             let thingToDo=obj.todoItems[i]
-            let columnSpace = " ".repeat(longestString - obj.todoItems[i].item.length) //make sure dates line up
+            let columnSpace = " ".repeat(longestString - obj.todoItems[i].item.length)
             console.log(i,".", thingToDo.done, "-", thingToDo.item, columnSpace, thingToDo.createdAt, "   ", thingToDo.updatedAt)
         }
     })
