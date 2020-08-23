@@ -44,9 +44,8 @@ switch(commandType){
             todoEntry["created_at"] = printDate();
             todoEntry["updated_at"] = "";
             todoList.push(todoEntry);
-
+            console.log(`"${todoItem}" added successfully to Task Wizard!`)
         jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
         });
     });
         break;
@@ -68,8 +67,8 @@ created at: ${item['created_at']}    updated at: ${item['updated_at']}`);
             let selectedItem = todoList[doneIndex]
             selectedItem["status"] = "[x]"
             selectedItem["updated_at"] = printDate();
+            console.log(`Marked "${selectedItem["name"]}" as complete`)
         jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
         });
 
     });
@@ -80,7 +79,6 @@ created at: ${item['created_at']}    updated at: ${item['updated_at']}`);
             let todoList = obj["todoItems"];
             todoList.splice(removeIndex, 1);
         jsonfile.writeFile(file, obj, (err) => {
-            console.log(err)
         });
 
     });
@@ -89,18 +87,3 @@ created at: ${item['created_at']}    updated at: ${item['updated_at']}`);
         console.log('Invalid selection');
         break;
 }
-
-
-
-
-
-// const testObject = {}
-
-// // jsonfile.readFile(file, (err, obj) => {
-
-// //   console.log(obj);
-
-//   jsonfile.writeFile(testObject, (err, obj) => {
-//     testObject["part2"] = "test"
-//     console.log(testObject)
-//   });
