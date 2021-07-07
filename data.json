@@ -1,0 +1,20 @@
+{
+  "todoItems": [
+    {
+      "id": 1,
+      "task": "eat laksa",
+      "done": "false",
+      "deleted": "false",
+      "created_at": "31/3/2019 02:44:19",
+      "updated_at": ""
+    },
+    {
+      "id": 2,
+      "task": "buy fruit juice",
+      "done": "false",
+      "deleted": "false",
+      "created_at": "31/3/2019 02:44:28",
+      "updated_at": ""
+    }
+  ]
+}
