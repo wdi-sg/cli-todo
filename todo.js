@@ -4,6 +4,8 @@ function getTodaysDate() {
   var day = today.getDate();
   var month = today.getMonth()+1; 
   var year = today.getFullYear();
+  var hour = today.getHours();
+  var minute = today.getMinutes();
   
   if(day<10) {
       day = '0'+day
@@ -13,13 +15,28 @@ function getTodaysDate() {
       month = '0'+month
   } 
   
-  today = day + '/' + month + '/' + year;
+  if(hour<10) {
+    hour = '0'+hour
+} 
+
+if(minute<10) {
+  minute = '0'+minute
+} 
+
+  today = day + '/' + month + '/' + year + " " + hour + ":" + minute;
 
   return today
 }
 var commandType = process.argv[2].toUpperCase();
 
-var userData = process.argv[3];
+var userData="";
+
+var userInput= process.argv.slice(3);
+
+for (var i=0; i < userInput.length; i++) {
+  userData += userInput[i] +  " ";
+}
+
 
 const jsonfile = require('jsonfile');
 
@@ -70,6 +87,8 @@ jsonfile.readFile(file, (err, todoList) => {
     console.log('  |_|\___/  |___/ \___/  |____|_/__/\__|  ');
     
     console.log(" ");
+    console.log("Item" + " sts   " + "Created on "+"      Updated At " +   "      To Do Lists");
+    console.log("====" + " ===   " + "==========="+"===== ================" + " ==========================");
     for (var i = 0; i < todoList.todoItems.length; i++) {
       var item = todoList.todoItems[i];
       var status = item.status.toUpperCase();
@@ -80,7 +99,7 @@ jsonfile.readFile(file, (err, todoList) => {
         status = " " 
       }
 
-      console.log(" " + (i + 1) + ". [" + status +"] - " +  item.userData)
+      console.log(" " + (i + 1) + ".  [" + status +"] - " + item.created_at + " " + item.updated_at + " " + item.userData)
     }
   
   } else if (commandType === "DELETE") {
